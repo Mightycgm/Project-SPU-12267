@@ -1,287 +1,349 @@
 <!DOCTYPE html>
 <html lang="th">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home - Game Reviews</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&family=Roboto+Slab:wght@900&display=swap"
-        rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&family=Roboto+Slab:wght@900&display=swap"
+      rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      rel="stylesheet"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
 
     <style>
-        /* 1. Override Bootstrap Variables (ตามธีมสีที่ต้องการ) */
-        :root {
-            --bs-danger: #6b0000;
-            --bs-danger-rgb: 107, 0, 0;
-            --bs-dark: #000000;
-            --bs-dark-rgb: 0, 0, 0;
-            --bs-body-color: #fff;
-            --bs-body-bg: #000;
-            --bs-border-color: var(--bs-danger);
-            --bs-link-color: #fff;
-            --bs-link-hover-color: #d1d1d1;
-        }
+      /* 1. Override Bootstrap Variables (ตามธีมสีที่ต้องการ) */
+      :root {
+        --bs-danger: #6b0000;
+        --bs-danger-rgb: 107, 0, 0;
+        --bs-dark: #000000;
+        --bs-dark-rgb: 0, 0, 0;
+        --bs-body-color: #fff;
+        --bs-body-bg: #000;
+        --bs-border-color: var(--bs-danger);
+        --bs-link-color: #fff;
+        --bs-link-hover-color: #d1d1d1;
+      }
 
-        /* 2. Custom Styles (ที่ Bootstrap ไม่มีให้) */
-        body {
-            background: linear-gradient(to top, var(--bs-danger), var(--bs-dark));
-            background-attachment: fixed;
-            font-family: "Noto Sans", sans-serif;
-            font-weight: 500;
-        }
+      /* 2. Custom Styles (ที่ Bootstrap ไม่มีให้) */
+      body {
+        background: linear-gradient(to top, var(--bs-danger), var(--bs-dark));
+        background-attachment: fixed;
+        font-family: "Noto Sans", sans-serif;
+        font-weight: 500;
+      }
 
-        h1,
-        h2,
-        h3,
-        h4 {
-            font-family: "Roboto Slab", serif;
-            font-weight: 900;
-        }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Roboto Slab", serif;
+        font-weight: 900;
+      }
 
-        .offcanvas-custom-gradient {
-            background: linear-gradient(to right,
-                    var(--bs-danger),
-                    10%,
-                    var(--bs-dark));
-        }
+      .offcanvas-custom-gradient {
+        background: linear-gradient(
+          to right,
+          var(--bs-danger),
+          10%,
+          var(--bs-dark)
+        );
+      }
 
-        .text-underline-danger {
-            text-decoration: underline;
-            text-decoration-color: var(--bs-danger);
-            text-decoration-thickness: 3px;
-        }
+      .text-underline-danger {
+        text-decoration: underline;
+        text-decoration-color: var(--bs-danger);
+        text-decoration-thickness: 3px;
+      }
 
-        .service-icon {
-            font-size: 1.25rem;
-            border: 2px solid var(--bs-danger);
-            border-radius: 10px;
-            padding: 8px 12px;
-            color: white;
-            text-decoration: none;
-            display: inline-block;
-            transition: 0.4s;
-        }
+      .service-icon {
+        font-size: 1.25rem;
+        border: 2px solid var(--bs-danger);
+        border-radius: 10px;
+        padding: 8px 12px;
+        color: white;
+        text-decoration: none;
+        display: inline-block;
+        transition: 0.4s;
+      }
 
-        .service-icon:hover {
-            color: var(--bs-danger);
-            background-color: white;
-        }
+      .service-icon:hover {
+        color: var(--bs-danger);
+        background-color: white;
+      }
 
-        .fa-brands:hover {
-            color: var(--bs-danger);
-            transition: 0.4s;
-        }
+      .fa-brands:hover {
+        color: var(--bs-danger);
+        transition: 0.4s;
+      }
 
-        .video-wrapper {
-            border: 1px solid var(--bs-danger);
-            border-radius: 0.5rem;
-            overflow: hidden;
-        }
+      .video-wrapper {
+        border: 1px solid var(--bs-danger);
+        border-radius: 0.5rem;
+        overflow: hidden;
+      }
 
-        .offcanvas .nav-link.active {
-            background-color: var(--bs-danger);
-            color: white;
-        }
+      .offcanvas .nav-link.active {
+        background-color: var(--bs-danger);
+        color: white;
+      }
 
-        .offcanvas .nav-link:hover {
-            background-color: #440606;
-        }
+      .offcanvas .nav-link:hover {
+        background-color: #440606;
+      }
     </style>
-</head>
+  </head>
 
-<body class="text-white">
-    <div class="offcanvas offcanvas-start text-white offcanvas-custom-gradient" id="mySidenav"
-        aria-labelledby="mySidenavLabel" tabindex="-1">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="mySidenavLabel">Menu</h5>
-            <button class="btn-close btn-close-white" data-bs-dismiss="offcanvas" type="button"
-                aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <nav class="nav flex-column">
-                <a class="nav-link active px-3 py-2" href="#" aria-current="page">
-                    <i class="fa fa-fw fa-home"></i> Home
-                </a>
-                <a class="nav-link px-3 py-2" href="#">
-                    <i class="fa-solid fa-address-card"></i> About
-                </a>
-                <a class="nav-link px-3 py-2" href="#">
-                    <i class="fa-regular fa-handshake"></i> Services
-                </a>
-                <a class="nav-link px-3 py-2" href="#">
-                    <i class="fa-regular fa-envelope"></i> Contact
-                </a>
-            </nav>
-        </div>
+  <body class="text-white">
+    <div
+      class="offcanvas offcanvas-start text-white offcanvas-custom-gradient"
+      id="mySidenav"
+      aria-labelledby="mySidenavLabel"
+      tabindex="-1">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="mySidenavLabel">Menu</h5>
+        <button
+          class="btn-close btn-close-white"
+          data-bs-dismiss="offcanvas"
+          type="button"
+          aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <nav class="nav flex-column">
+          <a class="nav-link active px-3 py-2" href="#" aria-current="page">
+            <i class="fa fa-fw fa-home"></i> Home
+          </a>
+          <a class="nav-link px-3 py-2" href="#">
+            <i class="fa-solid fa-address-card"></i> About
+          </a>
+          <a class="nav-link px-3 py-2" href="#">
+            <i class="fa-regular fa-handshake"></i> Services
+          </a>
+          <a class="nav-link px-3 py-2" href="#">
+            <i class="fa-regular fa-envelope"></i> Contact
+          </a>
+        </nav>
+      </div>
     </div>
 
-    <nav class="navbar navbar-dark bg-dark border-bottom border-danger sticky-top">
-        <div class="container-fluid">
-            <button class="navbar-toggler" data-bs-target="#mySidenav" data-bs-toggle="offcanvas" type="button"
-                aria-controls="mySidenav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
+    <nav
+      class="navbar navbar-dark bg-dark border-bottom border-danger sticky-top">
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          data-bs-target="#mySidenav"
+          data-bs-toggle="offcanvas"
+          type="button"
+          aria-controls="mySidenav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
     </nav>
 
     <main class="container mt-4">
-        <div class="bg-dark border border-danger rounded-3 p-4 p-md-5 shadow-lg">
-            <h1 class="display-4 text-center mb-5 text-underline-danger">
-                || รีวิวเกมน่าเล่น ||
-            </h1>
+      <div class="bg-dark border border-danger rounded-3 p-4 p-md-5 shadow-lg">
+        <h1 class="display-4 text-center mb-5 text-underline-danger">
+          || รีวิวเกมน่าเล่น ||
+        </h1>
 
-            <div class="mb-4 text-center">
-                <div class="dropdown">
-                    <button class="btn btn-outline-danger btn-lg dropdown-toggle" type="button" id="gameJumpMenu"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        เลือกเกมที่ต้องการ...
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="gameJumpMenu" id="game-jump-list">
-                    </ul>
-                </div>
-            </div>
-
-            <div id="game-list-container"></div>
+        <div class="mb-4 text-center">
+          <div class="dropdown">
+            <button
+              class="btn btn-outline-danger btn-lg dropdown-toggle"
+              id="gameJumpMenu"
+              data-bs-toggle="dropdown"
+              type="button"
+              aria-expanded="false">
+              เลือกเกมที่ต้องการ...
+            </button>
+            <ul
+              class="dropdown-menu dropdown-menu-dark"
+              id="game-jump-list"
+              aria-labelledby="gameJumpMenu"></ul>
+          </div>
         </div>
+
+        <div id="game-list-container"></div>
+      </div>
     </main>
 
     <footer class="bg-dark pt-5 mt-5 border-top border-danger">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-7 mb-4">
-                    <iframe
-                        src="https://www.google.com/maps/embed/v1/place?q=-18.91553548035164,+47.52165064045462&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"
-                        width="100%" height="350" style="border: 0" allowfullscreen loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-                <div class="col-lg-5 mb-4">
-                    <h2 class="text-underline-danger text-danger">ติดต่อสอบถาม</h2>
-                    <p class="fs-4">Madagascar</p>
-                    <hr class="border-danger opacity-50" />
-                    <p class="fs-5">
-                        <b>โทร : </b>
-                        <span class="text-white-50">062,666,6969 , 098-123-5236</span>
-                    </p>
-                    <p class="fs-5">
-                        <b>อีเมล : </b>
-                        <span class="text-white-50">anonymous@gmail.com</span>
-                    </p>
-                    <p class="fs-5">
-                        <b>ที่อยู่ : </b>
-                        <span class="text-white-50">
-                            666/72 ซอย ตัน อำเภอ เออเร่อ จังหวัด vtwi;t มิดการ์ 72319
-                        </span>
-                    </p>
-                </div>
-            </div>
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-7 mb-4">
+            <iframe
+              src="https://www.google.com/maps/embed/v1/place?q=-18.91553548035164,+47.52165064045462&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"
+              width="100%"
+              height="350"
+              style="border: 0"
+              allowfullscreen
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+          <div class="col-lg-5 mb-4">
+            <h2 class="text-underline-danger text-danger">ติดต่อสอบถาม</h2>
+            <p class="fs-4">Madagascar</p>
+            <hr class="border-danger opacity-50" />
+            <p class="fs-5">
+              <b>โทร : </b>
+              <span class="text-white-50">062,666,6969 , 098-123-5236</span>
+            </p>
+            <p class="fs-5">
+              <b>อีเมล : </b>
+              <span class="text-white-50">anonymous@gmail.com</span>
+            </p>
+            <p class="fs-5">
+              <b>ที่อยู่ : </b>
+              <span class="text-white-50">
+                666/72 ซอย ตัน อำเภอ เออเร่อ จังหวัด vtwi;t มิดการ์ 72319
+              </span>
+            </p>
+          </div>
         </div>
-        <div class="bg-black text-center p-3 text-white-50">
-            © Midgar Academy 2045. All rights reserved.
-        </div>
+      </div>
+      <div class="bg-black text-center p-3 text-white-50">
+        © Midgar Academy 2045. All rights reserved.
+      </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"></script>
 
     <script>
-        // 1. โกดังข้อมูล (Data Storage)
-        // ! คุณต้องอัปเดตข้อมูลตรงนี้ให้ครบทุกเกม
-        const gameData = [
-            {
-                id: "elden-ring", // <-- เพิ่ม (สำหรับวาร์ป)
-                title: "Elden Ring",
-                iconUrl: "icon/eldenring.png",
-                youtubeId: "eD_oYIbublE",
-                description:
-                    '"Elden Ring" เป็นเกมแนวแอ็กชัน RPG พัฒนาโดย FromSoftware และจัดจำหน่ายโดย Bandai Namco ผู้เล่นจะได้สำรวจโลกเปิดขนาดใหญ่ที่เรียกว่า Lands Between ต่อสู้กับศัตรูที่ท้าทายและค้นพบเรื่องราวที่ลึกซึ้ง เกมนี้ผสมผสานการต่อสู้อันซับซ้อน การสร้างโลกที่ละเอียด และการเล่าเรื่องที่เข้มข้น มีส่วนร่วมจาก George R. R. Martin และเล่นได้ทั้งแบบเดี่ยวและหลายคน',
-                score: "9.5/10", // <-- เพิ่ม
-                pros: ["โลกเปิดที่น่าสำรวจ", "การต่อสู้ที่ท้าทาย", "เนื้อเรื่องลึกซึ้ง"], // <-- เพิ่ม
-                cons: ["Performance บน PC", "ค่อนข้างยากสำหรับมือใหม่"] // <-- เพิ่ม
-            },
-            {
-                id: "monster-hunter-world", // <-- เพิ่ม
-                title: "Monster Hunter World",
-                iconUrl: "icon/monsterhunterworld.png",
-                youtubeId: "D8ubGtcYxpA",
-                description:
-                    '"Monster Hunter: World" เป็นเกมแอ็กชัน RPG จาก Capcom ที่ผู้เล่นรับบทเป็นนักล่าในโลกที่เต็มไปด้วยสัตว์ประหลาดขนาดยักษ์ เป้าหมายหลักคือการล่าและจับสัตว์เหล่านี้เพื่อสร้างอาวุธและชุดเกราะที่แข็งแกร่งขึ้น เกมเน้นการเล่นร่วมมือกับผู้เล่นคนอื่นและมีระบบการต่อสู้ที่ซับซ้อนและลึกซึ้งในโลกที่เปิดกว้างและเต็มไปด้วยรายละเอียด',
-                score: "9.0/10", // <-- เพิ่ม
-                pros: ["ระบบต่อสู้ลึกซึ้ง", "กราฟิกสวยงาม", "เล่น co-op สนุก"], // <-- เพิ่ม
-                cons: ["ต้องใช้เวลาเรียนรู้สูง", "เนื้อเรื่องไม่เข้มข้น"] // <-- เพิ่ม
-            },
-            {
-                id: "project-zomboid", // <-- เพิ่ม
-                title: "Project Zomboid",
-                iconUrl: "icon/projectzomboid.png",
-                youtubeId: "r8gdGOqcZvY",
-                description:
-                    '"Project Zomboid" เป็นเกมเอาชีวิตรอดแนวสยองขวัญที่พัฒนาโดย The Indie Stone ผู้เล่นต้องต่อสู้กับซอมบี้ในโลกที่เปิดกว้างและสมจริง เน้นการเอาตัวรอดในระยะยาว การค้นหาอาหาร การสร้างที่หลบภัย และการต่อสู้กับการติดเชื้อ เกมมีความยากสูงและไม่มีทางรอดที่แน่นอน ทำให้ผู้เล่นต้องคิดและวางแผนทุกขั้นตอน',
-                score: "8.5/10", // <-- เพิ่ม
-                pros: ["สมจริงมาก", "ระบบซับซ้อน", "เล่นกับเพื่อนได้"], // <-- เพิ่ม
-                cons: ["กราฟิกเฉพาะทาง", "ยากมาก", "ใช้เวลาเล่นนาน"] // <-- เพิ่ม
-            },
-            {
-                id: "7-day-to-die", // <-- เพิ่ม
-                title: "7 Day To Die",
-                iconUrl: "icon/7daytodie.png",
-                youtubeId: "UOE2Gt_E4SU",
-                description:
-                    '"7 Days to Die" เป็นเกมเอาชีวิตรอดที่ผสมผสานระหว่างการสร้างฐาน การคราฟต์ การสำรวจ และการต่อสู้กับซอมบี้ ผู้เล่นต้องรวบรวมทรัพยากร สร้างที่พักพิง และเตรียมพร้อมรับมือกับคลื่นซอมบี้ที่จู่โจมทุก 7 วัน เกมนี้มีระบบโลกเปิดและเล่นได้ทั้งแบบเดี่ยวและหลายคน โดยมีการเน้นการวางแผนเพื่อความอยู่รอดในระยะยาว',
-                score: "8.0/10", // <-- เพิ่ม
-                pros: ["สร้างฐานอิสระ", "ระบบคราฟต์ดี", "มีเป้าหมายชัดเจน (ทุก 7 วัน)"], // <-- เพิ่ม
-                cons: ["กราฟิกค่อนข้างเก่า", "Bug อาจจะยังมีบ้าง"] // <-- เพิ่ม
-            },
-            {
-                id: "broforce", // <-- เพิ่ม
-                title: "Broforce",
-                iconUrl: "icon/broforce.png",
-                youtubeId: "uaBBMuCCqPo",
-                description:
-                    '"Broforce" เป็นเกมแอ็กชันแพลตฟอร์มที่เต็มไปด้วยความระห่ำ พัฒนาโดย Free Lives ผู้เล่นควบคุมตัวละครที่เป็นฮีโร่แนวแอ็กชันคลาสสิก เพื่อปฏิบัติภารกิจทำลายล้างศัตรูและช่วยเหลือตัวประกัน เกมมีกราฟิกแบบพิกเซลและเน้นความมันส์ในแบบเล่นร่วมกับเพื่อน ทั้งในโหมดเดี่ยวและมัลติเพลเยอร์',
-                score: "9.0/10", // <-- เพิ่ม
-                pros: ["มันส์ ระเบิดภูเขาเผากระท่อม", "ตัวละครเยอะมาก", "เล่นกับเพื่อนฮามาก"], // <-- เพิ่ม
-                cons: ["บางด่านอาจจะมั่วไปหน่อย(ฮา)"] // <-- เพิ่ม
-            },
-            // --- (เพิ่มเกมที่ 6-15 ของคุณที่นี่) ---
-            // {
-            //   id: "ชือเกม-แบบ-id",
-            //   title: "ชือเกม",
-            //   iconUrl: "icon/ชือไฟล์.png",
-            //   youtubeId: "รหัสวิดีโอ",
-            //   description: "คำอธิบายเกม...",
-            //   score: "คะแนน/10",
-            //   pros: ["ข้อดี 1", "ข้อดี 2"],
-            //   cons: ["ข้อเสีย 1"]
-            // },
-        ];
+      // 1. โกดังข้อมูล (Data Storage)
+      // ! อัปเดต: แก้ไข description ให้เป็นข้อความเต็ม
+      const gameData = [
+        {
+          id: "elden-ring",
+          title: "Elden Ring",
+          iconUrl: "icon/eldenring.png",
+          youtubeId: "eD_oYIbublE",
+          description:
+            '"Elden Ring" เป็นเกมแนวแอ็กชัน RPG พัฒนาโดย FromSoftware และจัดจำหน่ายโดย Bandai Namco ผู้เล่นจะได้สำรวจโลกเปิดขนาดใหญ่ที่เรียกว่า Lands Between ต่อสู้กับศัตรูที่ท้าทายและค้นพบเรื่องราวที่ลึกซึ้ง เกมนี้ผสมผสานการต่อสู้อันซับซ้อน การสร้างโลกที่ละเอียด และการเล่าเรื่องที่เข้มข้น มีส่วนร่วมจาก George R. R. Martin และเล่นได้ทั้งแบบเดี่ยวและหลายคน',
+          score: "9.5/10",
+          pros: [
+            "โลกเปิดที่น่าสำรวจ",
+            "การต่อสู้ที่ท้าทาย",
+            "เนื้อเรื่องลึกซึ้ง",
+          ],
+          cons: ["Performance บน PC", "ค่อนข้างยากสำหรับมือใหม่"],
+          steamUrl: "https://store.steampowered.com/app/1245620/ELDEN_RING/",
+        },
+        {
+          id: "monster-hunter-world",
+          title: "Monster Hunter World",
+          iconUrl: "icon/monsterhunterworld.png",
+          youtubeId: "D8ubGtcYxpA",
+          description:
+            '"Monster Hunter: World" เป็นเกมแอ็กชัน RPG จาก Capcom ที่ผู้เล่นรับบทเป็นนักล่าในโลกที่เต็มไปด้วยสัตว์ประหลาดขนาดยักษ์ เป้าหมายหลักคือการล่าและจับสัตว์เหล่านี้เพื่อสร้างอาวุธและชุดเกราะที่แข็งแกร่งขึ้น เกมเน้นการเล่นร่วมมือกับผู้เล่นคนอื่นและมีระบบการต่อสู้ที่ซับซ้อนและลึกซึ้งในโลกที่เปิดกว้างและเต็มไปด้วยรายละเอียด',
+          score: "9.0/10",
+          pros: ["ระบบต่อสู้ลึกซึ้ง", "กราฟิกสวยงาม", "เล่น co-op สนุก"],
+          cons: ["ต้องใช้เวลาเรียนรู้สูง", "เนื้อเรื่องไม่เข้มข้น"],
+          steamUrl:
+            "https://store.steampowered.com/app/582010/Monster_Hunter_World/",
+        },
+        {
+          id: "project-zomboid",
+          title: "Project Zomboid",
+          iconUrl: "icon/projectzomboid.png",
+          youtubeId: "r8gdGOqcZvY",
+          description:
+            '"Project Zomboid" เป็นเกมเอาชีวิตรอดแนวสยองขวัญที่พัฒนาโดย The Indie Stone ผู้เล่นต้องต่อสู้กับซอมบี้ในโลกที่เปิดกว้างและสมจริง เน้นการเอาตัวรอดในระยะยาว การค้นหาอาหาร การสร้างที่หลบภัย และการต่อสู้กับการติดเชื้อ เกมมีความยากสูงและไม่มีทางรอดที่แน่นอน ทำให้ผู้เล่นต้องคิดและวางแผนทุกขั้นตอน',
+          score: "8.5/10",
+          pros: ["สมจริงมาก", "ระบบซับซ้อน", "เล่นกับเพื่อนได้"],
+          cons: ["กราฟิกเฉพาะทาง", "ยากมาก", "ใช้เวลาเล่นนาน"],
+          steamUrl:
+            "https://store.steampowered.com/app/108600/Project_Zomboid/",
+        },
+        {
+          id: "7-day-to-die",
+          title: "7 Day To Die",
+          iconUrl: "icon/7daytodie.png",
+          youtubeId: "UOE2Gt_E4SU",
+          description:
+            '"7 Days to Die" เป็นเกมเอาชีวิตรอดที่ผสมผสานระหว่างการสร้างฐาน การคราฟต์ การสำรวจ และการต่อสู้กับซอมบี้ ผู้เล่นต้องรวบรวมทรัพยากร สร้างที่พักพิง และเตรียมพร้อมรับมือกับคลื่นซอมบี้ที่จู่โจมทุก 7 วัน เกมนี้มีระบบโลกเปิดและเล่นได้ทั้งแบบเดี่ยวและหลายคน โดยมีการเน้นการวางแผนเพื่อความอยู่รอดในระยะยาว',
+          score: "8.0/10",
+          pros: [
+            "สร้างฐานอิสระ",
+            "ระบบคราฟต์ดี",
+            "มีเป้าหมายชัดเจน (ทุก 7 วัน)",
+          ],
+          cons: ["กราฟิกค่อนข้างเก่า", "Bug อาจจะยังมีบ้าง"],
+          steamUrl: "https://store.steampowered.com/app/251570/7_Days_to_Die/",
+        },
+        {
+          id: "broforce",
+          title: "Broforce",
+          iconUrl: "icon/broforce.png",
+          youtubeId: "uaBBMuCCqPo",
+          description:
+            '"Broforce" เป็นเกมแอ็กชันแพลตฟอร์มที่เต็มไปด้วยความระห่ำ พัฒนาโดย Free Lives ผู้เล่นควบคุมตัวละครที่เป็นฮีโร่แนวแอ็กชันคลาสสิก เพื่อปฏิบัติภารกิจทำลายล้างศัตรูและช่วยเหลือตัวประกัน เกมมีกราฟิกแบบพิกเซลและเน้นความมันส์ในแบบเล่นร่วมกับเพื่อน ทั้งในโหมดเดี่ยวและมัลติเพลเยอร์',
+          score: "9.0/10",
+          pros: [
+            "มันส์ ระเบิดภูเขาเผากระท่อม",
+            "ตัวละครเยอะมาก",
+            "เล่นกับเพื่อนฮามาก",
+          ],
+          cons: ["บางด่านอาจจะมั่วไปหน่อย(ฮา)"],
+          steamUrl: "https://store.steampowered.com/app/274190/Broforce/",
+        },
+        // --- (เพิ่มเกมที่ 6-15 ของคุณที่นี่) ---
+        // {
+        //   id: "ชือเกม-แบบ-id",
+        //   title: "ชือเกม",
+        //   iconUrl: "icon/ชือไฟล์.png",
+        //   youtubeId: "รหัสวิดีโอ",
+        //   description: "คำอธิบายเกม...",
+        //   score: "คะแนน/10",
+        //   pros: ["ข้อดี 1", "ข้อดี 2"],
+        //   cons: ["ข้อเสีย 1"]
+        //   steamUrl: "ลิงก์ Steam ของเกมใหม่"
+        // },
+      ];
 
-        // 2. ฟังก์ชันสำหรับ "ปั๊ม" HTML (อัปเดตแล้ว)
-        function renderGameList() {
-            const container = document.getElementById("game-list-container");
-            let allGamesHtml = ""; // ตัวแปรสำหรับเก็บ HTML ทั้งหมด
+      // 2. ฟังก์ชันสำหรับ "ปั๊ม" HTML (โค้ดส่วนนี้ถูกต้องอยู่แล้ว)
+      function renderGameList() {
+        const container = document.getElementById("game-list-container");
+        let allGamesHtml = "";
 
-            gameData.forEach((game, index) => {
-                // 3. ตรวจสอบ index เพื่อสลับข้าง
-                const isVideoLeft = index % 2 === 0;
+        gameData.forEach((game, index) => {
+          const isVideoLeft = index % 2 === 0;
+          const videoColOrder = isVideoLeft ? "" : "order-lg-2";
+          const textColOrder = isVideoLeft ? "" : "order-lg-1";
 
-                const videoColOrder = isVideoLeft ? "" : "order-lg-2";
-                const textColOrder = isVideoLeft ? "" : "order-lg-1";
+          if (index > 0) {
+            allGamesHtml += `<hr class="border-danger border-2 opacity-50 my-5" />`;
+          }
 
-                if (index > 0) {
-                    allGamesHtml += `<hr class="border-danger border-2 opacity-50 my-5" />`;
-                }
+          let shopButtonHtml = "";
+          if (game.steamUrl && game.steamUrl.trim() !== "") {
+            shopButtonHtml = `
+            <a class="service-icon" 
+              href="${game.steamUrl}" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              title="ซื้อเกมนี้">
+                <i class="fa-solid fa-shop"></i>
+            </a>
+          `;
+          }
 
-                // 4. สร้าง HTML ของเกม 1 ชิ้น (อัปเดตบรรทัด <section> และเพิ่มส่วนรีวิว)
-                const gameHtml = `
-          <section id="game-${game.id}" class="row g-4 align-items-center my-4 pt-4">
+          const gameHtml = `
+          <section id="game-${
+            game.id
+          }" class="row g-4 align-items-center my-4 pt-4">
             <div class="col-lg-6 ${videoColOrder}">
               <div class="ratio ratio-16x9 video-wrapper">
                 <iframe
@@ -292,11 +354,12 @@
                   allowfullscreen></iframe>
               </div>
             </div>
-
             <div class="col-lg-6 ${textColOrder}">
               <h2 class="display-6">
                 ${game.title}
-                <img src="${game.iconUrl}" alt="${game.title} icon" width="78" />
+                <img src="${game.iconUrl}" alt="${
+            game.title
+          } icon" width="78" />
               </h2>
               <p class="fs-5">${game.description}</p>
               
@@ -304,53 +367,53 @@
                 <div class="col-md-6">
                   <h5 class="text-success">จุดเด่น (Pros)</h5>
                   <ul class="fs-6">
-                    ${game.pros.map(pro => `<li>${pro}</li>`).join('')}
+                    ${game.pros.map((pro) => `<li>${pro}</li>`).join("")}
                   </ul>
                 </div>
                 <div class="col-md-6">
                   <h5 class="text-warning">จุดด้อย (Cons)</h5>
                   <ul class="fs-6">
-                    ${game.cons.map(con => `<li>${con}</li>`).join('')}
+                    ${game.cons.map((con) => `<li>${con}</li>`).join("")}
                   </ul>
                 </div>
               </div>
               <h4 class="text-danger mb-3">คะแนน: ${game.score}</h4>
-              <a class="service-icon" href="#"><i class="fa-solid fa-shop"></i></a>
+              
+              ${shopButtonHtml} 
+
             </div>
           </section>
         `;
 
-                allGamesHtml += gameHtml;
-            });
+          allGamesHtml += gameHtml;
+        });
 
-            container.innerHTML = allGamesHtml;
-        }
+        container.innerHTML = allGamesHtml;
+      }
 
-        // 3. ฟังก์ชันใหม่สำหรับ "ปั๊ม" เมนูวาร์ป (Dropdown)
-        function renderGameJumpList() {
-            const listContainer = document.getElementById("game-jump-list");
-            // ป้องกัน error ถ้าหา <ul> ไม่เจอ
-            if (!listContainer) return;
+      // 3. ฟังก์ชันใหม่สำหรับ "ปั๊ม" เมนูวาร์ป (Dropdown)
+      function renderGameJumpList() {
+        const listContainer = document.getElementById("game-jump-list");
+        if (!listContainer) return;
 
-            let listHtml = "";
-            gameData.forEach(game => {
-                listHtml += `
+        let listHtml = "";
+        gameData.forEach((game) => {
+          listHtml += `
           <li>
             <a class="dropdown-item" href="#game-${game.id}">
               ${game.title}
             </a>
           </li>
         `;
-            });
-            listContainer.innerHTML = listHtml;
-        }
-
-        // 4. สั่งให้ฟังก์ชันทำงาน (อัปเดตแล้ว)
-        document.addEventListener("DOMContentLoaded", () => {
-            renderGameList();
-            renderGameJumpList(); // <-- สั่งให้สร้างเมนูวาร์ปด้วย
         });
-    </script>
-</body>
+        listContainer.innerHTML = listHtml;
+      }
 
+      // 4. สั่งให้ฟังก์ชันทำงาน (อัปเดตแล้ว)
+      document.addEventListener("DOMContentLoaded", () => {
+        renderGameList();
+        renderGameJumpList();
+      });
+    </script>
+  </body>
 </html>
