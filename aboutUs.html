@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - Game Reviews</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&family=Roboto+Slab:wght@900&display=swap"
+      rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      rel="stylesheet"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* --- Variables (ชุดเดียวกับหน้าหลัก) --- */
+      :root {
+        --bs-danger: #6b0000;
+        --main-bg-gradient-start: #6b0000;
+        --main-bg-gradient-end: #000000;
+        --card-bg: #000000;
+        --text-color: #ffffff;
+        --theme-btn-color: #ffffff;
+      }
+
+      [data-theme="light"] {
+        --main-bg-gradient-start: #ffcccc;
+        --main-bg-gradient-end: #ffffff;
+        --card-bg: #ffffff;
+        --text-color: #212529;
+        --theme-btn-color: #000000;
+      }
+
+      body {
+        background: linear-gradient(
+          to top,
+          var(--main-bg-gradient-start),
+          var(--main-bg-gradient-end)
+        );
+        background-attachment: fixed;
+        font-family: "Noto Sans", sans-serif;
+        font-weight: 500;
+        color: var(--text-color);
+        transition: background 0.5s ease, color 0.3s ease;
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      main {
+        flex: 1;
+      } /* ดัน Footer ลงล่าง */
+
+      .theme-bg {
+        background-color: var(--card-bg) !important;
+        border: 1px solid var(--bs-danger);
+        color: var(--text-color);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      footer.theme-bg {
+        border-top: 1px solid var(--bs-danger) !important;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Roboto Slab", serif;
+        font-weight: 900;
+      }
+
+      .offcanvas-custom-gradient {
+        background: linear-gradient(
+          to right,
+          var(--bs-danger),
+          10%,
+          var(--main-bg-gradient-end)
+        );
+      }
+
+      .text-underline-danger {
+        text-decoration: underline;
+        text-decoration-color: var(--bs-danger);
+        text-decoration-thickness: 3px;
+      }
+
+      .offcanvas .nav-link.active {
+        background-color: var(--bs-danger);
+        color: white;
+      }
+
+      .offcanvas .nav-link:hover {
+        background-color: #440606;
+      }
+
+      .main-content-width {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1400px;
+      }
+
+      [data-theme="light"] .text-white-50 {
+        color: #6c757d !important;
+      }
+
+      .theme-toggle-btn {
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: var(--theme-btn-color);
+        transition: color 0.3s ease;
+      }
+      .theme-toggle-btn:hover {
+        color: var(--bs-danger) !important;
+      }
+
+      /* Back to Top */
+      #btn-back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: none;
+        z-index: 1000;
+        background-color: var(--bs-danger);
+        border: 2px solid white;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s;
+      }
+      #btn-back-to-top:hover {
+        background-color: #ff0000;
+        transform: scale(1.1);
+      }
+
+      /* --- CSS เฉพาะสำหรับหน้า About Us --- */
+      .profile-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+      }
+      .profile-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(255, 0, 0, 0.15);
+        border-color: #ff0000;
+      }
+
+      .profile-img-wrapper {
+        /* ขยายขนาดรูปขึ้น (จากเดิม 150px -> 200px) */
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 1.5rem;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 5px solid var(--bs-danger);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s;
+      }
+
+      .profile-card:hover .profile-img-wrapper {
+        transform: scale(1.05); /* ขยายรูปนิดนึงตอนชี้การ์ด */
+      }
+
+      .profile-img-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .role-badge {
+        background-color: var(--bs-danger);
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 1rem;
+        display: inline-block;
+        margin-bottom: 15px;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+
+      .student-id {
+        font-family: monospace;
+        font-size: 1.2rem;
+        color: #aaa;
+      }
+      [data-theme="light"] .student-id {
+        color: #666;
+      }
+    </style>
+  </head>
+
+  <body>
+    <button type="button" id="btn-back-to-top" title="กลับขึ้นบนสุด">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <div
+      class="offcanvas offcanvas-start offcanvas-custom-gradient"
+      id="mySidenav"
+      aria-labelledby="mySidenavLabel"
+      tabindex="-1">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title text-white" id="mySidenavLabel">Menu</h5>
+        <button
+          class="btn-close btn-close-white"
+          data-bs-dismiss="offcanvas"
+          type="button"
+          aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <nav class="nav flex-column">
+          <a class="nav-link px-3 py-2 text-white" href="index.html">
+            <i class="fa fa-fw fa-home"></i> Home
+          </a>
+          <a
+            class="nav-link active px-3 py-2 text-white"
+            href="aboutUs.html"
+            aria-current="page">
+            <i class="fa-solid fa-address-card"></i> About
+          </a>
+          <a class="nav-link px-3 py-2 text-white" href="#">
+            <i class="fa-regular fa-handshake"></i> Services
+          </a>
+          <a class="nav-link px-3 py-2 text-white" href="#">
+            <i class="fa-regular fa-envelope"></i> Contact
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <nav
+      class="navbar navbar-dark bg-dark border-bottom border-danger sticky-top">
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          data-bs-target="#mySidenav"
+          data-bs-toggle="offcanvas"
+          type="button"
+          aria-controls="mySidenav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <span
+          class="navbar-brand ms-3 fw-bold d-none d-sm-block"
+          style="font-family: 'Roboto Slab'; color: var(--bs-danger)"
+          >GAME REVIEWS</span
+        >
+
+        <button
+          class="btn btn-link theme-toggle-btn ms-auto"
+          onclick="toggleTheme()"
+          title="เปลี่ยนธีม">
+          <i class="fa-solid fa-sun" id="themeIcon"></i>
+        </button>
+      </div>
+    </nav>
+
+    <main class="main-content-width mt-5 mb-5">
+      <div class="text-center mb-5">
+        <h1 class="display-4 text-underline-danger">คณะผู้จัดทำ</h1>
+        <p class="fs-5 mt-3 opacity-75">ทีมงานเบื้องหลัง Project เว็บไซต์รีวิวเกม</p>
+      </div>
+
+      <div id="team-grid"></div>
+    </main>
+
+    <footer class="theme-bg pt-5 mt-5">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-7 mb-4">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3873.733038985041!2d100.5830372750921!3d13.855056736547654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29d3b2deb49ff%3A0xd2ed4165c39645cc!2z4Lih4Lir4Liy4Lin4Li04LiX4Lii4Liy4Lil4Lix4Lii4Lio4Lij4Li14Lib4LiX4Li44Lih!5e0!3m2!1sth!2sth!4v1763492973518!5m2!1sth!2sth"
+              width="100%"
+              height="350"
+              style="border: 0"
+              allowfullscreen
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+          <div class="col-lg-5 mb-4">
+            <h2 class="text-underline-danger text-danger">ติดต่อสอบถาม</h2>
+            <p class="fs-4">มหายวิทยาลัยศรีปทุม SPU</p>
+            <hr class="border-danger opacity-50" />
+            <p class="fs-5">
+              <b>โทร : </b>
+              <span class="text-white-50">02 558 6888</span>
+            </p>
+            <p class="fs-5">
+              <b>อีเมล : </b>
+              <span class="text-white-50">admissions@spu.ac.th</span>
+            </p>
+            <p class="fs-5">
+              <b>ที่อยู่ : </b>
+              <span class="text-white-50">
+                มหาวิทยาลัยศรีปทุม 2410/2 ถ.พหลโยธิน เขตจตุจักร กรุงเทพฯ 10900
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="bg-black text-center p-3 text-white-50">
+        © SPU University 2025. All rights reserved.
+      </div>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"></script>
+
+    <script>
+      // 1. ข้อมูลสมาชิก (เรียงตามลำดับ: คนที่ 2 จะอยู่ตรงกลางแถวบน)
+      // ลำดับการแสดงผล: [ซ้ายบน] [กลางบน(PM)] [ขวาบน] [ซ้ายล่าง] [ขวาล่าง]
+      const teamMembers = [
+        {
+          name: "นางสาวสมหญิง จริงใจ",
+          id: "6600000001",
+          role: "Frontend Dev",
+          image: "https://placehold.co/400x400/png?text=Member+1",
+        },
+        {
+          // !!! คนนี้คือ Project Manager จะถูกจัดให้อยู่ตรงกลางแถวบน !!!
+          name: "นายณชาศิลป์ นาเคณฑ์",
+          id: "68040402",
+          role: "Project Manager & Fullstack Dev",
+          image: "https://placehold.co/400x400/png?text=Project+Manager",
+        },
+        {
+          name: "นายมูฮัมหมัด อาลี",
+          id: "6600000002",
+          role: "Backend Dev",
+          image: "https://placehold.co/400x400/png?text=Member+3",
+        },
+        {
+          name: "นางสาวซากุระ ฮารุโนะ",
+          id: "6600000003",
+          role: "UX/UI Designer",
+          image: "https://placehold.co/400x400/png?text=Member+4",
+        },
+        {
+          name: "นายลูฟี่ หมวกฟาง",
+          id: "6600000004",
+          role: "Presenter",
+          image: "https://placehold.co/400x400/png?text=Member+5",
+        },
+      ];
+
+      // 2. ฟังก์ชัน Render Grid (บน 3 / ล่าง 2)
+      function renderTeamGrid() {
+        const container = document.getElementById("team-grid");
+
+        // แยกข้อมูลเป็น 2 ชุด
+        const topRowMembers = teamMembers.slice(0, 3); // 3 คนแรก (PM อยู่ index 1)
+        const bottomRowMembers = teamMembers.slice(3, 5); // 2 คนหลัง
+
+        let html = "";
+
+        // --- แถวบน (3 คน) ---
+        html += '<div class="row g-4 justify-content-center mb-4">';
+        topRowMembers.forEach((member) => {
+          html += createMemberCard(member, "col-lg-4");
+        });
+        html += "</div>";
+
+        // --- แถวล่าง (2 คน) ---
+        html += '<div class="row g-4 justify-content-center">';
+        bottomRowMembers.forEach((member) => {
+          html += createMemberCard(member, "col-lg-4"); // ใช้ col-lg-4 แต่จัดกลางด้วย justify-content-center
+        });
+        html += "</div>";
+
+        container.innerHTML = html;
+      }
+
+      // ฟังก์ชันสร้าง HTML การ์ดแต่ละคน
+      function createMemberCard(member, colSize) {
+        return `
+            <div class="col-md-6 ${colSize}">
+              <div class="theme-bg rounded-3 p-4 text-center profile-card shadow-lg">
+                <div class="profile-img-wrapper">
+                  <img src="${member.image}" alt="${member.name}">
+                </div>
+                <div class="role-badge shadow-sm">${member.role}</div>
+                <h3 class="mb-1 fs-3">${member.name}</h3>
+                <p class="student-id mb-0"><i class="fa-solid fa-id-card me-2"></i>${member.id}</p>
+              </div>
+            </div>
+        `;
+      }
+
+      // 3. ฟังก์ชันเปลี่ยนธีม
+      function toggleTheme() {
+        const body = document.body;
+        const icon = document.getElementById("themeIcon");
+        const isLight = body.getAttribute("data-theme") === "light";
+
+        if (isLight) {
+          body.removeAttribute("data-theme");
+          icon.classList.remove("fa-moon");
+          icon.classList.add("fa-sun");
+          document
+            .querySelector(".navbar")
+            .classList.remove("navbar-light", "bg-light");
+          document
+            .querySelector(".navbar")
+            .classList.add("navbar-dark", "bg-dark");
+        } else {
+          body.setAttribute("data-theme", "light");
+          icon.classList.remove("fa-sun");
+          icon.classList.add("fa-moon");
+          document
+            .querySelector(".navbar")
+            .classList.remove("navbar-dark", "bg-dark");
+          document
+            .querySelector(".navbar")
+            .classList.add("navbar-light", "bg-light");
+        }
+      }
+
+      // 4. Logic ปุ่ม Back to Top
+      let mybutton = document.getElementById("btn-back-to-top");
+      window.onscroll = function () {
+        if (
+          document.body.scrollTop > 200 ||
+          document.documentElement.scrollTop > 200
+        ) {
+          mybutton.style.display = "block";
+        } else {
+          mybutton.style.display = "none";
+        }
+      };
+      mybutton.addEventListener("click", function () {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      });
+
+      // เริ่มทำงาน
+      document.addEventListener("DOMContentLoaded", renderTeamGrid);
+    </script>
+  </body>
+</html>
