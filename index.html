@@ -22,31 +22,57 @@
       referrerpolicy="no-referrer" />
 
     <style>
-      /* 1. Override Bootstrap Variables (ตามธีมสีที่ต้องการ) */
-      :root {
-        --bs-danger: #6b0000;
-        --bs-danger-rgb: 107, 0, 0;
-        --bs-dark: #000000;
-        --bs-dark-rgb: 0, 0, 0;
-        --bs-body-color: #fff;
-        --bs-body-bg: #000;
-        --bs-border-color: var(--bs-danger);
-        --bs-link-color: #fff;
-        --bs-link-hover-color: #d1d1d1;
+      /* เพิ่ม Smooth Scroll ให้เลื่อนนุ่มๆ */
+      html {
+        scroll-behavior: smooth;
       }
 
-      /* 2. Custom Styles (ที่ Bootstrap ไม่มีให้) */
+      /* 1. Default Variables (Dark Mode เป็นค่าเริ่มต้น) */
+      :root {
+        --bs-danger: #6b0000;
+        --main-bg-gradient-start: #6b0000;
+        --main-bg-gradient-end: #000000;
+        --card-bg: #000000;
+        --text-color: #ffffff;
+        --theme-btn-color: #ffffff; 
+        --shop-btn-bg: #ffffff;
+        --shop-btn-text: #000000;
+      }
+
+      /* 2. Light Mode Variables */
+      [data-theme="light"] {
+        --main-bg-gradient-start: #ffcccc;
+        --main-bg-gradient-end: #ffffff;
+        --card-bg: #ffffff;
+        --text-color: #212529;
+        --theme-btn-color: #000000; 
+        --shop-btn-bg: #000000;
+        --shop-btn-text: #ffffff;
+      }
+
+      /* 3. Custom Styles */
       body {
-        background: linear-gradient(to top, var(--bs-danger), var(--bs-dark));
+        background: linear-gradient(to top, var(--main-bg-gradient-start), var(--main-bg-gradient-end));
         background-attachment: fixed;
         font-family: "Noto Sans", sans-serif;
         font-weight: 500;
+        color: var(--text-color);
+        transition: background 0.5s ease, color 0.3s ease;
+        position: relative;
       }
 
-      h1,
-      h2,
-      h3,
-      h4 {
+      .theme-bg {
+        background-color: var(--card-bg) !important;
+        border: 1px solid var(--bs-danger);
+        color: var(--text-color);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      
+      footer.theme-bg {
+        border-top: 1px solid var(--bs-danger) !important;
+      }
+
+      h1, h2, h3, h4 {
         font-family: "Roboto Slab", serif;
         font-weight: 900;
       }
@@ -56,7 +82,7 @@
           to right,
           var(--bs-danger),
           10%,
-          var(--bs-dark)
+          var(--main-bg-gradient-end)
         );
       }
 
@@ -66,31 +92,11 @@
         text-decoration-thickness: 3px;
       }
 
-      .service-icon {
-        font-size: 1.25rem;
-        border: 2px solid var(--bs-danger);
-        border-radius: 10px;
-        padding: 8px 12px;
-        color: white;
-        text-decoration: none;
-        display: inline-block;
-        transition: 0.4s;
-      }
-
-      .service-icon:hover {
-        color: var(--bs-danger);
-        background-color: white;
-      }
-
-      .fa-brands:hover {
-        color: var(--bs-danger);
-        transition: 0.4s;
-      }
-
       .video-wrapper {
         border: 1px solid var(--bs-danger);
         border-radius: 0.5rem;
         overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
       }
 
       .offcanvas .nav-link.active {
@@ -106,18 +112,100 @@
         width: 90%;
         margin-left: auto;
         margin-right: auto;
+        max-width: 1400px;
+      }
+
+      [data-theme="light"] .text-white-50 {
+        color: #6c757d !important;
+      }
+      
+      .theme-toggle-btn {
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: var(--theme-btn-color);
+        transition: color 0.3s ease;
+      }
+      .theme-toggle-btn:hover {
+        color: var(--bs-danger) !important;
+      }
+
+      .btn-custom-shop {
+        background-color: var(--shop-btn-bg);
+        color: var(--shop-btn-text);
+        border: 2px solid var(--bs-danger);
+        font-weight: bold;
+        transition: all 0.3s ease;
+      }
+      
+      .btn-custom-shop:hover {
+        background-color: var(--bs-danger);
+        color: #ffffff;
+        border-color: var(--bs-danger);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      }
+
+      /* Hover Effect */
+      section[id^="game-"] {
+        transition: transform 0.3s ease;
+        padding: 20px;
+        border-radius: 15px;
+      }
+      section[id^="game-"]:hover {
+        background-color: rgba(255, 255, 255, 0.03);
+      }
+
+      /* Back to Top */
+      #btn-back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: none;
+        z-index: 1000;
+        background-color: var(--bs-danger);
+        border: 2px solid white;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 20px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        transition: all 0.3s;
+      }
+      #btn-back-to-top:hover {
+        background-color: #ff0000;
+        transform: scale(1.1);
+      }
+
+      /* CSS สำหรับดาวและ Tags */
+      .star-rating {
+        color: #ffc107;
+        font-size: 1.2rem;
+        margin-right: 10px;
+      }
+      .badge-genre {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--bs-danger);
+        color: var(--text-color);
+        margin-right: 5px;
+        font-weight: normal;
+        font-size: 0.85rem;
       }
     </style>
   </head>
 
-  <body class="text-white">
+  <body>
+    <button type="button" id="btn-back-to-top" title="กลับขึ้นบนสุด">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <div
-      class="offcanvas offcanvas-start text-white offcanvas-custom-gradient"
+      class="offcanvas offcanvas-start offcanvas-custom-gradient"
       id="mySidenav"
       aria-labelledby="mySidenavLabel"
       tabindex="-1">
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="mySidenavLabel">Menu</h5>
+        <h5 class="offcanvas-title text-white" id="mySidenavLabel">Menu</h5>
         <button
           class="btn-close btn-close-white"
           data-bs-dismiss="offcanvas"
@@ -126,24 +214,23 @@
       </div>
       <div class="offcanvas-body">
         <nav class="nav flex-column">
-          <a class="nav-link active px-3 py-2" href="#" aria-current="page">
+          <a class="nav-link active px-3 py-2 text-white" href="#" aria-current="page">
             <i class="fa fa-fw fa-home"></i> Home
           </a>
-          <a class="nav-link px-3 py-2" href="#">
+          <a class="nav-link px-3 py-2 text-white" href="aboutUs.html">
             <i class="fa-solid fa-address-card"></i> About
           </a>
-          <a class="nav-link px-3 py-2" href="#">
+          <!-- <a class="nav-link px-3 py-2 text-white" href="#">
             <i class="fa-regular fa-handshake"></i> Services
-          </a>
-          <a class="nav-link px-3 py-2" href="#">
+          </a> -->
+          <a class="nav-link px-3 py-2 text-white" href="#">
             <i class="fa-regular fa-envelope"></i> Contact
           </a>
         </nav>
       </div>
     </div>
 
-    <nav
-      class="navbar navbar-dark bg-dark border-bottom border-danger sticky-top">
+    <nav class="navbar navbar-dark bg-dark border-bottom border-danger sticky-top">
       <div class="container-fluid">
         <button
           class="navbar-toggler"
@@ -153,11 +240,17 @@
           aria-controls="mySidenav">
           <span class="navbar-toggler-icon"></span>
         </button>
+
+        <span class="navbar-brand ms-3 fw-bold d-none d-sm-block" style="font-family: 'Roboto Slab'; color: var(--bs-danger);">GAME REVIEWS</span>
+
+        <button class="btn btn-link theme-toggle-btn ms-auto" onclick="toggleTheme()" title="เปลี่ยนธีม">
+            <i class="fa-solid fa-sun" id="themeIcon"></i>
+        </button>
       </div>
     </nav>
 
     <main class="main-content-width mt-4">
-        <div class="bg-dark border border-danger rounded-3 p-4 p-md-5 shadow-lg">
+        <div class="theme-bg rounded-3 p-4 p-md-5 shadow-lg">
         <h1 class="display-4 text-center mb-5 text-underline-danger">
           || รีวิวเกมน่าเล่น ||
         </h1>
@@ -175,7 +268,9 @@
             <ul
               class="dropdown-menu dropdown-menu-dark"
               id="game-jump-list"
-              aria-labelledby="gameJumpMenu"></ul>
+              aria-labelledby="gameJumpMenu"
+              style="max-height: 300px; overflow-y: auto;">
+            </ul>
           </div>
         </div>
 
@@ -183,12 +278,12 @@
       </div>
     </main>
 
-    <footer class="bg-dark pt-5 mt-5 border-top border-danger">
+    <footer class="theme-bg pt-5 mt-5">
       <div class="container">
         <div class="row g-4">
           <div class="col-lg-7 mb-4">
             <iframe
-              src="https://www.google.com/maps/embed/v1/place?q=-18.91553548035164,+47.52165064045462&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3873.733038985041!2d100.5830372750921!3d13.855056736547654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29d3b2deb49ff%3A0xd2ed4165c39645cc!2z4Lih4Lir4Liy4Lin4Li04LiX4Lii4Liy4Lil4Lix4Lii4Lio4Lij4Li14Lib4LiX4Li44Lih!5e0!3m2!1sth!2sth!4v1763492973518!5m2!1sth!2sth"
               width="100%"
               height="350"
               style="border: 0"
@@ -198,41 +293,82 @@
           </div>
           <div class="col-lg-5 mb-4">
             <h2 class="text-underline-danger text-danger">ติดต่อสอบถาม</h2>
-            <p class="fs-4">Madagascar</p>
+            <p class="fs-4">มหายวิทยาลัยศรีปทุม SPU</p>
             <hr class="border-danger opacity-50" />
             <p class="fs-5">
               <b>โทร : </b>
-              <span class="text-white-50">062,666,6969 , 098-123-5236</span>
+              <span class="text-white-50">02 558 6888</span>
             </p>
             <p class="fs-5">
               <b>อีเมล : </b>
-              <span class="text-white-50">anonymous@gmail.com</span>
+              <span class="text-white-50">admissions@spu.ac.th</span>
             </p>
             <p class="fs-5">
               <b>ที่อยู่ : </b>
               <span class="text-white-50">
-                666/72 ซอย ตัน อำเภอ เออเร่อ จังหวัด vtwi;t มิดการ์ 72319
+                มหาวิทยาลัยศรีปทุม 2410/2 ถ.พหลโยธิน เขตจตุจักร กรุงเทพฯ 10900
               </span>
             </p>
           </div>
         </div>
       </div>
       <div class="bg-black text-center p-3 text-white-50">
-        © Midgar Academy 2045. All rights reserved.
+        © SPU University 2025. All rights reserved.
       </div>
     </footer>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    <script 
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
       crossorigin="anonymous"></script>
 
+    <script src="main.js"></script> 
+
     <script>
-      // 1. โกดังข้อมูล (Data Storage)
-      // ! อัปเดต: แก้ไข description ให้เป็นข้อความเต็ม
+      // Logic เปลี่ยนธีม
+      function toggleTheme() {
+        const body = document.body;
+        const icon = document.getElementById("themeIcon");
+        const isLight = body.getAttribute("data-theme") === "light";
+        
+        if (isLight) {
+            body.removeAttribute("data-theme");
+            icon.classList.remove("fa-moon");
+            icon.classList.add("fa-sun");
+            document.querySelector(".navbar").classList.remove("navbar-light", "bg-light");
+            document.querySelector(".navbar").classList.add("navbar-dark", "bg-dark");
+        } else {
+            body.setAttribute("data-theme", "light");
+            icon.classList.remove("fa-sun");
+            icon.classList.add("fa-moon");
+            document.querySelector(".navbar").classList.remove("navbar-dark", "bg-dark");
+            document.querySelector(".navbar").classList.add("navbar-light", "bg-light");
+        }
+      }
+
+      // Logic ปุ่ม Back to Top
+      let mybutton = document.getElementById("btn-back-to-top");
+      window.onscroll = function () {
+        scrollFunction();
+      };
+      function scrollFunction() {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+          mybutton.style.display = "block";
+        } else {
+          mybutton.style.display = "none";
+        }
+      }
+      mybutton.addEventListener("click", backToTop);
+      function backToTop() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }
+    </script>
+
+    <script>
+      // ข้อมูลเกม (Game Data) - เพิ่ม Tags และใส่ข้อมูลกลับมาครบถ้วน
       const gameData = [
         {
-          // ฟลุ๊ค
           id: "elden-ring",
           title: "Elden Ring",
           iconUrl: "icon/eldenring.png",
@@ -240,6 +376,7 @@
           description: 
             'Elden Ring คือมหากาพย์ Action RPG จาก FromSoftware (ผู้สร้าง Dark Souls) ที่ยกระดับเกมสไตล์ Souls-like สู่โลก Open World อันกว้างใหญ่ไพศาลที่เรียกว่า "The Lands Between" สวมบทบาท "ผู้มัวหมอง" (Tarnished) ออกผจญภัยได้อย่างอิสระ, ต่อสู้กับเหล่า Demigod สุดท้าทาย, ค้นพบดันเจี้ยนและความลับที่ซ่อนอยู่, และเพลิดเพลินกับการสร้างบิวด์ตัวละครที่หลากหลาย นี่คือเกมที่ผสมผสานการต่อสู้ที่ดุดัน, การสำรวจที่คุ้มค่า, และงานศิลป์ที่งดงามไว้ได้อย่างลงตัว',
           score: "9.5/10",
+          tags: ["Action RPG", "Open World", "Souls-like", "Dark Fantasy"],
           pros: [
             'โลก Open World ที่น่าทึ่งและเต็มไปด้วยความลับ',
             'การต่อสู้ที่ท้าทาย ลึกซึ้ง และคุ้มค่า',
@@ -262,6 +399,7 @@
           description:
             'Monster Hunter: World คือเกม Action RPG ที่พาคุณสู่ "New World" โลกใหม่ที่เต็มไปด้วยมอนสเตอร์ยักษ์สุดอลังการ สวมบทบาทเป็น "Hunter" ออกสำรวจ, ติดตามร่องรอย, และล้มอสูรร้ายในระบบนิเวศที่มีชีวิตชีวา จุดเด่นคือเกมเพลย์การต่อสู้ที่ท้าทายและต้องอาศัยกลยุทธ์, อาวุธ 14 ประเภทที่มีสไตล์การเล่นต่างกันสุดขั้ว, และลูปการเล่นที่สนุกจนติดหนึบ: "ล่ามอนสเตอร์" เพื่อนำชิ้นส่วนมา "สร้างอาวุธและชุดเกราะ" ที่แกร่งขึ้น เพื่อออกไป "ล่าตัวที่โหดกว่าเดิม"',
           score: "9/10",
+          tags: ["Action RPG", "Co-op", "Hunting", "Open World"],
           pros: [
             'การต่อสู้กับมอนสเตอร์ที่ยิ่งใหญ่และท้าทาย',
             'อาวุธ 14 ชนิด สไตล์การเล่นหลากหลาย',
@@ -284,6 +422,7 @@
           description:
             '"นี่คือเรื่องราวการตายของคุณ" — Project Zomboid คือเกมเอาชีวิตรอดจากซอมบี้แบบ Sandbox ที่เน้นความสมจริงขั้นสุด (Hardcore Survival) ในมุมมอง Isometric คุณต้องต่อสู้กับความหิว, ความเหนื่อยล้า, อาการบาดเจ็บ, สภาพจิตใจ และฝูงซอมบี้ที่ไร้ทางสู้ ทุกการกระทำมีความหมาย ตั้งแต่การหาอาหารกระป๋อง (ที่ต้องมีที่เปิด), การต้มน้ำ, ไปจนถึงการรักษาบาดแผลที่อาจติดเชื้อได้ตลอดเวลา ในโลกที่กว้างใหญ่และไร้ความปรานีแห่งนี้ เป้าหมายไม่ใช่การ "ชนะ" แต่คือการ "ยื้อความตาย" ออกไปให้ได้นานที่สุด',
           score: "8.5/10",
+          tags: ["Survival", "Sandbox", "Zombie", "Simulation"],
           pros: [
             'ระบบ Survival ที่สมจริงและลึกที่สุดเกมหนึ่ง',
             'แผนที่ขนาดใหญ่มากและมีรายละเอียดสูง',
@@ -307,6 +446,7 @@
           description:
           '7 Days to Die คือสุดยอดเกม Survival Horror แบบ Sandbox ที่ผสมผสานแนวเกมยิง (FPS), RPG, และ Tower Defense เข้าไว้ด้วยกันอย่างลงตัว คุณต้องเอาชีวิตรอดในโลกหลังการล่มสลายที่เต็มไปด้วยซอมบี้ โดยมีเวลา 7 วันในการสำรวจ, ฟาร์มของ, คราฟต์ไอเทม, และสร้างฐานที่มั่นสุดแกร่ง เพื่อเตรียมรับมือกับ "Blood Moon Horde" ฝูงซอมบี้สุดโหดที่จะบุกโจมตีคุณอย่างบ้าคลั่งในคืนวันที่เจ็ด',
           score: "8/10",
+          tags: ["Survival Horror", "Voxel", "FPS", "Tower Defense"],
           pros: [
             "การสร้างฐานและป้องกันฐาน (Tower Defense) สนุกมาก",
             "ระบบคราฟต์และสกิลมีความลึกและหลากหลาย",
@@ -324,6 +464,7 @@
           description:
             'Broforce คือเกมแอ็กชัน 2D-Platformer แบบ "Run n Gun" สุดมันส์ ที่อัดแน่นไปด้วยความฮาและฉากระเบิดภูเขาเผากระท่อม สวมบทบาทเป็นเหล่า "Bro" (ที่ล้อเลียนตัวละครแอ็กชันในตำนานยุค 80-90s) ออกไปต่อสู้กับเหล่าร้ายเพื่อกอบกู้เสรีภาพ จุดเด่นคือสภาพแวดล้อมที่ "พัง" ได้เกือบทั้งหมด, ความโกลาหลแบบ Co-op 4 คน, และการที่คุณจะได้ตัวละครใหม่แบบสุ่มทุกครั้งที่ช่วยตัวประกัน ทำให้เกมเพลย์สดใหม่และคาดเดาไม่ได้ตลอดเวลา',
           score: "9/10",
+          tags: ["Action", "2D Platformer", "Co-op", "Destructible"],
           pros: [
             "แอ็กชันระเบิดเถิดเทิง สนุกสะใจ",
             'ตัวละคร "Bro" ให้เล่นเยอะมาก (ล้อเลียนหนังดัง)',
@@ -337,8 +478,6 @@
           ],
           steamUrl: "https://store.steampowered.com/app/274190/Broforce/",
         },
-
-        // ก้อง
         {
           id: "warframe",
           title: "Warframe",
@@ -346,6 +485,7 @@
           youtubeId: "C3MnugBJc6g",
           description: 'ดำดิ่งสู่ Warframe สุดยอดเกม Action RPG นินจาอวกาศแบบ Free-to-Play ที่โดดเด่นด้วยการต่อสู้สุดรวดเร็วสไตล์ Parkour สวมใส่ชุดเกราะ "Warframe" ที่มีให้เลือกกว่า 50 แบบ พร้อมพลังพิเศษเฉพาะตัว ออกฟาร์มทรัพยากร, สร้างอาวุธ, และปรับแต่งตัวละครของคุณได้อย่างไร้ขีดจำกัดในจักรวาล Sci-fi ที่กว้างใหญ่และมีเนื้อหาอัปเดตต่อเนื่อง นี่คือเกมยิงมุมมองบุคคลที่สาม (TPS) ที่ผสมผสานการต่อสู้ระยะประชิด, การยิงปืน, และสกิลเข้ากันได้อย่างลงตัว',
           score: "x/10",
+          tags: ["Action RPG", "Looter Shooter", "Sci-fi", "Free to Play"],
           pros: [
             "เกมเพลย์ต่อสู้เร็วและลื่นไหล",
             "ระบบปรับแต่งตัวละครลึกมาก",
@@ -365,6 +505,7 @@
           youtubeId: 'VY30CeEz3hg',
           description: 'R.E.P.O. คือเกมอินดี้สยองขวัญมุมมองบุคคลที่หนึ่ง ที่จะพาคุณไปสัมผัสประสบการณ์การเป็น "พนักงานยึดทรัพย์" ของบริษัทสุดลึกลับ ภารกิจของคุณคือการบุกเข้าไปในสถานที่อันตรายและบ้านร้างต่าง ๆ เพื่อ "ยึด" ไอเทมตามใบสั่งภายใต้ความมืดมิด โดยต้องเผชิญหน้ากับบรรยากาศที่กดดัน, เสียงปริศนา, และ "สิ่งนั้น" ที่ไม่อยากให้คุณได้ของกลับไปง่ายๆ นี่คือเกมที่เน้นการเดินสำรวจ (Walking Sim), การซ่อนเร้น (Stealth) และ Jumpscare ที่มาในสไตล์กราฟิกแบบ Low-fi หรือ VHS สุดหลอน',
           score: 'x/10',
+          tags: ["Horror", "Co-op", "First-Person", "Psychological"],
           pros: [
             'บรรยากาศกดดันและหลอนมาก',
             'คอนเซปต์ "พนักงานยึดของผี" แปลกใหม่',
@@ -386,6 +527,7 @@
           youtubeId: 'VLfc_9p7wNk',
           description: 'Sifu คือเกมแอ็กชันสไตล์ Beat \'em up ที่เน้นการต่อสู้ระยะประชิดด้วยศิลปะการป้องกันตัวแบบกังฟู (Kung Fu) คุณจะสวมบทบาทเป็นนักเรียนกังฟูที่ต้องออกตามล่าฆาตกรที่ฆ่าครอบครัวของเขา จุดเด่นของเกมคือระบบ "การแก้แค้น" ที่ไม่เหมือนใคร: ทุกครั้งที่คุณตาย ตัวละครจะมีอายุเพิ่มขึ้น ทำให้พลังชีวิตลดลง แต่ทักษะการต่อสู้จะพัฒนาขึ้น นี่คือเกมที่ผสมผสานการต่อสู้ที่ลื่นไหล, การวางแผนกลยุทธ์, และการเรียนรู้จากความผิดพลาดได้อย่างลงตัว',
           score: 'x/10',
+          tags: ["Action", "Beat 'em up", "Martial Arts", "Difficult"],
           pros: [
             'ระบบการต่อสู้ที่ลื่นไหลและมีความลึก',
             'คอนเซปต์ "การแก้แค้น" ที่ไม่เหมือนใคร',
@@ -407,6 +549,7 @@
           youtubeId: 'FUpQiUw922E',
           description: 'Phantasy Star Online 2: New Genesis (PSO2: NGS) คือการรีบูตครั้งใหญ่ของซีรีส์ MMORPG สุดคลาสสิก "Phantasy Star Online" ที่พาคุณสู่โลกอนาคตอันกว้างใหญ่ไพศาลบนดาว Halpha สัมผัสประสบการณ์การผจญภัยแบบ Open World, ระบบการต่อสู้ที่รวดเร็วและลื่นไหล, และกราฟิก Unreal Engine 4 ที่งดงาม นอกจากนี้ยังมีระบบสร้างตัวละครที่ลึกซึ้ง, ภารกิจและกิจกรรมหลากหลาย, และการเล่น Co-op กับเพื่อน ๆ เพื่อเผชิญหน้ากับศัตรูและบอสยักษ์ในจักรวาล Sci-fi ที่เต็มไปด้วยความลับ',
           score: 'x/10',
+          tags: ["MMORPG", "Open World", "Anime", "Sci-fi"],
           pros: [
             'โลก Open World ที่กว้างใหญ่และสวยงาม',
             'ระบบการต่อสู้ที่รวดเร็วและลื่นไหล',
@@ -421,8 +564,6 @@
           ],
           steamUrl: 'https://store.steampowered.com/app/1056640/Phantasy_Star_Online_2_New_Genesis/',
         },
-
-        // พุธ
         {
           id: 'dragon-ball-sparkling-zero',
           title: 'DRAGON BALL Sparking! ZERO',
@@ -430,6 +571,7 @@
           youtubeId: 'bvO39RbaAtQ',
           description: 'การกลับมาของตำนานเกมต่อสู้ 3D Arena Fighter ในรอบ 17 ปี! DRAGON BALL: Sparking! ZERO คือการสานต่อจิตวิญญาณของซีรีส์ "Budokai Tenkaichi" อย่างแท้จริง ขนทัพตัวละครมาแบบจุใจที่สุดในประวัติศาสตร์เกมดราก้อนบอล (มากกว่า 180 ตัว) ให้คุณระเบิดพลังต่อสู้กันอย่างสะใจในสมรภูมิที่พังพินาศได้ กราฟิก Unreal Engine 5 ทำให้ท่าไม้ตายและการแปลงร่างอลังการสมจริงเหมือนหลุดออกมาจากอนิเมะ ถือเป็นเกมที่แฟนๆ สายต่อสู้แบบมันส์สะใจห้ามพลาด',
           score: '9.0/10',
+          tags: ["Fighting", "Anime", "Action", "3D Fighter"],
           pros: [
             'จำนวนตัวละครเยอะที่สุดในประวัติศาสตร์เกม DB',
             'กราฟิกและเอฟเฟกต์ (Unreal 5) สวยงามอลังการ',
@@ -445,33 +587,13 @@
           steamUrl: 'https://store.steampowered.com/app/1790600/DRAGON_BALL_Sparking_ZERO/',
         },
         {
-          id: 'undisputed',
-          title: 'Undisputed',
-          iconUrl: 'icon/undisputed.png',
-          youtubeId: 'yTBysW1jBJ8',
-          description: 'Undisputed คือเกมจำลองกีฬาชกมวย (Boxing Sim) ที่เน้นความสมจริงและสมจริงที่สุดในรอบทศวรรษ (นับตั้งแต่ซีรีส์ Fight Night หายไป) พัฒนาโดย Steel City Interactive เกมนี้โดดเด่นด้วยระบบฟุตเวิร์กที่ลื่นไหล, ระบบการออกหมัดมากกว่า 60 รูปแบบ, และการป้องกันที่ต้องใช้ไหวพริบ คุณจะได้สวมบทบาทเป็นนักมวยในตำนานและนักมวยดังในปัจจุบันกว่า 70+ คน หรือสร้างนักมวยของคุณเองไต่เต้าในโหมด Career เพื่อก้าวสู่การเป็นแชมป์โลกผู้ไร้ข้อโต้แย้ง',
-          score: '9.0/10',
-          pros: [
-            'กราฟิกและการเคลื่อนไหวสมจริงมาก',
-            'ระบบการต่อสู้ (ฟุตเวิร์ก, การออกหมัด) มีความลึก',
-            'มีนักมวยลิขสิทธิ์จริงให้เลือกเล่นเยอะ',
-            'เป็นเกมมวยที่แฟนๆ รอคอยมานาน',
-          ],
-          cons: [
-            'โหมด Career ถูกวิจารณ์ว่ายังขาดความลึก (เน้นเมนู)',
-            'ระบบฟิสิกส์และการตรวจจับการปะทะ (Hit detection) ยังมีปัญหาบ้าง',
-            'การควบคุมซับซ้อนและต้องใช้เวลาเรียนรู้สูง',
-            'เซิร์ฟเวอร์ออนไลน์ยังไม่เสถียร (มีอาการแลค)',
-          ],
-          steamUrl: 'https://store.steampowered.com/app/1451190/Undisputed/',
-        },
-        {
           id: 'mecha-break',
           title: 'Mecha BREAK',
           iconUrl: 'icon/mechabreak.png',
           youtubeId: '3M7QOaVYMNE',
           description: 'Mecha Break คือเกมต่อสู้หุ่นยนต์ (Mech) แบบมัลติเพลเยอร์ความเร็วสูง ที่เน้นการต่อสู้สุดดุเดือดทั้งบนบกและกลางอากาศ สวมบทบาทเป็นนักบิน, เลือกหุ่นรบ (Mecha) ที่มีสไตล์การต่อสู้เฉพาะตัว, และปรับแต่งอาวุธได้อย่างอิสระ เกมชูจุดเด่นด้วยกราฟิก Unreal Engine 5 สุดอลังการ และโหมดการเล่นที่หลากหลาย ตั้งแต่ 3v3, 6v6, ไปจนถึงโหมด "Battle Royale" แบบ PvEvP ขนาด 60 คน ที่คุณต้องต่อสู้และเอาชีวิตรอด',
           score: '9.0/10',
+          tags: ["Action", "Mecha", "Multiplayer", "PvP"],
           pros: [
             'เกมเพลย์ต่อสู้ความเร็วสูง (แบบ Gundam/Armored Core)',
             'กราฟิก (UE5) และการออกแบบหุ่นยนต์สวยงามมาก',
@@ -493,6 +615,7 @@
           youtubeId: 'rx6UpnPU0Eo',
           description: 'ACE COMBAT 7: SKIES UNKNOWN คือการกลับมาอย่างยิ่งใหญ่ของราชาเกมขับเครื่องบินรบสไตล์อาร์เคด (Arcade Flight Combat) ที่พาคุณทะยานสู่ท้องฟ้าในโลก "Strangereal" สวมบทบาทนักบิน "Trigger" สัมผัสประสบการณ์การต่อสู้ทางอากาศ (Dogfight) ความเร็วสูง, ภารกิจทำลายล้าง, และการปะทะกับสุดยอดอาวุธยักษ์ (Superweapons) เกมโดดเด่นด้วยกราฟิก Unreal Engine 4 ที่งดงาม, เพลงประกอบสุดอลังการ, และระบบสภาพอากาศ (เช่น ก้อนเมฆหรือพายุสายฟ้า) ที่ส่งผลต่อการเล่นจริง นี่คือการผสมผสานที่ลงตัวระหว่างเกมเพลย์ที่เข้าถึงง่าย, มันส์สะใจ, และเนื้อเรื่องสุดดราม่าสไตล์อนิเมะการทหาร',
           score: '9.0/10',
+          tags: ["Flight Action", "Arcade", "Jet", "Story Rich"],
           pros: [
             'กราฟิก (UE4) และทิวทัศน์สวยงามอลังการ',
             'เกมเพลย์ขับเครื่องบินที่มันส์สะใจและเข้าถึงง่าย',
@@ -515,6 +638,7 @@
           youtubeId: 'bG844SBTS5s',
           description: 'Need for Speed Heat พาคุณซิ่งสู่ Palm City เมืองสไตล์ไมอามี่ที่การแข่งขันแบ่งเป็นสองขั้วชัดเจน: "กลางวัน" แข่งขันอย่างถูกกฎหมายในอีเวนต์ Speedhunters Showdown เพื่อเก็บเงินแต่งรถ และ "กลางคืน" ที่คุณต้องซิ่งหนีตายจากการไล่ล่าของตำรวจสุดโหดเพื่อสร้างชื่อเสียง (REP) เกมนี้คือการกลับมาของรากเหง้า NFS ที่เน้นการแต่งรถ "JDM" และ "Tuner" ที่ลึกและหลากหลาย ผสมผสานกับการไล่ล่าของตำรวจที่ดุเดือดและท้าทาย',
           score: 'x/10',
+          tags: ["Racing", "Open World", "Street Racing", "Tuner"],
           pros: [
             'ระบบแต่งรถ (Customization) ดีที่สุดในรอบหลายภาค',
             'บรรยากาศ "กลางวัน vs กลางคืน" ที่แตกต่างชัดเจน',
@@ -528,71 +652,71 @@
             'แผนที่อาจจะรู้สึกซ้ำซากเล็กน้อยเมื่อเล่นไปนานๆ',
           ],
           steamUrl: 'https://store.steampowered.com/app/1222680/Need_for_Speed_Heat/',
-        },
-
-        // ซุ๊
-        {
-          id: 'sotf',
-          title: 'Sons Of The Forest',
-          iconUrl: 'icon/sotf.png',
-          youtubeId: 'ICC1BnctYWE',
-          description: 'Sons of the Forest คือภาคต่อของเกม Survival Horror ชื่อดัง "The Forest" ที่ยกระดับทุกอย่างขึ้นไปอีกขั้น คุณถูกส่งมายังเกาะร้างสุดลึกลับเพื่อตามหาเศรษฐีที่หายตัวไป แต่กลับต้องเผชิญหน้ากับเหล่ามนุษย์กินคนและอสุรกายสุดสยอง เกมนี้ชูจุดเด่นด้านกราฟิกที่สมจริง, ระบบ AI ของเพื่อนร่วมทีม (Kelvin และ Virginia) ที่คอยช่วยงาน, และระบบการสร้างฐานแบบใหม่ที่อิสระและละเอียดกว่าเดิม คุณต้องออกสำรวจ, คราฟต์ของ, สร้างที่พัก, และเอาชีวิตรอดจากภัยคุกคามในป่าสุดโหดแห่งนี้',
-          score: 'x/10',
-          pros: [
-            'กราฟิกและบรรยากาศสวยงาม สมจริงมาก',
-            'ระบบ AI เพื่อนร่วมทีม (Kelvin) ที่มีประโยชน์',
-            'ระบบการสร้างฐานแบบใหม่ (Free-form) ทำได้ละเอียด',
-            'การสำรวจถ้ำและเนื้อเรื่องลึกลับน่าติดตาม',
-          ],
-          cons: [
-            'เนื้อเรื่องยังค่อนข้างสั้น (ในช่วง Early Access)',
-            'ประสิทธิภาพเกม (Performance) ยังไม่นิ่ง',
-            'ศัตรู AI บางครั้งอาจจะยังดูแปลกๆ',
-            'ต้องการสเปกคอมพิวเตอร์ค่อนข้างสูง',
-          ],
-          steamUrl: 'https://store.steampowered.com/app/1326470/Sons_Of_The_Forest/',
-        },
-
-
-        // --- (เพิ่มเกมที่ 6-15 ของคุณที่นี่) ---
-        // {
-        //   id: "ชือเกม-แบบ-id",
-        //   title: "ชือเกม",
-        //   iconUrl: "icon/ชือไฟล์.png",
-        //   youtubeId: "รหัสวิดีโอ",
-        //   description: "คำอธิบายเกม...",
-        //   score: "คะแนน/10",
-        //   pros: ["ข้อดี 1", "ข้อดี 2"],
-        //   cons: ["ข้อเสีย 1"]
-        //   steamUrl: "ลิงก์ Steam ของเกมใหม่"
-        // },
+        }
       ];
-      // 2. ฟังก์ชันสำหรับ "ปั๊ม" HTML 
-      function renderGameList() {
+
+      // ฟังก์ชันแปลงคะแนนเป็น HTML ดาว ⭐
+      function getStarHtml(scoreStr) {
+        if (!scoreStr || scoreStr.includes("x")) return ""; 
+        const score = parseFloat(scoreStr); 
+        const maxScore = 10;
+        let starsHtml = '<span class="star-rating">';
+        const starCount = score / 2; 
+        for (let i = 1; i <= 5; i++) {
+            if (starCount >= i) {
+                starsHtml += '<i class="fa-solid fa-star"></i>'; 
+            } else if (starCount >= i - 0.5) {
+                starsHtml += '<i class="fa-solid fa-star-half-stroke"></i>'; 
+            } else {
+                starsHtml += '<i class="fa-regular fa-star"></i>'; 
+            }
+        }
+        starsHtml += '</span>';
+        return starsHtml;
+      }
+
+      // ฟังก์ชันสร้างป้าย Tags
+      function getTagsHtml(tags) {
+          if(!tags) return "";
+          return tags.map(tag => `<span class="badge rounded-pill badge-genre">${tag}</span>`).join("");
+      }
+
+      function renderGameList(filterText = "") {
         const container = document.getElementById("game-list-container");
         let allGamesHtml = "";
+        let hasGame = false;
 
         gameData.forEach((game, index) => {
+          const searchText = filterText.toLowerCase();
+          const matchTitle = game.title.toLowerCase().includes(searchText);
+          const matchTags = game.tags ? game.tags.some(tag => tag.toLowerCase().includes(searchText)) : false;
+
+          if (filterText !== "" && !matchTitle && !matchTags) return;
+
+          hasGame = true;
           const isVideoLeft = index % 2 === 0;
           const videoColOrder = isVideoLeft ? "" : "order-lg-2";
           const textColOrder = isVideoLeft ? "" : "order-lg-1";
 
-          if (index > 0) {
+          if (allGamesHtml !== "") {
             allGamesHtml += `<hr class="border-danger border-2 opacity-50 my-5" />`;
           }
 
           let shopButtonHtml = "";
           if (game.steamUrl && game.steamUrl.trim() !== "") {
             shopButtonHtml = `
-            <a class="service-icon" 
-              href="${game.steamUrl}" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              title="ซื้อเกมนี้">
-                <i class="fa-solid fa-shop"></i>
+            <a class="btn btn-lg btn-custom-shop" 
+               href="${game.steamUrl}" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               title="สั่งซื้อเกมนี้บน Steam">
+               <i class="fa-solid fa-shop"></i>
+               <span class="d-none d-md-inline ms-2">สั่งซื้อเกมนี้</span>
             </a>
           `;
           }
+          
+          const iconHtml = game.iconUrl ? `<img src="${game.iconUrl}" alt="${game.title} icon" width="78" onerror="this.style.display='none'"/>` : '';
 
           const gameHtml = `
           <section id="game-${
@@ -602,6 +726,7 @@
               <div class="ratio ratio-16x9 video-wrapper">
                 <iframe
                   src="https://www.youtube.com/embed/${game.youtubeId}"
+                  loading="lazy"
                   title="YouTube video player"
                   frameborder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -611,30 +736,36 @@
             <div class="col-lg-6 ${textColOrder}">
               <h2 class="display-6 text-center">
                 ${game.title}
-                <img src="${game.iconUrl}" alt="${
-            game.title
-          } icon" width="78" />
+                ${iconHtml}
               </h2>
+              
+              <div class="text-center mb-3">
+                 ${getTagsHtml(game.tags)}
+              </div>
+
               <p class="fs-5">${game.description}</p>
               
               <div class="row mb-3">
                 <div class="col-md-6">
-                  <h5 class="text-success">จุดเด่น (Pros)</h5>
+                  <h5 class="text-success"><i class="fa-solid fa-circle-check"></i> จุดเด่น (Pros)</h5>
                   <ul class="fs-6">
                     ${game.pros.map((pro) => `<li>${pro}</li>`).join("")}
                   </ul>
                 </div>
                 <div class="col-md-6">
-                  <h5 class="text-warning">จุดด้อย (Cons)</h5>
+                  <h5 class="text-warning"><i class="fa-solid fa-circle-exclamation"></i> จุดด้อย (Cons)</h5>
                   <ul class="fs-6">
                     ${game.cons.map((con) => `<li>${con}</li>`).join("")}
                   </ul>
                 </div>
               </div>
-              <h4 class="text-danger mb-3">คะแนน: ${game.score}</h4>
-              
-              ${shopButtonHtml} 
-
+              <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                 <div class="d-flex align-items-center">
+                    ${getStarHtml(game.score)}
+                    <h4 class="text-danger mb-0 fw-bold">คะแนน: ${game.score}</h4>
+                 </div>
+                 ${shopButtonHtml} 
+              </div>
             </div>
           </section>
         `;
@@ -642,10 +773,13 @@
           allGamesHtml += gameHtml;
         });
 
-        container.innerHTML = allGamesHtml;
+        if (!hasGame) {
+            container.innerHTML = `<div class="text-center py-5"><h3>ไม่พบเกมที่คุณค้นหา... 😅</h3></div>`;
+        } else {
+            container.innerHTML = allGamesHtml;
+        }
       }
 
-      // 3. ฟังก์ชันใหม่สำหรับ "ปั๊ม" เมนูวาร์ป (Dropdown)
       function renderGameJumpList() {
         const listContainer = document.getElementById("game-jump-list");
         if (!listContainer) return;
@@ -662,8 +796,7 @@
         });
         listContainer.innerHTML = listHtml;
       }
-
-      // 4. สั่งให้ฟังก์ชันทำงาน
+      
       document.addEventListener("DOMContentLoaded", () => {
         renderGameList();
         renderGameJumpList();
