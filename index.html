@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Game Reviews</title>
+    <title>Game Reviews & About Us</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&family=Roboto+Slab:wght@900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&family=Prompt&family=Roboto+Slab:wght@900&family=Sarabun&display=swap"
       rel="stylesheet" />
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -20,59 +20,76 @@
       integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer" />
+      <meta name="description" content="รีวิวเกมดัง Elden Ring, Monster Hunter, Warframe ฯลฯ แบบอ่านง่าย ภาษาไทย">
+      <meta property="og:title" content="Game Reviews TH">
+      <meta property="og:description" content="รวมรีวิวเกมภาษาไทย พร้อมลิงก์ซื้อบน Steam">
+      <meta property="og:type" content="website">
+      <meta property="og:image" content="icon/preview.png">
 
     <style>
-      /* เพิ่ม Smooth Scroll ให้เลื่อนนุ่มๆ */
+      /* --- Global Styles --- */
       html {
         scroll-behavior: smooth;
       }
 
-      /* 1. Default Variables (Dark Mode เป็นค่าเริ่มต้น) */
       :root {
         --bs-danger: #6b0000;
         --main-bg-gradient-start: #6b0000;
         --main-bg-gradient-end: #000000;
         --card-bg: #000000;
         --text-color: #ffffff;
-        --theme-btn-color: #ffffff; 
+        --theme-btn-color: #ffffff;
         --shop-btn-bg: #ffffff;
         --shop-btn-text: #000000;
       }
 
-      /* 2. Light Mode Variables */
       [data-theme="light"] {
         --main-bg-gradient-start: #ffcccc;
         --main-bg-gradient-end: #ffffff;
         --card-bg: #ffffff;
         --text-color: #212529;
-        --theme-btn-color: #000000; 
+        --theme-btn-color: #000000;
         --shop-btn-bg: #000000;
         --shop-btn-text: #ffffff;
       }
 
-      /* 3. Custom Styles */
       body {
-        background: linear-gradient(to top, var(--main-bg-gradient-start), var(--main-bg-gradient-end));
+        background: linear-gradient(
+          to top,
+          var(--main-bg-gradient-start),
+          var(--main-bg-gradient-end)
+        );
         background-attachment: fixed;
-        font-family: "Noto Sans", sans-serif;
-        font-weight: 500;
+        font-family: "Prompt", "Noto Sans", sans-serif; /* รวม Font */
+        font-weight: 400;
         color: var(--text-color);
         transition: background 0.5s ease, color 0.3s ease;
         position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
       }
 
+      main {
+        flex: 1;
+      } /* ดัน Footer ลงล่าง */
+
+      /* --- Common Components --- */
       .theme-bg {
         background-color: var(--card-bg) !important;
         border: 1px solid var(--bs-danger);
         color: var(--text-color);
         transition: background-color 0.3s ease, color 0.3s ease;
       }
-      
+
       footer.theme-bg {
         border-top: 1px solid var(--bs-danger) !important;
       }
 
-      h1, h2, h3, h4 {
+      h1,
+      h2,
+      h3,
+      h4 {
         font-family: "Roboto Slab", serif;
         font-weight: 900;
       }
@@ -86,26 +103,17 @@
         );
       }
 
+      .offcanvas {
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+      }
+      .offcanvas-backdrop {
+        transition: opacity 0.4s ease-in-out !important;
+      }
+
       .text-underline-danger {
         text-decoration: underline;
         text-decoration-color: var(--bs-danger);
         text-decoration-thickness: 3px;
-      }
-
-      .video-wrapper {
-        border: 1px solid var(--bs-danger);
-        border-radius: 0.5rem;
-        overflow: hidden;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-      }
-
-      .offcanvas .nav-link.active {
-        background-color: var(--bs-danger);
-        color: white;
-      }
-
-      .offcanvas .nav-link:hover {
-        background-color: #440606;
       }
 
       .main-content-width {
@@ -115,10 +123,71 @@
         max-width: 1400px;
       }
 
-      [data-theme="light"] .text-white-50 {
-        color: #6c757d !important;
+      /* --- Navbar Active State --- */
+      .nav-link.active-custom {
+        background-color: var(--bs-danger);
+        color: white !important;
+        border-radius: 5px;
       }
-      
+      .offcanvas .nav-link:hover {
+        background-color: #440606;
+        color: white;
+      }
+
+      /* Navbar links color per theme */
+      nav.navbar .nav-link {
+        transition: color 0.2s ease, background-color 0.2s ease;
+      }
+
+      /* default (dark) navbar: ใช้ตัวอักษรสีขาวตามเดิม */
+      body:not([data-theme="light"]) nav.navbar .nav-link {
+        color: #ffffff;
+      }
+
+      /* light theme: ให้ลิงก์เป็นสีดำ/เทาเข้ม ยกเว้นปุ่มที่ active */
+      body[data-theme="light"] nav.navbar .nav-link:not(.active-custom) {
+        color: #212529 !important;
+      }
+
+      body[data-theme="light"] nav.navbar .nav-link:not(.active-custom):hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+
+      /* --- Footer Social Icons --- */
+      .social-link {
+        color: rgba(255, 255, 255, 0.65);
+        transition: color 0.2s ease, transform 0.2s ease;
+      }
+
+      [data-theme="light"] .social-link {
+        color: rgba(0, 0, 0, 0.6);
+      }
+
+      .social-link:hover {
+        transform: translateY(-2px);
+      }
+
+      .social-line:hover {
+        color: #00c300;
+      }
+
+      .social-instagram:hover {
+        color: #e4405f;
+      }
+
+      .social-facebook:hover {
+        color: #1778f2;
+      }
+
+      .social-youtube:hover {
+        color: #ff0000;
+      }
+
+      .social-tiktok:hover {
+        color: #25f4ee;
+      }
+
+      /* --- Buttons & Toggles --- */
       .theme-toggle-btn {
         cursor: pointer;
         font-size: 1.5rem;
@@ -129,33 +198,6 @@
         color: var(--bs-danger) !important;
       }
 
-      .btn-custom-shop {
-        background-color: var(--shop-btn-bg);
-        color: var(--shop-btn-text);
-        border: 2px solid var(--bs-danger);
-        font-weight: bold;
-        transition: all 0.3s ease;
-      }
-      
-      .btn-custom-shop:hover {
-        background-color: var(--bs-danger);
-        color: #ffffff;
-        border-color: var(--bs-danger);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      }
-
-      /* Hover Effect */
-      section[id^="game-"] {
-        transition: transform 0.3s ease;
-        padding: 20px;
-        border-radius: 15px;
-      }
-      section[id^="game-"]:hover {
-        background-color: rgba(255, 255, 255, 0.03);
-      }
-
-      /* Back to Top */
       #btn-back-to-top {
         position: fixed;
         bottom: 20px;
@@ -169,7 +211,7 @@
         height: 50px;
         border-radius: 50%;
         font-size: 20px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         transition: all 0.3s;
       }
       #btn-back-to-top:hover {
@@ -177,7 +219,35 @@
         transform: scale(1.1);
       }
 
-      /* CSS สำหรับดาวและ Tags */
+      /* --- Home Section Styles --- */
+      .video-wrapper {
+        border: 1px solid var(--bs-danger);
+        border-radius: 0.5rem;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      }
+      .btn-custom-shop {
+        background-color: var(--shop-btn-bg);
+        color: var(--shop-btn-text);
+        border: 2px solid var(--bs-danger);
+        font-weight: bold;
+        transition: all 0.3s ease;
+      }
+      .btn-custom-shop:hover {
+        background-color: var(--bs-danger);
+        color: #ffffff;
+        border-color: var(--bs-danger);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      section[id^="game-"] {
+        transition: transform 0.3s ease;
+        padding: 20px;
+        border-radius: 15px;
+      }
+      section[id^="game-"]:hover {
+        background-color: rgba(255, 255, 255, 0.03);
+      }
       .star-rating {
         color: #ffc107;
         font-size: 1.2rem;
@@ -191,19 +261,380 @@
         font-weight: normal;
         font-size: 0.85rem;
       }
+
+      /* --- Filter Controls (Search & Tag Dropdown) --- */
+      #game-search-input,
+      #game-tag-filter {
+        background-color: var(--card-bg);
+        color: var(--text-color);
+        border: 1px solid var(--bs-danger);
+      }
+
+      #game-search-input::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      [data-theme="light"] #game-search-input::placeholder {
+        color: rgba(0, 0, 0, 0.5);
+      }
+
+      #game-search-input:focus,
+      #game-tag-filter:focus {
+        border-color: var(--bs-danger);
+        box-shadow: 0 0 0 0.2rem rgba(107, 0, 0, 0.35);
+        background-color: var(--card-bg);
+        color: var(--text-color);
+      }
+
+      /* --- Skeleton Placeholder --- */
+      @keyframes shimmer {
+        0% {
+          background-position: -200px 0;
+        }
+        100% {
+          background-position: 200px 0;
+        }
+      }
+
+      .skeleton-card {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+
+      [data-theme="light"] .skeleton-card {
+        background-color: rgba(0, 0, 0, 0.05);
+        border-color: rgba(0, 0, 0, 0.08);
+      }
+
+      .skeleton-line {
+        height: 16px;
+        border-radius: 999px;
+        margin-bottom: 10px;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.08) 0%,
+          rgba(255, 255, 255, 0.2) 50%,
+          rgba(255, 255, 255, 0.08) 100%
+        );
+        background-size: 400px 100%;
+        animation: shimmer 1.5s infinite;
+      }
+
+      [data-theme="light"] .skeleton-line {
+        background: linear-gradient(
+          90deg,
+          rgba(0, 0, 0, 0.05) 0%,
+          rgba(0, 0, 0, 0.12) 50%,
+          rgba(0, 0, 0, 0.05) 100%
+        );
+      }
+
+      .skeleton-line.w-75 {
+        width: 75%;
+      }
+      .skeleton-line.w-50 {
+        width: 50%;
+      }
+      .skeleton-line.w-25 {
+        width: 25%;
+      }
+
+      /* --- Game Jump Dropdown (Theme Aware) --- */
+      #gameJumpMenu {
+        border-width: 2px;
+      }
+
+      /* default (dark theme) */
+      .dropdown-menu-dark#game-jump-list {
+        background-color: #111;
+        color: #f8f9fa;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .dropdown-menu-dark#game-jump-list .dropdown-item {
+        color: #f8f9fa;
+      }
+
+      .dropdown-menu-dark#game-jump-list .dropdown-item:hover {
+        background-color: var(--bs-danger);
+        color: #ffffff;
+      }
+
+      /* light theme override */
+      [data-theme="light"] .dropdown-menu-dark#game-jump-list {
+        background-color: #ffffff;
+        color: #212529;
+        border-color: rgba(0, 0, 0, 0.12);
+      }
+
+      [data-theme="light"] .dropdown-menu-dark#game-jump-list .dropdown-item {
+        color: #212529;
+      }
+
+      [data-theme="light"]
+        .dropdown-menu-dark#game-jump-list
+        .dropdown-item:hover {
+        background-color: rgba(107, 0, 0, 0.08);
+        color: #000000;
+      }
+
+      /* --- About Section Styles --- */
+      .profile-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+      }
+      .profile-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(255, 0, 0, 0.15);
+        border-color: #ff0000;
+      }
+      .profile-img-wrapper {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 1.5rem;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 5px solid var(--bs-danger);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s;
+      }
+      .profile-card:hover .profile-img-wrapper {
+        transform: scale(1.05);
+      }
+      .profile-img-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .role-badge {
+        background-color: var(--bs-danger);
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 1rem;
+        display: inline-block;
+        margin-bottom: 15px;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+      .student-id {
+        font-family: monospace;
+        font-size: 1.2rem;
+        color: #aaa;
+      }
+      [data-theme="light"] .student-id {
+        color: #666;
+      }
+
+      /* Utility to Hide Section */
+      .d-none-section {
+        display: none !important;
+      }
+
+      /* --- Contact Section Styles --- */
+      .contact-grid {
+        --bs-gutter-y: 1.5rem;
+        --bs-gutter-x: 1.5rem;
+      }
+
+      .contact-card {
+        border: 1px solid var(--bs-danger);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+
+      [data-theme="light"] .contact-card {
+        background-color: rgba(255, 255, 255, 0.8);
+      }
+
+      .contact-card h4 {
+        margin-bottom: 1rem;
+        font-weight: 700;
+      }
+
+      #contact-form .form-control,
+      #contact-form .form-select {
+        background-color: var(--card-bg);
+        color: var(--text-color);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      [data-theme="light"] #contact-form .form-control,
+      [data-theme="light"] #contact-form .form-select {
+        border-color: rgba(0, 0, 0, 0.1);
+      }
+
+      #contact-form .form-control:focus,
+      #contact-form .form-select:focus {
+        border-color: var(--bs-danger);
+        box-shadow: 0 0 0 0.2rem rgba(107, 0, 0, 0.35);
+      }
+
+      #contact-form .form-label {
+        font-weight: 600;
+      }
+
+      #contact-submit-btn {
+        min-width: 180px;
+      }
+
+      .contact-status {
+        min-height: 48px;
+      }
+
+      .contact-status .alert {
+        margin-bottom: 0;
+      }
+
+      .contact-map {
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 1rem;
+        overflow: hidden;
+      }
+
+      [data-theme="light"] .contact-map {
+        border-color: rgba(0, 0, 0, 0.1);
+      }
+
+      /* --- Spotlight Section --- */
+      .spotlight-card {
+        border: 1px solid var(--bs-danger);
+        border-radius: 1.25rem;
+        padding: 1.75rem;
+        height: 100%;
+        background: linear-gradient(
+            135deg,
+            rgba(107, 0, 0, 0.8),
+            rgba(0, 0, 0, 0.6)
+          ),
+          url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=60")
+            center/cover;
+        background-blend-mode: multiply;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+      }
+
+      [data-theme="light"] .spotlight-card {
+        background: linear-gradient(
+            135deg,
+            rgba(255, 230, 230, 0.92),
+            rgba(255, 255, 255, 0.9)
+          ),
+          url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=60")
+            center/cover;
+        color: #111;
+      }
+
+      .spotlight-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .spotlight-title {
+        font-size: 1.75rem;
+      }
+
+      .spotlight-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+
+      .spotlight-chip {
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 999px;
+        padding: 0.2rem 0.9rem;
+        font-size: 0.85rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      [data-theme="light"] .spotlight-chip {
+        border-color: rgba(0, 0, 0, 0.3);
+        color: #333;
+      }
+
+      .spotlight-highlights {
+        list-style: none;
+        padding-left: 0;
+        margin: 1rem 0 1.5rem 0;
+      }
+
+      .spotlight-highlights li {
+        margin-bottom: 0.5rem;
+        display: flex;
+        gap: 0.6rem;
+        align-items: flex-start;
+      }
+
+      .spotlight-highlights i {
+        color: #ffc107;
+      }
+
+      .spotlight-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+        gap: 0.6rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .spotlight-stat {
+        background-color: rgba(0, 0, 0, 0.35);
+        border-radius: 0.8rem;
+        padding: 0.75rem;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .spotlight-stat strong {
+        display: block;
+        font-size: 1.1rem;
+      }
+
+      [data-theme="light"] .spotlight-stat {
+        background-color: rgba(0, 0, 0, 0.05);
+        border-color: rgba(0, 0, 0, 0.1);
+      }
+
+      .spotlight-actions .btn {
+        min-width: 160px;
+      }
+
+      .spotlight-card .btn-outline-light {
+        border-color: rgba(255, 255, 255, 0.6);
+        color: #fff;
+      }
+      .spotlight-card .btn-outline-light:hover {
+        background-color: rgba(255, 255, 255, 0.12);
+        color: #fff;
+      }
+
+      [data-theme="light"] .spotlight-card .btn-outline-light {
+        color: var(--bs-danger);
+        border-color: rgba(0, 0, 0, 0.2);
+      }
+      [data-theme="light"] .spotlight-card .btn-outline-light:hover {
+        background-color: rgba(107, 0, 0, 0.15);
+      }
     </style>
   </head>
 
   <body>
-    <button type="button" id="btn-back-to-top" title="กลับขึ้นบนสุด">
-        <i class="fas fa-arrow-up"></i>
+    <button type="button" id="btn-back-to-top" title="กลับขึ้นบนสุด" aria-label="กลับขึ้นบนสุด">
+      <i class="fas fa-arrow-up"></i>
     </button>
 
     <div
       class="offcanvas offcanvas-start offcanvas-custom-gradient"
       id="mySidenav"
-      aria-labelledby="mySidenavLabel"
-      tabindex="-1">
+      tabindex="-1"
+      aria-labelledby="mySidenavLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title text-white" id="mySidenavLabel">Menu</h5>
         <button
@@ -214,67 +645,310 @@
       </div>
       <div class="offcanvas-body">
         <nav class="nav flex-column">
-          <a class="nav-link active px-3 py-2 text-white" href="#" aria-current="page">
+          <a
+            class="nav-link active-custom px-3 py-2 text-white mb-2"
+            href="#"
+            onclick="switchPage('home')"
+            id="nav-home-mobile">
             <i class="fa fa-fw fa-home"></i> Home
           </a>
-          <a class="nav-link px-3 py-2 text-white" href="aboutUs.html">
+          <a
+            class="nav-link px-3 py-2 text-white mb-2"
+            href="#"
+            onclick="switchPage('about')"
+            id="nav-about-mobile">
             <i class="fa-solid fa-address-card"></i> About
           </a>
-          <!-- <a class="nav-link px-3 py-2 text-white" href="#">
-            <i class="fa-regular fa-handshake"></i> Services
-          </a> -->
-          <a class="nav-link px-3 py-2 text-white" href="#">
+          <a
+            class="nav-link px-3 py-2 text-white mb-2"
+            href="#"
+            onclick="switchPage('spotlight')"
+            id="nav-spotlight-mobile">
+            <i class="fa-solid fa-fire-flame-curved"></i> Spotlight
+          </a>
+          <a
+            class="nav-link px-3 py-2 text-white"
+            href="#"
+            onclick="switchPage('contact')"
+            id="nav-contact-mobile">
             <i class="fa-regular fa-envelope"></i> Contact
           </a>
         </nav>
       </div>
     </div>
 
-    <nav class="navbar navbar-dark bg-dark border-bottom border-danger sticky-top">
+    <nav
+      class="navbar navbar-dark bg-dark border-bottom border-danger sticky-top">
       <div class="container-fluid">
         <button
           class="navbar-toggler"
           data-bs-target="#mySidenav"
           data-bs-toggle="offcanvas"
-          type="button"
-          aria-controls="mySidenav">
+          type="button">
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <span class="navbar-brand ms-3 fw-bold d-none d-sm-block" style="font-family: 'Roboto Slab'; color: var(--bs-danger);">GAME REVIEWS</span>
+        <a
+          class="navbar-brand ms-3 fw-bold d-none d-sm-block"
+          href="#"
+          onclick="switchPage('home')"
+          style="
+            font-family: 'Roboto Slab';
+            color: var(--bs-danger);
+            text-decoration: none;
+          ">
+          GAME REVIEWS
+        </a>
 
-        <button class="btn btn-link theme-toggle-btn ms-auto" onclick="toggleTheme()" title="เปลี่ยนธีม">
-            <i class="fa-solid fa-sun" id="themeIcon"></i>
+        <div class="d-none d-md-flex ms-4">
+          <a
+            class="nav-link text-white mx-2 active-custom px-3"
+            href="#"
+            onclick="switchPage('home')"
+            id="nav-home-desktop"
+            >Home</a
+          >
+          <a
+            class="nav-link text-white mx-2 px-3"
+            href="#"
+            onclick="switchPage('about')"
+            id="nav-about-desktop"
+            >About Us</a
+          >
+          <a
+            class="nav-link text-white mx-2 px-3"
+            href="#"
+            onclick="switchPage('spotlight')"
+            id="nav-spotlight-desktop"
+            >Spotlight</a
+          >
+          <a
+            class="nav-link text-white mx-2 px-3"
+            href="#"
+            onclick="switchPage('contact')"
+            id="nav-contact-desktop"
+            >Contact</a
+          >
+        </div>
+
+        <button
+          class="btn btn-link theme-toggle-btn ms-auto"
+          onclick="toggleTheme()"
+          title="เปลี่ยนธีม"
+          aria-label="เปลี่ยนธีม">
+          <i class="fa-solid fa-sun" id="themeIcon"></i>
         </button>
       </div>
     </nav>
 
-    <main class="main-content-width mt-4">
+    <main class="main-content-width mt-4 mb-5">
+      <div id="home-section">
         <div class="theme-bg rounded-3 p-4 p-md-5 shadow-lg">
-        <h1 class="display-4 text-center mb-5 text-underline-danger">
-          || รีวิวเกมน่าเล่น ||
-        </h1>
+          <h1 class="display-4 text-center mb-5 text-underline-danger">
+            || รีวิวเกม ||
+          </h1>
 
-        <div class="mb-4 text-center">
-          <div class="dropdown">
-            <button
-              class="btn btn-outline-danger btn-lg dropdown-toggle"
-              id="gameJumpMenu"
-              data-bs-toggle="dropdown"
-              type="button"
-              aria-expanded="false">
-              เลือกเกมที่ต้องการ...
-            </button>
-            <ul
-              class="dropdown-menu dropdown-menu-dark"
-              id="game-jump-list"
-              aria-labelledby="gameJumpMenu"
-              style="max-height: 300px; overflow-y: auto;">
-            </ul>
+          <div class="mb-4 text-center">
+            <div class="dropdown">
+              <button
+                class="btn btn-outline-danger btn-lg dropdown-toggle"
+                id="gameJumpMenu"
+                data-bs-toggle="dropdown"
+                type="button">
+                เลือกเกมที่ต้องการ...
+              </button>
+              <ul
+                class="dropdown-menu dropdown-menu-dark"
+                id="game-jump-list"
+                style="max-height: 300px; overflow-y: auto"></ul>
+            </div>
           </div>
+
+          <div class="row align-items-center mb-4">
+            <div class="col-md-8 mb-2 mb-md-0">
+              <input
+                id="game-search-input"
+                class="form-control"
+                type="text"
+                placeholder="พิมพ์ชื่อเกมที่ต้องการค้นหา..." />
+            </div>
+            <div class="col-md-4">
+              <select id="game-tag-filter" class="form-select">
+                <option value="">ทุกแนวเกม</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="game-list-container"></div>
+        </div>
+      </div>
+
+      <div id="about-section" class="d-none-section">
+        <div class="text-center mb-5 pt-4">
+          <h1 class="display-4 text-underline-danger">คณะผู้จัดทำ</h1>
+          <p class="fs-5 mt-3 opacity-75">
+            ทีมงานเบื้องหลัง Project เว็บไซต์รีวิวเกม
+          </p>
         </div>
 
-        <div id="game-list-container"></div>
+        <div id="team-grid"></div>
+      </div>
+
+      <div id="spotlight-section" class="d-none-section">
+        <div class="text-center mb-5 pt-4">
+          <h1 class="display-4 text-underline-danger">Game Spotlight</h1>
+          <p class="fs-5 mt-3 opacity-75">
+            คัด 3 เกมเด่นประจำเดือน พร้อมเหตุผลว่าทำไมถึงห้ามพลาด
+          </p>
+        </div>
+        <div id="spotlight-grid" class="row g-4"></div>
+      </div>
+
+      <div id="contact-section" class="d-none-section">
+        <div class="text-center mb-5 pt-4">
+          <h1 class="display-4 text-underline-danger">Contact Us</h1>
+          <p class="fs-5 mt-3 opacity-75">
+            มีคำถามเกี่ยวกับโปรเจกต์ หรืออยากแนะนำเกมใหม่ ๆ ติดต่อเราได้เลย
+          </p>
+        </div>
+
+        <div class="contact-grid row g-4 align-items-start">
+          <div class="col-12 col-lg-7">
+            <div class="contact-card theme-bg">
+              <h4><i class="fa-solid fa-inbox me-2 text-danger"></i>ส่งข้อความถึงทีมงาน</h4>
+              <form id="contact-form" class="needs-validation" novalidate>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label for="contact-name" class="form-label">ชื่อ-สกุล *</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="contact-name"
+                      name="name"
+                      placeholder="เช่น ณชาศิลป์ นาเคณฑ์"
+                      required />
+                    <div class="invalid-feedback">กรุณาระบุชื่อ</div>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="contact-email" class="form-label">อีเมล *</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="contact-email"
+                      name="email"
+                      placeholder="name@example.com"
+                      required />
+                    <div class="invalid-feedback">กรุณากรอกอีเมลให้ถูกต้อง</div>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="contact-phone" class="form-label">เบอร์โทรศัพท์</label>
+                    <input
+                      type="tel"
+                      class="form-control"
+                      id="contact-phone"
+                      name="phone"
+                      placeholder="08X-XXX-XXXX" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="contact-topic" class="form-label">หัวข้อ *</label>
+                    <select
+                      class="form-select"
+                      id="contact-topic"
+                      name="topic"
+                      required>
+                      <option value="" selected disabled>เลือกหัวข้อ...</option>
+                      <option value="review">ขอรีวิวเกม</option>
+                      <option value="bug">รายงานปัญหาในเว็บไซต์</option>
+                      <option value="collab">ติดต่อเพื่อความร่วมมือ</option>
+                      <option value="other">อื่น ๆ</option>
+                    </select>
+                    <div class="invalid-feedback">กรุณาเลือกหัวข้อ</div>
+                  </div>
+                  <div class="col-12">
+                    <label for="contact-message" class="form-label">ข้อความ *</label>
+                    <textarea
+                      class="form-control"
+                      id="contact-message"
+                      name="message"
+                      rows="5"
+                      placeholder="พิมพ์รายละเอียดที่ต้องการแจ้ง..."
+                      required></textarea>
+                    <div class="invalid-feedback">กรุณากรอกข้อความ</div>
+                  </div>
+                  <div class="col-12 contact-status" id="contact-status"></div>
+                  <div class="col-12 d-flex align-items-center gap-3 flex-wrap">
+                    <button
+                      class="btn btn-danger"
+                      type="submit"
+                      id="contact-submit-btn">
+                      <i class="fa-regular fa-paper-plane me-2"></i>ส่งข้อความ
+                    </button>
+                    <small class="opacity-75"
+                      ><i class="fa-solid fa-lock me-1"></i>ข้อมูลของคุณถูกเก็บเป็นความลับ
+                      และใช้เพื่อการติดต่อกลับเท่านั้น</small
+                    >
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="col-12 col-lg-5">
+            <div class="contact-card theme-bg">
+              <h4><i class="fa-solid fa-headset me-2 text-danger"></i>ช่องทางอื่น ๆ</h4>
+              <p class="mb-2">
+                <i class="fa-solid fa-phone me-2 text-danger"></i>
+                <strong>Call Center:</strong> 02-558-6888
+              </p>
+              <p class="mb-2">
+                <i class="fa-regular fa-envelope me-2 text-danger"></i>
+                <strong>Email:</strong> admissions@spu.ac.th
+              </p>
+              <p class="mb-2">
+                <i class="fa-solid fa-clock me-2 text-danger"></i>
+                <strong>เวลาให้บริการ:</strong> จันทร์ - ศุกร์ 09:00 - 17:00 น.
+              </p>
+              <hr class="border-danger opacity-50" />
+              <p class="opacity-75">
+                หรือเลือกติดตามข่าวสาร / อัปเดตรีวิวเกมใหม่ ๆ ผ่านโซเชียลด้านล่างได้เลย
+              </p>
+              <div class="d-flex flex-wrap gap-3 fs-3">
+                <a href="https://lin.ee/BEbNr4r" class="social-link social-line" target="_blank" rel="noopener" aria-label="Line">
+                  <i class="fa-brands fa-line"></i>
+                </a>
+                <a href="https://www.instagram.com/sripatum_spu" class="social-link social-instagram" target="_blank" rel="noopener" aria-label="Instagram">
+                  <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/SPUsripatumuniversity/?locale=th_TH" class="social-link social-facebook" target="_blank" rel="noopener" aria-label="Facebook">
+                  <i class="fa-brands fa-facebook"></i>
+                </a>
+                <a href="https://www.youtube.com/channel/UCrXai9P4Weq5z91t2hJEI4g" class="social-link social-youtube" target="_blank" rel="noopener" aria-label="YouTube">
+                  <i class="fa-brands fa-youtube"></i>
+                </a>
+                <a href="https://www.tiktok.com/@sripatum.spu" class="social-link social-tiktok" target="_blank" rel="noopener" aria-label="TikTok">
+                  <i class="fa-brands fa-tiktok"></i>
+                </a>
+              </div>
+              <div class="mt-4">
+                <h5 class="text-underline-danger">แผนที่</h5>
+                <div class="contact-map ratio ratio-16x9 mb-3">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3873.733038985041!2d100.5830372750921!3d13.855056736547654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29d3b2deb49ff%3A0xd2ed4165c39645cc!2z4Lih4Lir4Liy4Lin4Li04LiX4Lii4Liy4Lil4Lix4Lii4Lio4Lij4Li14Lib4LiX4Li44Lih!5e0!3m2!1sth!2sth!4v1763492973518!5m2!1sth!2sth"
+                    width="100%"
+                    height="100%"
+                    style="border: 0"
+                    allowfullscreen
+                    loading="lazy"
+                    title="แผนที่มหาวิทยาลัยศรีปทุม"></iframe>
+                </div>
+                <p class="mb-1"><strong>มหาวิทยาลัยศรีปทุม</strong></p>
+                <p class="opacity-75 mb-0">
+                  2410/2 ถ.พหลโยธิน แขวงเสนานิคม เขตจตุจักร กรุงเทพฯ 10900
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
 
@@ -288,16 +962,14 @@
               height="350"
               style="border: 0"
               allowfullscreen
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"></iframe>
+              loading="lazy"></iframe>
           </div>
           <div class="col-lg-5 mb-4">
             <h2 class="text-underline-danger text-danger">ติดต่อสอบถาม</h2>
-            <p class="fs-4">มหายวิทยาลัยศรีปทุม SPU</p>
+            <p class="fs-4">มหาวิทยาลัยศรีปทุม SPU</p>
             <hr class="border-danger opacity-50" />
             <p class="fs-5">
-              <b>โทร : </b>
-              <span class="text-white-50">02 558 6888</span>
+              <b>โทร : </b> <span class="text-white-50">02 558 6888</span>
             </p>
             <p class="fs-5">
               <b>อีเมล : </b>
@@ -305,10 +977,28 @@
             </p>
             <p class="fs-5">
               <b>ที่อยู่ : </b>
-              <span class="text-white-50">
-                มหาวิทยาลัยศรีปทุม 2410/2 ถ.พหลโยธิน เขตจตุจักร กรุงเทพฯ 10900
-              </span>
+              <span class="text-white-50"
+                >มหาวิทยาลัยศรีปทุม 2410/2 ถ.พหลโยธิน เขตจตุจักร กรุงเทพฯ
+                10900</span
+              >
             </p>
+            <div class="d-flex flex-wrap gap-3 mt-3 fs-3">
+              <a href="https://lin.ee/BEbNr4r" class="social-link social-line" aria-label="Line link" target="_blank" rel="noopener">
+                <i class="fa-brands fa-line"></i>
+              </a>
+              <a href="https://www.instagram.com/sripatum_spu" class="social-link social-instagram" aria-label="Instagram link" target="_blank" rel="noopener">
+                <i class="fa-brands fa-instagram"></i>
+              </a>
+              <a href="https://www.facebook.com/SPUsripatumuniversity/?locale=th_TH" class="social-link social-facebook" aria-label="Facebook link" target="_blank" rel="noopener">
+                <i class="fa-brands fa-facebook"></i>
+              </a>
+              <a href="https://www.youtube.com/channel/UCrXai9P4Weq5z91t2hJEI4g" class="social-link social-youtube" aria-label="YouTube link" target="_blank" rel="noopener">
+                <i class="fa-brands fa-youtube"></i>
+              </a>
+              <a href="https://www.tiktok.com/@sripatum.spu" class="social-link social-tiktok" aria-label="TikTok link" target="_blank" rel="noopener">
+                <i class="fa-brands fa-tiktok"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -317,77 +1007,41 @@
       </div>
     </footer>
 
-    <script 
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"></script>
 
-    <script src="main.js"></script> 
-
     <script>
-      // Logic เปลี่ยนธีม
-      function toggleTheme() {
-        const body = document.body;
-        const icon = document.getElementById("themeIcon");
-        const isLight = body.getAttribute("data-theme") === "light";
-        
-        if (isLight) {
-            body.removeAttribute("data-theme");
-            icon.classList.remove("fa-moon");
-            icon.classList.add("fa-sun");
-            document.querySelector(".navbar").classList.remove("navbar-light", "bg-light");
-            document.querySelector(".navbar").classList.add("navbar-dark", "bg-dark");
-        } else {
-            body.setAttribute("data-theme", "light");
-            icon.classList.remove("fa-sun");
-            icon.classList.add("fa-moon");
-            document.querySelector(".navbar").classList.remove("navbar-dark", "bg-dark");
-            document.querySelector(".navbar").classList.add("navbar-light", "bg-light");
-        }
-      }
-
-      // Logic ปุ่ม Back to Top
-      let mybutton = document.getElementById("btn-back-to-top");
-      window.onscroll = function () {
-        scrollFunction();
-      };
-      function scrollFunction() {
-        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-          mybutton.style.display = "block";
-        } else {
-          mybutton.style.display = "none";
-        }
-      }
-      mybutton.addEventListener("click", backToTop);
-      function backToTop() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-      }
-    </script>
-
-    <script>
-      // ข้อมูลเกม (Game Data) - เพิ่ม Tags และใส่ข้อมูลกลับมาครบถ้วน
+      /* ---------------- Data ---------------- */
       const gameData = [
         {
           id: "elden-ring",
           title: "Elden Ring",
           iconUrl: "icon/eldenring.png",
           youtubeId: "eD_oYIbublE",
-          description: 
+          description:
             'Elden Ring คือมหากาพย์ Action RPG จาก FromSoftware (ผู้สร้าง Dark Souls) ที่ยกระดับเกมสไตล์ Souls-like สู่โลก Open World อันกว้างใหญ่ไพศาลที่เรียกว่า "The Lands Between" สวมบทบาท "ผู้มัวหมอง" (Tarnished) ออกผจญภัยได้อย่างอิสระ, ต่อสู้กับเหล่า Demigod สุดท้าทาย, ค้นพบดันเจี้ยนและความลับที่ซ่อนอยู่, และเพลิดเพลินกับการสร้างบิวด์ตัวละครที่หลากหลาย นี่คือเกมที่ผสมผสานการต่อสู้ที่ดุดัน, การสำรวจที่คุ้มค่า, และงานศิลป์ที่งดงามไว้ได้อย่างลงตัว',
           score: "9.5/10",
-          tags: ["Action RPG", "Open World", "Souls-like", "Dark Fantasy"],
+          tags: [
+            "Action RPG",
+            "Open World",
+            "Souls-like",
+            "Dark Fantasy",
+            "Singleplayer",
+            "Hardcore",
+          ],
           pros: [
-            'โลก Open World ที่น่าทึ่งและเต็มไปด้วยความลับ',
-            'การต่อสู้ที่ท้าทาย ลึกซึ้ง และคุ้มค่า',
-            'การออกแบบศิลป์ (Art Design) และบอสไฟต์สุดอลังการ',
-            'อิสระในการสร้างบิวด์ตัวละครและสไตล์การเล่น',
+            "โลก Open World ที่น่าทึ่งและเต็มไปด้วยความลับ",
+            "การต่อสู้ที่ท้าทาย ลึกซึ้ง และคุ้มค่า",
+            "การออกแบบศิลป์ (Art Design) และบอสไฟต์สุดอลังการ",
+            "อิสระในการสร้างบิวด์ตัวละครและสไตล์การเล่น",
           ],
           cons: [
-            'เกมมีความยากสูงมากตามสไตล์ค่ายนี้',
-            'การเล่าเรื่องแบบปลายเปิด (ต้องปะติดปะต่อเอง)',
-            'อาจมีปัญหา Performance บ้างในบางแพลตฟอร์ม',
-            'บางดันเจี้ยนหรือบอสอาจมีการออกแบบที่คล้ายกัน',
+            "เกมมีความยากสูงมากตามสไตล์ค่ายนี้",
+            "การเล่าเรื่องแบบปลายเปิด (ต้องปะติดปะต่อเอง)",
+            "อาจมีปัญหา Performance บ้างในบางแพลตฟอร์ม",
+            "บางดันเจี้ยนหรือบอสอาจมีการออกแบบที่คล้ายกัน",
           ],
           steamUrl: "https://store.steampowered.com/app/1245620/ELDEN_RING/",
         },
@@ -399,17 +1053,24 @@
           description:
             'Monster Hunter: World คือเกม Action RPG ที่พาคุณสู่ "New World" โลกใหม่ที่เต็มไปด้วยมอนสเตอร์ยักษ์สุดอลังการ สวมบทบาทเป็น "Hunter" ออกสำรวจ, ติดตามร่องรอย, และล้มอสูรร้ายในระบบนิเวศที่มีชีวิตชีวา จุดเด่นคือเกมเพลย์การต่อสู้ที่ท้าทายและต้องอาศัยกลยุทธ์, อาวุธ 14 ประเภทที่มีสไตล์การเล่นต่างกันสุดขั้ว, และลูปการเล่นที่สนุกจนติดหนึบ: "ล่ามอนสเตอร์" เพื่อนำชิ้นส่วนมา "สร้างอาวุธและชุดเกราะ" ที่แกร่งขึ้น เพื่อออกไป "ล่าตัวที่โหดกว่าเดิม"',
           score: "9/10",
-          tags: ["Action RPG", "Co-op", "Hunting", "Open World"],
+          tags: [
+            "Action RPG",
+            "Co-op",
+            "Hunting",
+            "Open World",
+            "Multiplayer",
+            "Boss Fight",
+          ],
           pros: [
-            'การต่อสู้กับมอนสเตอร์ที่ยิ่งใหญ่และท้าทาย',
-            'อาวุธ 14 ชนิด สไตล์การเล่นหลากหลาย',
-            'กราฟิกและระบบนิเวศ (World) สวยงามมาก',
-            'เล่น Co-op กับเพื่อนสนุกสุดๆ',
+            "การต่อสู้กับมอนสเตอร์ที่ยิ่งใหญ่และท้าทาย",
+            "อาวุธ 14 ชนิด สไตล์การเล่นหลากหลาย",
+            "กราฟิกและระบบนิเวศ (World) สวยงามมาก",
+            "เล่น Co-op กับเพื่อนสนุกสุดๆ",
           ],
           cons: [
-            'ต้องฟาร์มของ (Grind) ซ้ำๆ เพื่อทำของ',
-            'ระบบเกมซับซ้อน มือใหม่ใช้เวลาเรียนรู้เยอะ',
-            'เนื้อเรื่องค่อนข้างธรรมดา',
+            "ต้องฟาร์มของ (Grind) ซ้ำๆ เพื่อทำของ",
+            "ระบบเกมซับซ้อน มือใหม่ใช้เวลาเรียนรู้เยอะ",
+            "เนื้อเรื่องค่อนข้างธรรมดา",
           ],
           steamUrl:
             "https://store.steampowered.com/app/582010/Monster_Hunter_World/",
@@ -422,18 +1083,25 @@
           description:
             '"นี่คือเรื่องราวการตายของคุณ" — Project Zomboid คือเกมเอาชีวิตรอดจากซอมบี้แบบ Sandbox ที่เน้นความสมจริงขั้นสุด (Hardcore Survival) ในมุมมอง Isometric คุณต้องต่อสู้กับความหิว, ความเหนื่อยล้า, อาการบาดเจ็บ, สภาพจิตใจ และฝูงซอมบี้ที่ไร้ทางสู้ ทุกการกระทำมีความหมาย ตั้งแต่การหาอาหารกระป๋อง (ที่ต้องมีที่เปิด), การต้มน้ำ, ไปจนถึงการรักษาบาดแผลที่อาจติดเชื้อได้ตลอดเวลา ในโลกที่กว้างใหญ่และไร้ความปรานีแห่งนี้ เป้าหมายไม่ใช่การ "ชนะ" แต่คือการ "ยื้อความตาย" ออกไปให้ได้นานที่สุด',
           score: "8.5/10",
-          tags: ["Survival", "Sandbox", "Zombie", "Simulation"],
+          tags: [
+            "Survival",
+            "Sandbox",
+            "Zombie",
+            "Simulation",
+            "Isometric",
+            "Hardcore",
+          ],
           pros: [
-            'ระบบ Survival ที่สมจริงและลึกที่สุดเกมหนึ่ง',
-            'แผนที่ขนาดใหญ่มากและมีรายละเอียดสูง',
-            'ปรับแต่ง Sandbox ได้อิสระ (ปรับความยาก/ซอมบี้)',
-            'รองรับ Mod ที่หลากหลาย เปลี่ยนเกมได้เยอะ',
+            "ระบบ Survival ที่สมจริงและลึกที่สุดเกมหนึ่ง",
+            "แผนที่ขนาดใหญ่มากและมีรายละเอียดสูง",
+            "ปรับแต่ง Sandbox ได้อิสระ (ปรับความยาก/ซอมบี้)",
+            "รองรับ Mod ที่หลากหลาย เปลี่ยนเกมได้เยอะ",
           ],
           cons: [
             '"ตายแล้วตายเลย" (Permadeath) เริ่มใหม่หมด',
-            'กราฟิกแบบ Isometric อาจไม่ถูกใจทุกคน',
-            'เกมยากและซับซ้อนมากสำหรับผู้เล่นใหม่',
-            'เรียนรู้ระบบเกม (Learning Curve) นานมาก',
+            "กราฟิกแบบ Isometric อาจไม่ถูกใจทุกคน",
+            "เกมยากและซับซ้อนมากสำหรับผู้เล่นใหม่",
+            "เรียนรู้ระบบเกม (Learning Curve) นานมาก",
           ],
           steamUrl:
             "https://store.steampowered.com/app/108600/Project_Zomboid/",
@@ -444,9 +1112,17 @@
           iconUrl: "icon/7daytodie.png",
           youtubeId: "UOE2Gt_E4SU",
           description:
-          '7 Days to Die คือสุดยอดเกม Survival Horror แบบ Sandbox ที่ผสมผสานแนวเกมยิง (FPS), RPG, และ Tower Defense เข้าไว้ด้วยกันอย่างลงตัว คุณต้องเอาชีวิตรอดในโลกหลังการล่มสลายที่เต็มไปด้วยซอมบี้ โดยมีเวลา 7 วันในการสำรวจ, ฟาร์มของ, คราฟต์ไอเทม, และสร้างฐานที่มั่นสุดแกร่ง เพื่อเตรียมรับมือกับ "Blood Moon Horde" ฝูงซอมบี้สุดโหดที่จะบุกโจมตีคุณอย่างบ้าคลั่งในคืนวันที่เจ็ด',
+            '7 Days to Die คือสุดยอดเกม Survival Horror แบบ Sandbox ที่ผสมผสานแนวเกมยิง (FPS), RPG, และ Tower Defense เข้าไว้ด้วยกันอย่างลงตัว คุณต้องเอาชีวิตรอดในโลกหลังการล่มสลายที่เต็มไปด้วยซอมบี้ โดยมีเวลา 7 วันในการสำรวจ, ฟาร์มของ, คราฟต์ไอเทม, และสร้างฐานที่มั่นสุดแกร่ง เพื่อเตรียมรับมือกับ "Blood Moon Horde" ฝูงซอมบี้สุดโหดที่จะบุกโจมตีคุณอย่างบ้าคลั่งในคืนวันที่เจ็ด',
           score: "8/10",
-          tags: ["Survival Horror", "Voxel", "FPS", "Tower Defense"],
+          tags: [
+            "Survival Horror",
+            "Voxel",
+            "FPS",
+            "Tower Defense",
+            "Crafting",
+            "Multiplayer",
+            "Zombie",
+          ],
           pros: [
             "การสร้างฐานและป้องกันฐาน (Tower Defense) สนุกมาก",
             "ระบบคราฟต์และสกิลมีความลึกและหลากหลาย",
@@ -464,7 +1140,14 @@
           description:
             'Broforce คือเกมแอ็กชัน 2D-Platformer แบบ "Run n Gun" สุดมันส์ ที่อัดแน่นไปด้วยความฮาและฉากระเบิดภูเขาเผากระท่อม สวมบทบาทเป็นเหล่า "Bro" (ที่ล้อเลียนตัวละครแอ็กชันในตำนานยุค 80-90s) ออกไปต่อสู้กับเหล่าร้ายเพื่อกอบกู้เสรีภาพ จุดเด่นคือสภาพแวดล้อมที่ "พัง" ได้เกือบทั้งหมด, ความโกลาหลแบบ Co-op 4 คน, และการที่คุณจะได้ตัวละครใหม่แบบสุ่มทุกครั้งที่ช่วยตัวประกัน ทำให้เกมเพลย์สดใหม่และคาดเดาไม่ได้ตลอดเวลา',
           score: "9/10",
-          tags: ["Action", "2D Platformer", "Co-op", "Destructible"],
+          tags: [
+            "Action",
+            "2D Platformer",
+            "Co-op",
+            "Destructible",
+            "Retro",
+            "Arcade",
+          ],
           pros: [
             "แอ็กชันระเบิดเถิดเทิง สนุกสะใจ",
             'ตัวละคร "Bro" ให้เล่นเยอะมาก (ล้อเลียนหนังดัง)',
@@ -483,9 +1166,17 @@
           title: "Warframe",
           iconUrl: "icon/warframe.png",
           youtubeId: "C3MnugBJc6g",
-          description: 'ดำดิ่งสู่ Warframe สุดยอดเกม Action RPG นินจาอวกาศแบบ Free-to-Play ที่โดดเด่นด้วยการต่อสู้สุดรวดเร็วสไตล์ Parkour สวมใส่ชุดเกราะ "Warframe" ที่มีให้เลือกกว่า 50 แบบ พร้อมพลังพิเศษเฉพาะตัว ออกฟาร์มทรัพยากร, สร้างอาวุธ, และปรับแต่งตัวละครของคุณได้อย่างไร้ขีดจำกัดในจักรวาล Sci-fi ที่กว้างใหญ่และมีเนื้อหาอัปเดตต่อเนื่อง นี่คือเกมยิงมุมมองบุคคลที่สาม (TPS) ที่ผสมผสานการต่อสู้ระยะประชิด, การยิงปืน, และสกิลเข้ากันได้อย่างลงตัว',
+          description:
+            'ดำดิ่งสู่ Warframe สุดยอดเกม Action RPG นินจาอวกาศแบบ Free-to-Play ที่โดดเด่นด้วยการต่อสู้สุดรวดเร็วสไตล์ Parkour สวมใส่ชุดเกราะ "Warframe" ที่มีให้เลือกกว่า 50 แบบ พร้อมพลังพิเศษเฉพาะตัว ออกฟาร์มทรัพยากร, สร้างอาวุธ, และปรับแต่งตัวละครของคุณได้อย่างไร้ขีดจำกัดในจักรวาล Sci-fi ที่กว้างใหญ่และมีเนื้อหาอัปเดตต่อเนื่อง นี่คือเกมยิงมุมมองบุคคลที่สาม (TPS) ที่ผสมผสานการต่อสู้ระยะประชิด, การยิงปืน, และสกิลเข้ากันได้อย่างลงตัว',
           score: "x/10",
-          tags: ["Action RPG", "Looter Shooter", "Sci-fi", "Free to Play"],
+          tags: [
+            "Action RPG",
+            "Looter Shooter",
+            "Sci-fi",
+            "Free to Play",
+            "Multiplayer",
+            "Parkour",
+          ],
           pros: [
             "เกมเพลย์ต่อสู้เร็วและลื่นไหล",
             "ระบบปรับแต่งตัวละครลึกมาก",
@@ -499,308 +1190,777 @@
           steamUrl: "https://store.steampowered.com/app/230410/Warframe/",
         },
         {
-          id: 'repo',
-          title: 'R.E.P.O.',
-          iconUrl: 'icon/repo.png',
-          youtubeId: 'VY30CeEz3hg',
-          description: 'R.E.P.O. คือเกมอินดี้สยองขวัญมุมมองบุคคลที่หนึ่ง ที่จะพาคุณไปสัมผัสประสบการณ์การเป็น "พนักงานยึดทรัพย์" ของบริษัทสุดลึกลับ ภารกิจของคุณคือการบุกเข้าไปในสถานที่อันตรายและบ้านร้างต่าง ๆ เพื่อ "ยึด" ไอเทมตามใบสั่งภายใต้ความมืดมิด โดยต้องเผชิญหน้ากับบรรยากาศที่กดดัน, เสียงปริศนา, และ "สิ่งนั้น" ที่ไม่อยากให้คุณได้ของกลับไปง่ายๆ นี่คือเกมที่เน้นการเดินสำรวจ (Walking Sim), การซ่อนเร้น (Stealth) และ Jumpscare ที่มาในสไตล์กราฟิกแบบ Low-fi หรือ VHS สุดหลอน',
-          score: 'x/10',
-          tags: ["Horror", "Co-op", "First-Person", "Psychological"],
+          id: "repo",
+          title: "R.E.P.O.",
+          iconUrl: "icon/repo.png",
+          youtubeId: "VY30CeEz3hg",
+          description:
+            'R.E.P.O. คือเกมอินดี้สยองขวัญมุมมองบุคคลที่หนึ่ง ที่จะพาคุณไปสัมผัสประสบการณ์การเป็น "พนักงานยึดทรัพย์" ของบริษัทสุดลึกลับ ภารกิจของคุณคือการบุกเข้าไปในสถานที่อันตรายและบ้านร้างต่าง ๆ เพื่อ "ยึด" ไอเทมตามใบสั่งภายใต้ความมืดมิด โดยต้องเผชิญหน้ากับบรรยากาศที่กดดัน, เสียงปริศนา, และ "สิ่งนั้น" ที่ไม่อยากให้คุณได้ของกลับไปง่ายๆ นี่คือเกมที่เน้นการเดินสำรวจ (Walking Sim), การซ่อนเร้น (Stealth) และ Jumpscare ที่มาในสไตล์กราฟิกแบบ Low-fi หรือ VHS สุดหลอน',
+          score: "x/10",
+          tags: [
+            "Horror",
+            "Co-op",
+            "First-Person",
+            "Psychological",
+            "Indie",
+            "Short Game",
+          ],
           pros: [
-            'บรรยากาศกดดันและหลอนมาก',
+            "บรรยากาศกดดันและหลอนมาก",
             'คอนเซปต์ "พนักงานยึดของผี" แปลกใหม่',
-            'กราฟิกสไตล์ VHS/Low-fi ได้อารมณ์',
-            'เป็นเกมสยองขวัญที่เน้น Jumpscare',
+            "กราฟิกสไตล์ VHS/Low-fi ได้อารมณ์",
+            "เป็นเกมสยองขวัญที่เน้น Jumpscare",
           ],
           cons: [
-            'เกมค่อนข้างสั้น (จบได้เร็ว)',
-            'เกมเพลย์อาจจะซ้ำซาก (เดินหาของ)',
-            'พึ่งพา Jumpscare มากเกินไป (สำหรับบางคน)',
-            'กราฟิก Low-fi อาจไม่ถูกใจทุกคน',
+            "เกมค่อนข้างสั้น (จบได้เร็ว)",
+            "เกมเพลย์อาจจะซ้ำซาก (เดินหาของ)",
+            "พึ่งพา Jumpscare มากเกินไป (สำหรับบางคน)",
+            "กราฟิก Low-fi อาจไม่ถูกใจทุกคน",
           ],
-          steamUrl: 'https://store.steampowered.com/app/3241660/REPO/',
+          steamUrl: "https://store.steampowered.com/app/3241660/REPO/",
         },
         {
-          id: 'sifu',
-          title: 'Sifu',
-          iconUrl: 'icon/sifu.png',
-          youtubeId: 'VLfc_9p7wNk',
-          description: 'Sifu คือเกมแอ็กชันสไตล์ Beat \'em up ที่เน้นการต่อสู้ระยะประชิดด้วยศิลปะการป้องกันตัวแบบกังฟู (Kung Fu) คุณจะสวมบทบาทเป็นนักเรียนกังฟูที่ต้องออกตามล่าฆาตกรที่ฆ่าครอบครัวของเขา จุดเด่นของเกมคือระบบ "การแก้แค้น" ที่ไม่เหมือนใคร: ทุกครั้งที่คุณตาย ตัวละครจะมีอายุเพิ่มขึ้น ทำให้พลังชีวิตลดลง แต่ทักษะการต่อสู้จะพัฒนาขึ้น นี่คือเกมที่ผสมผสานการต่อสู้ที่ลื่นไหล, การวางแผนกลยุทธ์, และการเรียนรู้จากความผิดพลาดได้อย่างลงตัว',
-          score: 'x/10',
-          tags: ["Action", "Beat 'em up", "Martial Arts", "Difficult"],
+          id: "sifu",
+          title: "Sifu",
+          iconUrl: "icon/sifu.png",
+          youtubeId: "VLfc_9p7wNk",
+          description:
+            'Sifu คือเกมแอ็กชันสไตล์ Beat \'em up ที่เน้นการต่อสู้ระยะประชิดด้วยศิลปะการป้องกันตัวแบบกังฟู (Kung Fu) คุณจะสวมบทบาทเป็นนักเรียนกังฟูที่ต้องออกตามล่าฆาตกรที่ฆ่าครอบครัวของเขา จุดเด่นของเกมคือระบบ "การแก้แค้น" ที่ไม่เหมือนใคร: ทุกครั้งที่คุณตาย ตัวละครจะมีอายุเพิ่มขึ้น ทำให้พลังชีวิตลดลง แต่ทักษะการต่อสู้จะพัฒนาขึ้น นี่คือเกมที่ผสมผสานการต่อสู้ที่ลื่นไหล, การวางแผนกลยุทธ์, และการเรียนรู้จากความผิดพลาดได้อย่างลงตัว',
+          score: "x/10",
+          tags: [
+            "Action",
+            "Beat 'em up",
+            "Martial Arts",
+            "Difficult",
+            "Singleplayer",
+            "Roguelite",
+          ],
           pros: [
-            'ระบบการต่อสู้ที่ลื่นไหลและมีความลึก',
+            "ระบบการต่อสู้ที่ลื่นไหลและมีความลึก",
             'คอนเซปต์ "การแก้แค้น" ที่ไม่เหมือนใคร',
-            'กราฟิกและการออกแบบฉากที่มีสไตล์',
-            'เพลงประกอบ (Soundtrack) ที่เพิ่มอารมณ์ในการเล่น',
+            "กราฟิกและการออกแบบฉากที่มีสไตล์",
+            "เพลงประกอบ (Soundtrack) ที่เพิ่มอารมณ์ในการเล่น",
           ],
           cons: [
-            'เกมค่อนข้างสั้น (ถ้าเล่นแค่โหมดเนื้อเรื่อง)',
-            'บางครั้งอาจจะรู้สึกซ้ำซากกับการต่อสู้',
-            'การควบคุมอาจต้องใช้เวลาปรับตัว',
-            'ไม่มีโหมด Co-op หรือ Multiplayer',
+            "เกมค่อนข้างสั้น (ถ้าเล่นแค่โหมดเนื้อเรื่อง)",
+            "บางครั้งอาจจะรู้สึกซ้ำซากกับการต่อสู้",
+            "การควบคุมอาจต้องใช้เวลาปรับตัว",
+            "ไม่มีโหมด Co-op หรือ Multiplayer",
           ],
-          steamUrl: 'https://store.steampowered.com/app/2138710/Sifu/',
+          steamUrl: "https://store.steampowered.com/app/2138710/Sifu/",
         },
         {
-          id: 'pso2-ngs',
-          title: 'Phantasy Star Online 2: New Genesis',
-          iconUrl: 'icon/pso2-ngs.png',
-          youtubeId: 'FUpQiUw922E',
-          description: 'Phantasy Star Online 2: New Genesis (PSO2: NGS) คือการรีบูตครั้งใหญ่ของซีรีส์ MMORPG สุดคลาสสิก "Phantasy Star Online" ที่พาคุณสู่โลกอนาคตอันกว้างใหญ่ไพศาลบนดาว Halpha สัมผัสประสบการณ์การผจญภัยแบบ Open World, ระบบการต่อสู้ที่รวดเร็วและลื่นไหล, และกราฟิก Unreal Engine 4 ที่งดงาม นอกจากนี้ยังมีระบบสร้างตัวละครที่ลึกซึ้ง, ภารกิจและกิจกรรมหลากหลาย, และการเล่น Co-op กับเพื่อน ๆ เพื่อเผชิญหน้ากับศัตรูและบอสยักษ์ในจักรวาล Sci-fi ที่เต็มไปด้วยความลับ',
-          score: 'x/10',
-          tags: ["MMORPG", "Open World", "Anime", "Sci-fi"],
+          id: "pso2-ngs",
+          title: "Phantasy Star Online 2: New Genesis",
+          iconUrl: "icon/pso2-ngs.png",
+          youtubeId: "FUpQiUw922E",
+          description:
+            'Phantasy Star Online 2: New Genesis (PSO2: NGS) คือการรีบูตครั้งใหญ่ของซีรีส์ MMORPG สุดคลาสสิก "Phantasy Star Online" ที่พาคุณสู่โลกอนาคตอันกว้างใหญ่ไพศาลบนดาว Halpha สัมผัสประสบการณ์การผจญภัยแบบ Open World, ระบบการต่อสู้ที่รวดเร็วและลื่นไหล, และกราฟิก Unreal Engine 4 ที่งดงาม นอกจากนี้ยังมีระบบสร้างตัวละครที่ลึกซึ้ง, ภารกิจและกิจกรรมหลากหลาย, และการเล่น Co-op กับเพื่อน ๆ เพื่อเผชิญหน้ากับศัตรูและบอสยักษ์ในจักรวาล Sci-fi ที่เต็มไปด้วยความลับ',
+          score: "x/10",
+          tags: [
+            "MMORPG",
+            "Open World",
+            "Anime",
+            "Sci-fi",
+            "Action",
+            "Live Service",
+          ],
           pros: [
-            'โลก Open World ที่กว้างใหญ่และสวยงาม',
-            'ระบบการต่อสู้ที่รวดเร็วและลื่นไหล',
-            'กราฟิก Unreal Engine 4 ที่น่าทึ่ง',
-            'ระบบสร้างตัวละครที่มีความลึก',
+            "โลก Open World ที่กว้างใหญ่และสวยงาม",
+            "ระบบการต่อสู้ที่รวดเร็วและลื่นไหล",
+            "กราฟิก Unreal Engine 4 ที่น่าทึ่ง",
+            "ระบบสร้างตัวละครที่มีความลึก",
           ],
           cons: [
-            'ต้องเชื่อมต่ออินเทอร์เน็ตตลอดเวลา (Online-only)',
-            'บางครั้งอาจมีปัญหาด้านเซิร์ฟเวอร์',
-            'ระบบเกมซับซ้อนสำหรับผู้เล่นใหม่',
-            'เนื้อเรื่องอาจจะไม่ลึกซึ้งเท่าภาคก่อนหน้า',
+            "ต้องเชื่อมต่ออินเทอร์เน็ตตลอดเวลา (Online-only)",
+            "บางครั้งอาจมีปัญหาด้านเซิร์ฟเวอร์",
+            "ระบบเกมซับซ้อนสำหรับผู้เล่นใหม่",
+            "เนื้อเรื่องอาจจะไม่ลึกซึ้งเท่าภาคก่อนหน้า",
           ],
-          steamUrl: 'https://store.steampowered.com/app/1056640/Phantasy_Star_Online_2_New_Genesis/',
+          steamUrl:
+            "https://store.steampowered.com/app/1056640/Phantasy_Star_Online_2_New_Genesis/",
         },
         {
-          id: 'dragon-ball-sparkling-zero',
-          title: 'DRAGON BALL Sparking! ZERO',
-          iconUrl: 'icon/dragonball.png',
-          youtubeId: 'bvO39RbaAtQ',
-          description: 'การกลับมาของตำนานเกมต่อสู้ 3D Arena Fighter ในรอบ 17 ปี! DRAGON BALL: Sparking! ZERO คือการสานต่อจิตวิญญาณของซีรีส์ "Budokai Tenkaichi" อย่างแท้จริง ขนทัพตัวละครมาแบบจุใจที่สุดในประวัติศาสตร์เกมดราก้อนบอล (มากกว่า 180 ตัว) ให้คุณระเบิดพลังต่อสู้กันอย่างสะใจในสมรภูมิที่พังพินาศได้ กราฟิก Unreal Engine 5 ทำให้ท่าไม้ตายและการแปลงร่างอลังการสมจริงเหมือนหลุดออกมาจากอนิเมะ ถือเป็นเกมที่แฟนๆ สายต่อสู้แบบมันส์สะใจห้ามพลาด',
-          score: '9.0/10',
-          tags: ["Fighting", "Anime", "Action", "3D Fighter"],
+          id: "dragon-ball-sparkling-zero",
+          title: "DRAGON BALL Sparking! ZERO",
+          iconUrl: "icon/dragonball.png",
+          youtubeId: "bvO39RbaAtQ",
+          description:
+            'การกลับมาของตำนานเกมต่อสู้ 3D Arena Fighter ในรอบ 17 ปี! DRAGON BALL: Sparking! ZERO คือการสานต่อจิตวิญญาณของซีรีส์ "Budokai Tenkaichi" อย่างแท้จริง ขนทัพตัวละครมาแบบจุใจที่สุดในประวัติศาสตร์เกมดราก้อนบอล (มากกว่า 180 ตัว) ให้คุณระเบิดพลังต่อสู้กันอย่างสะใจในสมรภูมิที่พังพินาศได้ กราฟิก Unreal Engine 5 ทำให้ท่าไม้ตายและการแปลงร่างอลังการสมจริงเหมือนหลุดออกมาจากอนิเมะ ถือเป็นเกมที่แฟนๆ สายต่อสู้แบบมันส์สะใจห้ามพลาด',
+          score: "9.0/10",
+          tags: [
+            "Fighting",
+            "Anime",
+            "Action",
+            "3D Fighter",
+            "Versus",
+            "Split-second Combat",
+          ],
           pros: [
-            'จำนวนตัวละครเยอะที่สุดในประวัติศาสตร์เกม DB',
-            'กราฟิกและเอฟเฟกต์ (Unreal 5) สวยงามอลังการ',
-            'เกมเพลย์ 3D Arena Fighter ที่รวดเร็วและคุ้นเคย',
+            "จำนวนตัวละครเยอะที่สุดในประวัติศาสตร์เกม DB",
+            "กราฟิกและเอฟเฟกต์ (Unreal 5) สวยงามอลังการ",
+            "เกมเพลย์ 3D Arena Fighter ที่รวดเร็วและคุ้นเคย",
             'โหมดเนื้อเรื่องมีฉาก "What If" ให้เล่น',
           ],
           cons: [
-            'ไม่มี Local Split-Screen (เล่น 2 คนจอเดียวกันไม่ได้)',
-            'โหมดเนื้อเรื่องถูกวิจารณ์ว่าใช้ภาพนิ่งเล่าเรื่องเยอะไป',
-            'บางคนรู้สึกว่าเกมเพลย์ซ้ำซาก (เมื่อเทียบกับเกมไฟต์ติ้งยุคใหม่)',
-            'การควบคุมอาจต้องใช้เวลาปรับตัว',
+            "ไม่มี Local Split-Screen (เล่น 2 คนจอเดียวกันไม่ได้)",
+            "โหมดเนื้อเรื่องถูกวิจารณ์ว่าใช้ภาพนิ่งเล่าเรื่องเยอะไป",
+            "บางคนรู้สึกว่าเกมเพลย์ซ้ำซาก (เมื่อเทียบกับเกมไฟต์ติ้งยุคใหม่)",
+            "การควบคุมอาจต้องใช้เวลาปรับตัว",
           ],
-          steamUrl: 'https://store.steampowered.com/app/1790600/DRAGON_BALL_Sparking_ZERO/',
+          steamUrl:
+            "https://store.steampowered.com/app/1790600/DRAGON_BALL_Sparking_ZERO/",
         },
         {
-          id: 'mecha-break',
-          title: 'Mecha BREAK',
-          iconUrl: 'icon/mechabreak.png',
-          youtubeId: '3M7QOaVYMNE',
-          description: 'Mecha Break คือเกมต่อสู้หุ่นยนต์ (Mech) แบบมัลติเพลเยอร์ความเร็วสูง ที่เน้นการต่อสู้สุดดุเดือดทั้งบนบกและกลางอากาศ สวมบทบาทเป็นนักบิน, เลือกหุ่นรบ (Mecha) ที่มีสไตล์การต่อสู้เฉพาะตัว, และปรับแต่งอาวุธได้อย่างอิสระ เกมชูจุดเด่นด้วยกราฟิก Unreal Engine 5 สุดอลังการ และโหมดการเล่นที่หลากหลาย ตั้งแต่ 3v3, 6v6, ไปจนถึงโหมด "Battle Royale" แบบ PvEvP ขนาด 60 คน ที่คุณต้องต่อสู้และเอาชีวิตรอด',
-          score: '9.0/10',
-          tags: ["Action", "Mecha", "Multiplayer", "PvP"],
+          id: "mecha-break",
+          title: "Mecha BREAK",
+          iconUrl: "icon/mechabreak.png",
+          youtubeId: "3M7QOaVYMNE",
+          description:
+            'Mecha Break คือเกมต่อสู้หุ่นยนต์ (Mech) แบบมัลติเพลเยอร์ความเร็วสูง ที่เน้นการต่อสู้สุดดุเดือดทั้งบนบกและกลางอากาศ สวมบทบาทเป็นนักบิน, เลือกหุ่นรบ (Mecha) ที่มีสไตล์การต่อสู้เฉพาะตัว, และปรับแต่งอาวุธได้อย่างอิสระ เกมชูจุดเด่นด้วยกราฟิก Unreal Engine 5 สุดอลังการ และโหมดการเล่นที่หลากหลาย ตั้งแต่ 3v3, 6v6, ไปจนถึงโหมด "Battle Royale" แบบ PvEvP ขนาด 60 คน ที่คุณต้องต่อสู้และเอาชีวิตรอด',
+          score: "9.0/10",
+          tags: [
+            "Action",
+            "Mecha",
+            "Multiplayer",
+            "PvP",
+            "Battle Royale",
+            "Team-Based",
+          ],
           pros: [
-            'เกมเพลย์ต่อสู้ความเร็วสูง (แบบ Gundam/Armored Core)',
-            'กราฟิก (UE5) และการออกแบบหุ่นยนต์สวยงามมาก',
-            'ระบบปรับแต่งหุ่น (Customization) ที่มีความลึก',
-            'โหมด 60 คน (PvEvP) ที่น่าสนใจ',
+            "เกมเพลย์ต่อสู้ความเร็วสูง (แบบ Gundam/Armored Core)",
+            "กราฟิก (UE5) และการออกแบบหุ่นยนต์สวยงามมาก",
+            "ระบบปรับแต่งหุ่น (Customization) ที่มีความลึก",
+            "โหมด 60 คน (PvEvP) ที่น่าสนใจ",
           ],
           cons: [
-            'เกมยังอยู่ในช่วง Early Access/Beta (ณ ปลายปี 2024/2025)',
-            'สมดุลของหุ่นและอาวุธยังไม่นิ่ง',
-            'ต้องใช้สเปกคอมพิวเตอร์ค่อนข้างสูง',
-            'เกมเน้นออนไลน์ (Online-only)',
+            "เกมยังอยู่ในช่วง Early Access/Beta (ณ ปลายปี 2024/2025)",
+            "สมดุลของหุ่นและอาวุธยังไม่นิ่ง",
+            "ต้องใช้สเปกคอมพิวเตอร์ค่อนข้างสูง",
+            "เกมเน้นออนไลน์ (Online-only)",
           ],
-          steamUrl: 'https://store.steampowered.com/app/2452280/Mecha_BREAK/',
+          steamUrl: "https://store.steampowered.com/app/2452280/Mecha_BREAK/",
         },
         {
-          id: 'ace-combat7',
-          title: 'ACE COMBAT™ 7: SKIES UNKNOWN',
-          iconUrl: 'icon/acecombat7.png',
-          youtubeId: 'rx6UpnPU0Eo',
-          description: 'ACE COMBAT 7: SKIES UNKNOWN คือการกลับมาอย่างยิ่งใหญ่ของราชาเกมขับเครื่องบินรบสไตล์อาร์เคด (Arcade Flight Combat) ที่พาคุณทะยานสู่ท้องฟ้าในโลก "Strangereal" สวมบทบาทนักบิน "Trigger" สัมผัสประสบการณ์การต่อสู้ทางอากาศ (Dogfight) ความเร็วสูง, ภารกิจทำลายล้าง, และการปะทะกับสุดยอดอาวุธยักษ์ (Superweapons) เกมโดดเด่นด้วยกราฟิก Unreal Engine 4 ที่งดงาม, เพลงประกอบสุดอลังการ, และระบบสภาพอากาศ (เช่น ก้อนเมฆหรือพายุสายฟ้า) ที่ส่งผลต่อการเล่นจริง นี่คือการผสมผสานที่ลงตัวระหว่างเกมเพลย์ที่เข้าถึงง่าย, มันส์สะใจ, และเนื้อเรื่องสุดดราม่าสไตล์อนิเมะการทหาร',
-          score: '9.0/10',
-          tags: ["Flight Action", "Arcade", "Jet", "Story Rich"],
+          id: "ace-combat7",
+          title: "ACE COMBAT™ 7: SKIES UNKNOWN",
+          iconUrl: "icon/acecombat7.png",
+          youtubeId: "rx6UpnPU0Eo",
+          description:
+            'ACE COMBAT 7: SKIES UNKNOWN คือการกลับมาอย่างยิ่งใหญ่ของราชาเกมขับเครื่องบินรบสไตล์อาร์เคด (Arcade Flight Combat) ที่พาคุณทะยานสู่ท้องฟ้าในโลก "Strangereal" สวมบทบาทนักบิน "Trigger" สัมผัสประสบการณ์การต่อสู้ทางอากาศ (Dogfight) ความเร็วสูง, ภารกิจทำลายล้าง, และการปะทะกับสุดยอดอาวุธยักษ์ (Superweapons) เกมโดดเด่นด้วยกราฟิก Unreal Engine 4 ที่งดงาม, เพลงประกอบสุดอลังการ, และระบบสภาพอากาศ (เช่น ก้อนเมฆหรือพายุสายฟ้า) ที่ส่งผลต่อการเล่นจริง นี่คือการผสมผสานที่ลงตัวระหว่างเกมเพลย์ที่เข้าถึงง่าย, มันส์สะใจ, และเนื้อเรื่องสุดดราม่าสไตล์อนิเมะการทหาร',
+          score: "9.0/10",
+          tags: [
+            "Flight Action",
+            "Arcade",
+            "Jet",
+            "Story Rich",
+            "Dogfight",
+            "Cinematic",
+          ],
           pros: [
-            'กราฟิก (UE4) และทิวทัศน์สวยงามอลังการ',
-            'เกมเพลย์ขับเครื่องบินที่มันส์สะใจและเข้าถึงง่าย',
-            'เพลงประกอบ (Soundtrack) ยิ่งใหญ่และบิลด์อารมณ์',
-            'บอสไฟต์ (Superweapons) และเนื้อเรื่องดราม่าเข้มข้น',
-            'โหมด VR (บน PS) มอบประสบการณ์ที่ดื่มด่ำสุดๆ',
+            "กราฟิก (UE4) และทิวทัศน์สวยงามอลังการ",
+            "เกมเพลย์ขับเครื่องบินที่มันส์สะใจและเข้าถึงง่าย",
+            "เพลงประกอบ (Soundtrack) ยิ่งใหญ่และบิลด์อารมณ์",
+            "บอสไฟต์ (Superweapons) และเนื้อเรื่องดราม่าเข้มข้น",
+            "โหมด VR (บน PS) มอบประสบการณ์ที่ดื่มด่ำสุดๆ",
           ],
           cons: [
             'เนื้อเรื่องอาจจะ "เว่อร์" และชวนงง (สไตล์ AC)',
-            'บางภารกิจออกแบบมาน่าหงุดหงิด (เช่น ภารกิจจับเวลา)',
-            'โหมด VR (บน PS) มีให้เล่นเพียงไม่กี่ภารกิจเท่านั้น',
-            'ไม่ใช่เกมแนว Flight Sim (สำหรับคนคาดหวังความสมจริง)',
+            "บางภารกิจออกแบบมาน่าหงุดหงิด (เช่น ภารกิจจับเวลา)",
+            "โหมด VR (บน PS) มีให้เล่นเพียงไม่กี่ภารกิจเท่านั้น",
+            "ไม่ใช่เกมแนว Flight Sim (สำหรับคนคาดหวังความสมจริง)",
           ],
-          steamUrl: 'https://store.steampowered.com/app/502500/ACE_COMBAT_7_SKIES_UNKNOWN/',
+          steamUrl:
+            "https://store.steampowered.com/app/502500/ACE_COMBAT_7_SKIES_UNKNOWN/",
         },
         {
-          id: 'nfs-heat',
-          title: 'Need for Speed™ Heat',
-          iconUrl: 'icon/nfs-heat.png',
-          youtubeId: 'bG844SBTS5s',
-          description: 'Need for Speed Heat พาคุณซิ่งสู่ Palm City เมืองสไตล์ไมอามี่ที่การแข่งขันแบ่งเป็นสองขั้วชัดเจน: "กลางวัน" แข่งขันอย่างถูกกฎหมายในอีเวนต์ Speedhunters Showdown เพื่อเก็บเงินแต่งรถ และ "กลางคืน" ที่คุณต้องซิ่งหนีตายจากการไล่ล่าของตำรวจสุดโหดเพื่อสร้างชื่อเสียง (REP) เกมนี้คือการกลับมาของรากเหง้า NFS ที่เน้นการแต่งรถ "JDM" และ "Tuner" ที่ลึกและหลากหลาย ผสมผสานกับการไล่ล่าของตำรวจที่ดุเดือดและท้าทาย',
-          score: 'x/10',
-          tags: ["Racing", "Open World", "Street Racing", "Tuner"],
+          id: "nfs-heat",
+          title: "Need for Speed™ Heat",
+          iconUrl: "icon/nfs-heat.png",
+          youtubeId: "bG844SBTS5s",
+          description:
+            'Need for Speed Heat พาคุณซิ่งสู่ Palm City เมืองสไตล์ไมอามี่ที่การแข่งขันแบ่งเป็นสองขั้วชัดเจน: "กลางวัน" แข่งขันอย่างถูกกฎหมายในอีเวนต์ Speedhunters Showdown เพื่อเก็บเงินแต่งรถ และ "กลางคืน" ที่คุณต้องซิ่งหนีตายจากการไล่ล่าของตำรวจสุดโหดเพื่อสร้างชื่อเสียง (REP) เกมนี้คือการกลับมาของรากเหง้า NFS ที่เน้นการแต่งรถ "JDM" และ "Tuner" ที่ลึกและหลากหลาย ผสมผสานกับการไล่ล่าของตำรวจที่ดุเดือดและท้าทาย',
+          score: "x/10",
+          tags: [
+            "Racing",
+            "Open World",
+            "Street Racing",
+            "Tuner",
+            "Day & Night",
+            "Car Customization",
+          ],
           pros: [
-            'ระบบแต่งรถ (Customization) ดีที่สุดในรอบหลายภาค',
+            "ระบบแต่งรถ (Customization) ดีที่สุดในรอบหลายภาค",
             'บรรยากาศ "กลางวัน vs กลางคืน" ที่แตกต่างชัดเจน',
-            'การไล่ล่าของตำรวจที่ตึงเครียดและสนุก (โดยเฉพาะกลางคืน)',
-            'กราฟิกและแสงสี (โดยเฉพาะตอนฝนตก) สวยงาม',
+            "การไล่ล่าของตำรวจที่ตึงเครียดและสนุก (โดยเฉพาะกลางคืน)",
+            "กราฟิกและแสงสี (โดยเฉพาะตอนฝนตก) สวยงาม",
           ],
           cons: [
-            'เนื้อเรื่องสั้นและค่อนข้างธรรมดา',
-            'ฟิสิกส์การขับรถยังเป็นสไตล์อาร์เคด (ไม่ใช่สมจริง)',
-            'ตำรวจในช่วงกลางวันค่อนข้างง่ายเกินไป',
-            'แผนที่อาจจะรู้สึกซ้ำซากเล็กน้อยเมื่อเล่นไปนานๆ',
+            "เนื้อเรื่องสั้นและค่อนข้างธรรมดา",
+            "ฟิสิกส์การขับรถยังเป็นสไตล์อาร์เคด (ไม่ใช่สมจริง)",
+            "ตำรวจในช่วงกลางวันค่อนข้างง่ายเกินไป",
+            "แผนที่อาจจะรู้สึกซ้ำซากเล็กน้อยเมื่อเล่นไปนานๆ",
           ],
-          steamUrl: 'https://store.steampowered.com/app/1222680/Need_for_Speed_Heat/',
-        }
+          steamUrl:
+            "https://store.steampowered.com/app/1222680/Need_for_Speed_Heat/",
+        },
       ];
 
-      // ฟังก์ชันแปลงคะแนนเป็น HTML ดาว ⭐
+      const teamMembers = [
+        {
+          name: "นายชัยกาญจน์ ขันธนิธิ",
+          id: "68042995",
+          role: "Presenter & InfoGraphic Designer",
+          image: "https://placehold.co/400x400/png?text=Member+1",
+        },
+        {
+          name: "นายณชาศิลป์ นาเคณฑ์",
+          id: "68040402",
+          role: "Project Manager & Fullstack Dev",
+          image: "icon/Fluke.jpg",
+        },
+        {
+          name: "นายวสุธร ทรงสวัสดิ์วงศ์",
+          id: "68094957",
+          role: "Researcher",
+          image: "icon/Zhu.jpg",
+        },
+        {
+          name: "นายกิตติพช พลวิชิต",
+          id: "68078966",
+          role: "Researcher",
+          image: "icon/Kong.jpg",
+        },
+        {
+          name: "นายยศกร ทองคำแท้",
+          id: "68037092",
+          role: "Researcher",
+          image: "icon/Put.jpg",
+        },
+      ];
+
+      const spotlightGames = [
+        {
+          id: "elden-ring-spotlight",
+          title: "Elden Ring",
+          subtitle: "Shadow of the Erdtree Update",
+          coverImage:
+            "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=60",
+          tags: ["GOTY", "Souls-like", "Open World"],
+          summary:
+            "นำเสนอคอนเทนต์ DLC ล่าสุด พร้อมแนะนำเส้นทางเก็บบอสลับและบิลด์ยอดนิยมที่ยังคงโกงเกมได้แบบสะใจ.",
+          highlights: [
+            "แนะนำบอสที่ควรไปหาอาวุธก่อนสู้",
+            "สรุป Meta Build (Bleed & Faith) เวอร์ชัน 1.12",
+            "ลิสต์ไอเทมสำคัญที่ไม่ควรพลาดใน DLC",
+          ],
+          stats: [
+            { label: "Score", value: "9.5/10" },
+            { label: "Playtime", value: "100+ ชม." },
+            { label: "Mode", value: "Solo / Co-op" },
+            { label: "Difficulty", value: "สูงมาก" },
+          ],
+          videoId: "eD_oYIbublE",
+          storeUrl: "https://store.steampowered.com/app/1245620/ELDEN_RING/",
+        },
+        {
+          id: "monster-hunter-spotlight",
+          title: "Monster Hunter World",
+          subtitle: "Co-op ที่ยังสนุกสุดในปี 2025",
+          coverImage:
+            "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=900&q=60",
+          tags: ["Co-op", "Hunting", "Iceborne"],
+          summary:
+            "รวบรวมกิจกรรมพิเศษปัจจุบัน, เซ็ตเกราะ Meta และแนวทางหาของสำหรับผู้เล่นที่เพิ่งกลับมา.",
+          highlights: [
+            "Roadmap แนะนำลำดับการล่าจาก HR0 ถึง MR100",
+            "สรุป Meta Weapons สำหรับทุกสาย",
+            "Mod คุณภาพชีวิตที่ช่วยให้เล่นสนุกขึ้น",
+          ],
+          stats: [
+            { label: "Score", value: "9/10" },
+            { label: "Team", value: "1-4 คน" },
+            { label: "Content", value: "Iceborne" },
+            { label: "Hours", value: "80+ ชม." },
+          ],
+          videoId: "D8ubGtcYxpA",
+          storeUrl: "https://store.steampowered.com/app/582010/Monster_Hunter_World/",
+        },
+        {
+          id: "nfs-heat-spotlight",
+          title: "Need for Speed Heat",
+          subtitle: "สายแต่งรถกลางวัน-กลางคืน",
+          coverImage:
+            "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=900&q=60",
+          tags: ["Racing", "Tuner", "Night Ride"],
+          summary:
+            "คู่มือสร้างรถสำหรับกลางวัน/กลางคืน, เทคนิคหนีตำรวจระดับ Heat 5 และคอมมูนิตี้ Custom Liveries.",
+          highlights: [
+            "สเปกรถแนะนำ 3 คลาส (A, S, S+) สำหรับ Street / Track",
+            "เทคนิคหนีตำรวจ + เส้นทางซ่อนตัวใน Palm City",
+            "รวม Liveries เท่ ๆ พร้อมรหัสแชร์",
+          ],
+          stats: [
+            { label: "Score", value: "8.8/10" },
+            { label: "Platform", value: "PC / Console" },
+            { label: "Focus", value: "Street Racing" },
+            { label: "Playstyle", value: "Solo / Online" },
+          ],
+          videoId: "bG844SBTS5s",
+          storeUrl: "https://store.steampowered.com/app/1222680/Need_for_Speed_Heat/",
+        },
+      ];
+
+      /* ---------------- Render Functions ---------------- */
+
+      // Render Game List
+      let currentSearch = "";
+      let currentTagFilter = "";
+
       function getStarHtml(scoreStr) {
-        if (!scoreStr || scoreStr.includes("x")) return ""; 
-        const score = parseFloat(scoreStr); 
-        const maxScore = 10;
+        if (!scoreStr || scoreStr.includes("x")) return "";
+        const score = parseFloat(scoreStr);
         let starsHtml = '<span class="star-rating">';
-        const starCount = score / 2; 
+        const starCount = score / 2;
         for (let i = 1; i <= 5; i++) {
-            if (starCount >= i) {
-                starsHtml += '<i class="fa-solid fa-star"></i>'; 
-            } else if (starCount >= i - 0.5) {
-                starsHtml += '<i class="fa-solid fa-star-half-stroke"></i>'; 
-            } else {
-                starsHtml += '<i class="fa-regular fa-star"></i>'; 
-            }
+          if (starCount >= i) starsHtml += '<i class="fa-solid fa-star"></i>';
+          else if (starCount >= i - 0.5)
+            starsHtml += '<i class="fa-solid fa-star-half-stroke"></i>';
+          else starsHtml += '<i class="fa-regular fa-star"></i>';
         }
-        starsHtml += '</span>';
+        starsHtml += "</span>";
         return starsHtml;
       }
 
-      // ฟังก์ชันสร้างป้าย Tags
       function getTagsHtml(tags) {
-          if(!tags) return "";
-          return tags.map(tag => `<span class="badge rounded-pill badge-genre">${tag}</span>`).join("");
+        if (!tags) return "";
+        return tags
+          .map(
+            (tag) =>
+              `<span class="badge rounded-pill badge-genre">${tag}</span>`
+          )
+          .join("");
       }
 
-      function renderGameList(filterText = "") {
+      function renderGameList() {
         const container = document.getElementById("game-list-container");
+        if (!container) return;
+        const search = currentSearch.toLowerCase().trim();
+        const tag = currentTagFilter;
         let allGamesHtml = "";
-        let hasGame = false;
-
+        let renderedCount = 0;
         gameData.forEach((game, index) => {
-          const searchText = filterText.toLowerCase();
-          const matchTitle = game.title.toLowerCase().includes(searchText);
-          const matchTags = game.tags ? game.tags.some(tag => tag.toLowerCase().includes(searchText)) : false;
+          const titleMatch =
+            !search || game.title.toLowerCase().includes(search);
+          const tagMatch =
+            !tag || (game.tags && game.tags.includes(tag));
+          if (!titleMatch || !tagMatch) return;
+          renderedCount++;
 
-          if (filterText !== "" && !matchTitle && !matchTags) return;
-
-          hasGame = true;
           const isVideoLeft = index % 2 === 0;
           const videoColOrder = isVideoLeft ? "" : "order-lg-2";
           const textColOrder = isVideoLeft ? "" : "order-lg-1";
 
-          if (allGamesHtml !== "") {
+          if (allGamesHtml !== "")
             allGamesHtml += `<hr class="border-danger border-2 opacity-50 my-5" />`;
-          }
 
           let shopButtonHtml = "";
           if (game.steamUrl && game.steamUrl.trim() !== "") {
-            shopButtonHtml = `
-            <a class="btn btn-lg btn-custom-shop" 
-               href="${game.steamUrl}" 
-               target="_blank" 
-               rel="noopener noreferrer"
-               title="สั่งซื้อเกมนี้บน Steam">
-               <i class="fa-solid fa-shop"></i>
-               <span class="d-none d-md-inline ms-2">สั่งซื้อเกมนี้</span>
-            </a>
-          `;
+            shopButtonHtml = `<a class="btn btn-lg btn-custom-shop" href="${game.steamUrl}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-shop"></i><span class="d-none d-md-inline ms-2">สั่งซื้อเกมนี้</span></a>`;
           }
-          
-          const iconHtml = game.iconUrl ? `<img src="${game.iconUrl}" alt="${game.title} icon" width="78" onerror="this.style.display='none'"/>` : '';
 
-          const gameHtml = `
+          const iconHtml = game.iconUrl
+            ? `<img src="${game.iconUrl}" alt="${game.title} icon" width="78" onerror="this.style.display='none'"/>`
+            : "";
+
+          allGamesHtml += `
           <section id="game-${
             game.id
           }" class="row g-4 align-items-center my-4 pt-4">
             <div class="col-lg-6 ${videoColOrder}">
               <div class="ratio ratio-16x9 video-wrapper">
-                <iframe
-                  src="https://www.youtube.com/embed/${game.youtubeId}"
-                  loading="lazy"
-                  title="YouTube video player"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/${
+                  game.youtubeId
+                }" loading="lazy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
               </div>
             </div>
             <div class="col-lg-6 ${textColOrder}">
-              <h2 class="display-6 text-center">
-                ${game.title}
-                ${iconHtml}
-              </h2>
-              
-              <div class="text-center mb-3">
-                 ${getTagsHtml(game.tags)}
-              </div>
-
+              <h2 class="display-6 text-center">${game.title} ${iconHtml}</h2>
+              <div class="text-center mb-3">${getTagsHtml(game.tags)}</div>
               <p class="fs-5">${game.description}</p>
-              
               <div class="row mb-3">
-                <div class="col-md-6">
-                  <h5 class="text-success"><i class="fa-solid fa-circle-check"></i> จุดเด่น (Pros)</h5>
-                  <ul class="fs-6">
-                    ${game.pros.map((pro) => `<li>${pro}</li>`).join("")}
-                  </ul>
-                </div>
-                <div class="col-md-6">
-                  <h5 class="text-warning"><i class="fa-solid fa-circle-exclamation"></i> จุดด้อย (Cons)</h5>
-                  <ul class="fs-6">
-                    ${game.cons.map((con) => `<li>${con}</li>`).join("")}
-                  </ul>
-                </div>
+                <div class="col-md-6"><h5 class="text-success"><i class="fa-solid fa-circle-check"></i> จุดเด่น</h5><ul class="fs-6">${game.pros
+                  .map((p) => `<li>${p}</li>`)
+                  .join("")}</ul></div>
+                <div class="col-md-6"><h5 class="text-warning"><i class="fa-solid fa-circle-exclamation"></i> จุดด้อย</h5><ul class="fs-6">${game.cons
+                  .map((c) => `<li>${c}</li>`)
+                  .join("")}</ul></div>
               </div>
               <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
-                 <div class="d-flex align-items-center">
-                    ${getStarHtml(game.score)}
-                    <h4 class="text-danger mb-0 fw-bold">คะแนน: ${game.score}</h4>
-                 </div>
-                 ${shopButtonHtml} 
+                 <div class="d-flex align-items-center">${getStarHtml(
+                   game.score
+                 )}<h4 class="text-danger mb-0 fw-bold">คะแนน: ${
+            game.score
+          }</h4></div>
+                 ${shopButtonHtml}
               </div>
             </div>
-          </section>
-        `;
+          </section>`;
+        });
+        if (allGamesHtml === "") {
+          container.innerHTML = `<div class="text-center py-5">
+            <i class="fa-solid fa-sad-tear fa-3x text-danger mb-3"></i>
+            <p class="fs-4 fw-bold">ไม่พบเกมที่ตรงกับการค้นหาหรือแท็กที่เลือก</p>
+            <p class="opacity-75">ลองเปลี่ยนคำค้นหาหรือเลือกหมวดหมู่อื่นดูนะครับ</p>
+          </div>`;
+          return;
+        }
+        container.innerHTML = allGamesHtml;
+      }
 
-          allGamesHtml += gameHtml;
+      function renderSkeletonCards(count = 3) {
+        const container = document.getElementById("game-list-container");
+        if (!container) return;
+        let placeholderHtml = "";
+        for (let i = 0; i < count; i++) {
+          placeholderHtml += `
+            <div class="skeleton-card">
+              <div class="skeleton-line w-75"></div>
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line w-50"></div>
+              <div class="skeleton-line"></div>
+              <div class="skeleton-line w-25"></div>
+            </div>`;
+        }
+        container.innerHTML = placeholderHtml;
+      }
+
+      function getAllTags() {
+        const tagsSet = new Set();
+        gameData.forEach((game) => {
+          if (game.tags && Array.isArray(game.tags)) {
+            game.tags.forEach((t) => tagsSet.add(t));
+          }
+        });
+        return Array.from(tagsSet).sort();
+      }
+
+      function initFilters() {
+        const searchInput = document.getElementById("game-search-input");
+        const tagSelect = document.getElementById("game-tag-filter");
+        if (!searchInput || !tagSelect) return;
+
+        const allTags = getAllTags();
+        tagSelect.innerHTML =
+          '<option value="">ทุกแนวเกม</option>' +
+          allTags.map((t) => `<option value="${t}">${t}</option>`).join("");
+
+        searchInput.addEventListener("input", (e) => {
+          currentSearch = e.target.value || "";
+          renderGameList();
         });
 
-        if (!hasGame) {
-            container.innerHTML = `<div class="text-center py-5"><h3>ไม่พบเกมที่คุณค้นหา... 😅</h3></div>`;
-        } else {
-            container.innerHTML = allGamesHtml;
-        }
+        tagSelect.addEventListener("change", (e) => {
+          currentTagFilter = e.target.value || "";
+          renderGameList();
+        });
       }
 
       function renderGameJumpList() {
         const listContainer = document.getElementById("game-jump-list");
-        if (!listContainer) return;
-
         let listHtml = "";
         gameData.forEach((game) => {
-          listHtml += `
-          <li>
-            <a class="dropdown-item" href="#game-${game.id}">
-              ${game.title}
-            </a>
-          </li>
-        `;
+          listHtml += `<li><a class="dropdown-item" href="#game-${game.id}">${game.title}</a></li>`;
         });
         listContainer.innerHTML = listHtml;
       }
-      
+
+      // Render Team Grid
+      function createMemberCard(member, colSize) {
+        return `
+            <div class="col-md-6 ${colSize}">
+              <div class="theme-bg rounded-3 p-4 text-center profile-card shadow-lg">
+                <div class="profile-img-wrapper"><img src="${member.image}" alt="${member.name}"></div>
+                <div class="role-badge shadow-sm">${member.role}</div>
+                <h3 class="mb-1 fs-3">${member.name}</h3>
+                <p class="student-id mb-0"><i class="fa-solid fa-id-card me-2"></i>${member.id}</p>
+              </div>
+            </div>`;
+      }
+
+      function renderTeamGrid() {
+        const container = document.getElementById("team-grid");
+        const topRowMembers = teamMembers.slice(0, 3);
+        const bottomRowMembers = teamMembers.slice(3, 5);
+        let html = '<div class="row g-4 justify-content-center mb-4">';
+        topRowMembers.forEach(
+          (member) => (html += createMemberCard(member, "col-lg-4"))
+        );
+        html += '</div><div class="row g-4 justify-content-center">';
+        bottomRowMembers.forEach(
+          (member) => (html += createMemberCard(member, "col-lg-4"))
+        );
+        html += "</div>";
+        container.innerHTML = html;
+      }
+
+      function renderSpotlightGrid() {
+        const container = document.getElementById("spotlight-grid");
+        if (!container) return;
+        let html = "";
+        spotlightGames.forEach((game) => {
+          const chipsHtml = (game.tags || [])
+            .map((tag) => `<span class="spotlight-chip">${tag}</span>`)
+            .join("");
+          const highlightsHtml = (game.highlights || [])
+            .map(
+              (item) =>
+                `<li><i class="fa-solid fa-circle-check mt-1"></i><span>${item}</span></li>`
+            )
+            .join("");
+          const statsHtml = (game.stats || [])
+            .map(
+              (stat) => `
+            <div class="spotlight-stat">
+              <small class="text-uppercase opacity-75">${stat.label}</small>
+              <strong>${stat.value}</strong>
+            </div>`
+            )
+            .join("");
+          const backgroundStyle = game.coverImage
+            ? `style="background-image: linear-gradient(135deg, rgba(107,0,0,0.85), rgba(0,0,0,0.6)), url('${game.coverImage}');"`
+            : "";
+          html += `
+          <div class="col-12 col-lg-4">
+            <article class="spotlight-card" ${backgroundStyle}>
+              <div class="spotlight-header">
+                <div>
+                  <h3 class="spotlight-title mb-1">${game.title}</h3>
+                  <p class="mb-0 opacity-75">${game.subtitle || ""}</p>
+                </div>
+              </div>
+              <div class="spotlight-chips mb-3">${chipsHtml}</div>
+              <p class="fs-5">${game.summary}</p>
+              <ul class="spotlight-highlights">${highlightsHtml}</ul>
+              <div class="spotlight-stats">${statsHtml}</div>
+              <div class="spotlight-actions d-flex flex-wrap gap-3">
+                <a class="btn btn-outline-light" href="https://www.youtube.com/watch?v=${
+                  game.videoId
+                }" target="_blank" rel="noopener">
+                  <i class="fa-brands fa-youtube me-2"></i>ชม Trailer
+                </a>
+                <a class="btn btn-danger" href="${game.storeUrl}" target="_blank" rel="noopener">
+                  <i class="fa-solid fa-cart-shopping me-2"></i>ดูรายละเอียด
+                </a>
+              </div>
+            </article>
+          </div>`;
+        });
+        container.innerHTML = html;
+      }
+
+      /* ---------------- Utility Logic (Theme, Scroll, Navigation) ---------------- */
+
+      // Theme Toggle with localStorage
+      function applyTheme(theme) {
+        const body = document.body;
+        const icon = document.getElementById("themeIcon");
+        const navbar = document.querySelector(".navbar");
+
+        if (theme === "light") {
+          body.setAttribute("data-theme", "light");
+          if (icon) icon.classList.replace("fa-sun", "fa-moon");
+          if (navbar) {
+            navbar.classList.remove("navbar-dark", "bg-dark");
+            navbar.classList.add("navbar-light", "bg-light");
+          }
+        } else {
+          body.removeAttribute("data-theme");
+          if (icon) icon.classList.replace("fa-moon", "fa-sun");
+          if (navbar) {
+            navbar.classList.remove("navbar-light", "bg-light");
+            navbar.classList.add("navbar-dark", "bg-dark");
+          }
+        }
+
+        localStorage.setItem("theme", theme);
+      }
+
+      function toggleTheme() {
+        const isLight = document.body.getAttribute("data-theme") === "light";
+        const nextTheme = isLight ? "dark" : "light";
+        applyTheme(nextTheme);
+      }
+
+      // Back to Top
+      let mybutton = document.getElementById("btn-back-to-top");
+      window.onscroll = function () {
+        if (
+          document.body.scrollTop > 200 ||
+          document.documentElement.scrollTop > 200
+        ) {
+          mybutton.style.display = "block";
+        } else {
+          mybutton.style.display = "none";
+        }
+      };
+      mybutton.addEventListener("click", () => {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      });
+
+      /* ---------------- PAGE SWITCHING LOGIC (Single File Magic) ---------------- */
+      function switchPage(pageId) {
+        const homeSection = document.getElementById("home-section");
+        const aboutSection = document.getElementById("about-section");
+        const spotlightSection = document.getElementById("spotlight-section");
+        const contactSection = document.getElementById("contact-section");
+
+        // Navbar Items (Desktop & Mobile)
+        const navHomeMobile = document.getElementById("nav-home-mobile");
+        const navAboutMobile = document.getElementById("nav-about-mobile");
+        const navSpotlightMobile =
+          document.getElementById("nav-spotlight-mobile");
+        const navContactMobile = document.getElementById("nav-contact-mobile");
+        const navHomeDesktop = document.getElementById("nav-home-desktop");
+        const navAboutDesktop = document.getElementById("nav-about-desktop");
+        const navSpotlightDesktop = document.getElementById(
+          "nav-spotlight-desktop"
+        );
+        const navContactDesktop = document.getElementById("nav-contact-desktop");
+
+        // Reset Scroll
+        window.scrollTo(0, 0);
+
+        if (pageId === "home") {
+          // Show Home, Hide others
+          homeSection.classList.remove("d-none-section");
+          aboutSection.classList.add("d-none-section");
+          if (spotlightSection) spotlightSection.classList.add("d-none-section");
+          if (contactSection) contactSection.classList.add("d-none-section");
+
+          // Update Active Class
+          navHomeMobile.classList.add("active-custom");
+          navAboutMobile.classList.remove("active-custom");
+          if (navSpotlightMobile)
+            navSpotlightMobile.classList.remove("active-custom");
+          if (navContactMobile) navContactMobile.classList.remove("active-custom");
+          if (navHomeDesktop) navHomeDesktop.classList.add("active-custom");
+          if (navAboutDesktop)
+            navAboutDesktop.classList.remove("active-custom");
+          if (navSpotlightDesktop)
+            navSpotlightDesktop.classList.remove("active-custom");
+          if (navContactDesktop)
+            navContactDesktop.classList.remove("active-custom");
+        } else if (pageId === "about") {
+          // Hide Home, Show About
+          homeSection.classList.add("d-none-section");
+          aboutSection.classList.remove("d-none-section");
+          if (spotlightSection) spotlightSection.classList.add("d-none-section");
+          if (contactSection) contactSection.classList.add("d-none-section");
+
+          // Update Active Class
+          navHomeMobile.classList.remove("active-custom");
+          navAboutMobile.classList.add("active-custom");
+          if (spotlightSection && navSpotlightMobile)
+            navSpotlightMobile.classList.remove("active-custom");
+          if (navContactMobile) navContactMobile.classList.remove("active-custom");
+          if (navHomeDesktop) navHomeDesktop.classList.remove("active-custom");
+          if (navAboutDesktop) navAboutDesktop.classList.add("active-custom");
+          if (navSpotlightDesktop)
+            navSpotlightDesktop.classList.remove("active-custom");
+          if (navContactDesktop)
+            navContactDesktop.classList.remove("active-custom");
+        } else if (pageId === "spotlight") {
+          homeSection.classList.add("d-none-section");
+          aboutSection.classList.add("d-none-section");
+          if (spotlightSection) spotlightSection.classList.remove("d-none-section");
+          if (contactSection) contactSection.classList.add("d-none-section");
+
+          navHomeMobile.classList.remove("active-custom");
+          navAboutMobile.classList.remove("active-custom");
+          if (navSpotlightMobile) navSpotlightMobile.classList.add("active-custom");
+          if (navContactMobile) navContactMobile.classList.remove("active-custom");
+          if (navHomeDesktop) navHomeDesktop.classList.remove("active-custom");
+          if (navAboutDesktop) navAboutDesktop.classList.remove("active-custom");
+          if (navSpotlightDesktop)
+            navSpotlightDesktop.classList.add("active-custom");
+          if (navContactDesktop)
+            navContactDesktop.classList.remove("active-custom");
+        } else if (pageId === "contact") {
+          homeSection.classList.add("d-none-section");
+          aboutSection.classList.add("d-none-section");
+          if (spotlightSection) spotlightSection.classList.add("d-none-section");
+          if (contactSection) contactSection.classList.remove("d-none-section");
+
+          navHomeMobile.classList.remove("active-custom");
+          navAboutMobile.classList.remove("active-custom");
+          if (navSpotlightMobile)
+            navSpotlightMobile.classList.remove("active-custom");
+          if (navContactMobile) navContactMobile.classList.add("active-custom");
+          if (navHomeDesktop) navHomeDesktop.classList.remove("active-custom");
+          if (navAboutDesktop) navAboutDesktop.classList.remove("active-custom");
+          if (navSpotlightDesktop)
+            navSpotlightDesktop.classList.remove("active-custom");
+          if (navContactDesktop)
+            navContactDesktop.classList.add("active-custom");
+        }
+
+        // Close Offcanvas automatically on mobile
+        const offcanvasElement = document.getElementById("mySidenav");
+        const bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+        if (bsOffcanvas) {
+          bsOffcanvas.hide();
+        }
+      }
+
+      // Show placeholders immediately
+      renderSkeletonCards();
+
+      // Initialization
       document.addEventListener("DOMContentLoaded", () => {
+        const savedTheme = localStorage.getItem("theme") || "dark";
+        applyTheme(savedTheme);
         renderGameList();
         renderGameJumpList();
+        renderTeamGrid();
+        renderSpotlightGrid();
+        initFilters();
+        initContactForm();
       });
+
+      function initContactForm() {
+        const form = document.getElementById("contact-form");
+        if (!form) return;
+        const statusEl = document.getElementById("contact-status");
+        const submitBtn = document.getElementById("contact-submit-btn");
+
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+
+          if (!form.checkValidity()) {
+            form.classList.add("was-validated");
+            return;
+          }
+
+          form.classList.remove("was-validated");
+          submitBtn.disabled = true;
+          submitBtn.innerHTML =
+            '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>กำลังส่ง...';
+          statusEl.innerHTML =
+            '<div class="alert alert-info py-2 mb-0"><i class="fa-solid fa-circle-info me-2"></i>กำลังส่งข้อมูลของคุณ...</div>';
+
+          setTimeout(() => {
+            statusEl.innerHTML =
+              '<div class="alert alert-success py-2 mb-0"><i class="fa-solid fa-circle-check me-2"></i>ส่งข้อมูลเรียบร้อย ทีมงานจะติดต่อกลับโดยเร็วที่สุด</div>';
+            submitBtn.disabled = false;
+            submitBtn.innerHTML =
+              '<i class="fa-regular fa-paper-plane me-2"></i>ส่งข้อความ';
+            form.reset();
+          }, 1200);
+        });
+      }
     </script>
   </body>
 </html>
