@@ -20,11 +20,10 @@
       integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer" />
-      <meta name="description" content="รีวิวเกมดัง Elden Ring, Monster Hunter, Warframe ฯลฯ แบบอ่านง่าย ภาษาไทย">
-      <meta property="og:title" content="Game Reviews TH">
-      <meta property="og:description" content="รวมรีวิวเกมภาษาไทย พร้อมลิงก์ซื้อบน Steam">
-      <meta property="og:type" content="website">
-      <meta property="og:image" content="icon/preview.png">
+    <meta
+      name="description"
+      content="รีวิวเกมดัง Elden Ring, Monster Hunter, Warframe ฯลฯ แบบอ่านง่าย ภาษาไทย" />
+    <meta property="og:title" content="Game Reviews TH" />
 
     <style>
       /* --- Global Styles --- */
@@ -60,7 +59,7 @@
           var(--main-bg-gradient-end)
         );
         background-attachment: fixed;
-        font-family: "Prompt", "Noto Sans", sans-serif; /* รวม Font */
+        font-family: "Prompt", "Noto Sans", sans-serif;
         font-weight: 400;
         color: var(--text-color);
         transition: background 0.5s ease, color 0.3s ease;
@@ -72,7 +71,7 @@
 
       main {
         flex: 1;
-      } /* ดัน Footer ลงล่าง */
+      }
 
       /* --- Common Components --- */
       .theme-bg {
@@ -123,7 +122,7 @@
         max-width: 1400px;
       }
 
-      /* --- Navbar Active State --- */
+      /* --- Navbar --- */
       .nav-link.active-custom {
         background-color: var(--bs-danger);
         color: white !important;
@@ -133,61 +132,20 @@
         background-color: #440606;
         color: white;
       }
-
-      /* Navbar links color per theme */
       nav.navbar .nav-link {
         transition: color 0.2s ease, background-color 0.2s ease;
       }
-
-      /* default (dark) navbar: ใช้ตัวอักษรสีขาวตามเดิม */
       body:not([data-theme="light"]) nav.navbar .nav-link {
         color: #ffffff;
       }
-
-      /* light theme: ให้ลิงก์เป็นสีดำ/เทาเข้ม ยกเว้นปุ่มที่ active */
       body[data-theme="light"] nav.navbar .nav-link:not(.active-custom) {
         color: #212529 !important;
       }
-
       body[data-theme="light"] nav.navbar .nav-link:not(.active-custom):hover {
         background-color: rgba(0, 0, 0, 0.05);
       }
 
-      /* --- Footer Social Icons --- */
-      .social-link {
-        color: rgba(255, 255, 255, 0.65);
-        transition: color 0.2s ease, transform 0.2s ease;
-      }
-
-      [data-theme="light"] .social-link {
-        color: rgba(0, 0, 0, 0.6);
-      }
-
-      .social-link:hover {
-        transform: translateY(-2px);
-      }
-
-      .social-line:hover {
-        color: #00c300;
-      }
-
-      .social-instagram:hover {
-        color: #e4405f;
-      }
-
-      .social-facebook:hover {
-        color: #1778f2;
-      }
-
-      .social-youtube:hover {
-        color: #ff0000;
-      }
-
-      .social-tiktok:hover {
-        color: #25f4ee;
-      }
-
-      /* --- Buttons & Toggles --- */
+      /* --- Buttons --- */
       .theme-toggle-btn {
         cursor: pointer;
         font-size: 1.5rem;
@@ -219,7 +177,7 @@
         transform: scale(1.1);
       }
 
-      /* --- Home Section Styles --- */
+      /* --- Home Section --- */
       .video-wrapper {
         border: 1px solid var(--bs-danger);
         border-radius: 0.5rem;
@@ -262,22 +220,19 @@
         font-size: 0.85rem;
       }
 
-      /* --- Filter Controls (Search & Tag Dropdown) --- */
+      /* --- Inputs --- */
       #game-search-input,
       #game-tag-filter {
         background-color: var(--card-bg);
         color: var(--text-color);
         border: 1px solid var(--bs-danger);
       }
-
       #game-search-input::placeholder {
         color: rgba(255, 255, 255, 0.6);
       }
-
       [data-theme="light"] #game-search-input::placeholder {
         color: rgba(0, 0, 0, 0.5);
       }
-
       #game-search-input:focus,
       #game-tag-filter:focus {
         border-color: var(--bs-danger);
@@ -286,94 +241,24 @@
         color: var(--text-color);
       }
 
-      /* --- Skeleton Placeholder --- */
-      @keyframes shimmer {
-        0% {
-          background-position: -200px 0;
-        }
-        100% {
-          background-position: 200px 0;
-        }
-      }
-
-      .skeleton-card {
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 1rem;
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-        background-color: rgba(0, 0, 0, 0.2);
-      }
-
-      [data-theme="light"] .skeleton-card {
-        background-color: rgba(0, 0, 0, 0.05);
-        border-color: rgba(0, 0, 0, 0.08);
-      }
-
-      .skeleton-line {
-        height: 16px;
-        border-radius: 999px;
-        margin-bottom: 10px;
-        background: linear-gradient(
-          90deg,
-          rgba(255, 255, 255, 0.08) 0%,
-          rgba(255, 255, 255, 0.2) 50%,
-          rgba(255, 255, 255, 0.08) 100%
-        );
-        background-size: 400px 100%;
-        animation: shimmer 1.5s infinite;
-      }
-
-      [data-theme="light"] .skeleton-line {
-        background: linear-gradient(
-          90deg,
-          rgba(0, 0, 0, 0.05) 0%,
-          rgba(0, 0, 0, 0.12) 50%,
-          rgba(0, 0, 0, 0.05) 100%
-        );
-      }
-
-      .skeleton-line.w-75 {
-        width: 75%;
-      }
-      .skeleton-line.w-50 {
-        width: 50%;
-      }
-      .skeleton-line.w-25 {
-        width: 25%;
-      }
-
-      /* --- Game Jump Dropdown (Theme Aware) --- */
-      #gameJumpMenu {
-        border-width: 2px;
-      }
-
-      /* default (dark theme) */
+      /* --- Dropdown --- */
       .dropdown-menu-dark#game-jump-list {
         background-color: #111;
         color: #f8f9fa;
         border: 1px solid rgba(255, 255, 255, 0.08);
       }
-
-      .dropdown-menu-dark#game-jump-list .dropdown-item {
-        color: #f8f9fa;
-      }
-
       .dropdown-menu-dark#game-jump-list .dropdown-item:hover {
         background-color: var(--bs-danger);
         color: #ffffff;
       }
-
-      /* light theme override */
       [data-theme="light"] .dropdown-menu-dark#game-jump-list {
         background-color: #ffffff;
         color: #212529;
         border-color: rgba(0, 0, 0, 0.12);
       }
-
       [data-theme="light"] .dropdown-menu-dark#game-jump-list .dropdown-item {
         color: #212529;
       }
-
       [data-theme="light"]
         .dropdown-menu-dark#game-jump-list
         .dropdown-item:hover {
@@ -381,7 +266,7 @@
         color: #000000;
       }
 
-      /* --- About Section Styles --- */
+      /* --- About Section --- */
       .profile-card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         height: 100%;
@@ -429,204 +314,130 @@
         color: #666;
       }
 
-      /* Utility to Hide Section */
-      .d-none-section {
-        display: none !important;
+      /* --- Gallery Section (New Style for Section 3) --- */
+      .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+      }
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+      .gallery-item:hover img {
+        transform: scale(1.1);
+      }
+      .gallery-item:hover {
+        border-color: var(--bs-danger);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+      }
+      .gallery-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+        padding: 20px;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+      }
+      .gallery-item:hover .gallery-caption {
+        transform: translateY(0);
       }
 
-      /* --- Contact Section Styles --- */
-      .contact-grid {
-        --bs-gutter-y: 1.5rem;
-        --bs-gutter-x: 1.5rem;
+      /* --- FAQ Section (New Style for Section 5) --- */
+      .accordion-button:not(.collapsed) {
+        color: white;
+        background-color: var(--bs-danger);
+        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125);
+      }
+      .accordion-button:focus {
+        border-color: var(--bs-danger);
+        box-shadow: 0 0 0 0.25rem rgba(107, 0, 0, 0.25);
+      }
+      .accordion-item {
+        background-color: rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--bs-danger);
+        color: var(--text-color);
+      }
+      [data-theme="light"] .accordion-item {
+        background-color: #fff;
+      }
+      .accordion-button {
+        background-color: var(--card-bg);
+        color: var(--text-color);
       }
 
+      /* --- Contact Section --- */
       .contact-card {
         border: 1px solid var(--bs-danger);
         border-radius: 1rem;
         padding: 1.5rem;
         background-color: rgba(0, 0, 0, 0.2);
       }
-
       [data-theme="light"] .contact-card {
         background-color: rgba(255, 255, 255, 0.8);
       }
-
-      .contact-card h4 {
-        margin-bottom: 1rem;
-        font-weight: 700;
-      }
-
       #contact-form .form-control,
       #contact-form .form-select {
         background-color: var(--card-bg);
         color: var(--text-color);
         border: 1px solid rgba(255, 255, 255, 0.2);
       }
-
       [data-theme="light"] #contact-form .form-control,
       [data-theme="light"] #contact-form .form-select {
         border-color: rgba(0, 0, 0, 0.1);
       }
-
       #contact-form .form-control:focus,
       #contact-form .form-select:focus {
         border-color: var(--bs-danger);
         box-shadow: 0 0 0 0.2rem rgba(107, 0, 0, 0.35);
       }
 
-      #contact-form .form-label {
-        font-weight: 600;
+      /* --- Social Icons --- */
+      .social-link {
+        color: rgba(255, 255, 255, 0.65);
+        transition: color 0.2s ease, transform 0.2s ease;
+      }
+      [data-theme="light"] .social-link {
+        color: rgba(0, 0, 0, 0.6);
+      }
+      .social-link:hover {
+        transform: translateY(-2px);
+      }
+      .social-line:hover {
+        color: #00c300;
+      }
+      .social-instagram:hover {
+        color: #e4405f;
+      }
+      .social-facebook:hover {
+        color: #1778f2;
+      }
+      .social-youtube:hover {
+        color: #ff0000;
+      }
+      .social-tiktok:hover {
+        color: #25f4ee;
       }
 
-      #contact-submit-btn {
-        min-width: 180px;
-      }
-
-      .contact-status {
-        min-height: 48px;
-      }
-
-      .contact-status .alert {
-        margin-bottom: 0;
-      }
-
-      .contact-map {
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 1rem;
-        overflow: hidden;
-      }
-
-      [data-theme="light"] .contact-map {
-        border-color: rgba(0, 0, 0, 0.1);
-      }
-
-      /* --- Spotlight Section --- */
-      .spotlight-card {
-        border: 1px solid var(--bs-danger);
-        border-radius: 1.25rem;
-        padding: 1.75rem;
-        height: 100%;
-        background: linear-gradient(
-            135deg,
-            rgba(107, 0, 0, 0.8),
-            rgba(0, 0, 0, 0.6)
-          ),
-          url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=60")
-            center/cover;
-        background-blend-mode: multiply;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
-      }
-
-      [data-theme="light"] .spotlight-card {
-        background: linear-gradient(
-            135deg,
-            rgba(255, 230, 230, 0.92),
-            rgba(255, 255, 255, 0.9)
-          ),
-          url("https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=60")
-            center/cover;
-        color: #111;
-      }
-
-      .spotlight-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .spotlight-title {
-        font-size: 1.75rem;
-      }
-
-      .spotlight-chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.4rem;
-      }
-
-      .spotlight-chip {
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        border-radius: 999px;
-        padding: 0.2rem 0.9rem;
-        font-size: 0.85rem;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-      }
-
-      [data-theme="light"] .spotlight-chip {
-        border-color: rgba(0, 0, 0, 0.3);
-        color: #333;
-      }
-
-      .spotlight-highlights {
-        list-style: none;
-        padding-left: 0;
-        margin: 1rem 0 1.5rem 0;
-      }
-
-      .spotlight-highlights li {
-        margin-bottom: 0.5rem;
-        display: flex;
-        gap: 0.6rem;
-        align-items: flex-start;
-      }
-
-      .spotlight-highlights i {
-        color: #ffc107;
-      }
-
-      .spotlight-stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-        gap: 0.6rem;
-        margin-bottom: 1.25rem;
-      }
-
-      .spotlight-stat {
-        background-color: rgba(0, 0, 0, 0.35);
-        border-radius: 0.8rem;
-        padding: 0.75rem;
-        text-align: center;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .spotlight-stat strong {
-        display: block;
-        font-size: 1.1rem;
-      }
-
-      [data-theme="light"] .spotlight-stat {
-        background-color: rgba(0, 0, 0, 0.05);
-        border-color: rgba(0, 0, 0, 0.1);
-      }
-
-      .spotlight-actions .btn {
-        min-width: 160px;
-      }
-
-      .spotlight-card .btn-outline-light {
-        border-color: rgba(255, 255, 255, 0.6);
-        color: #fff;
-      }
-      .spotlight-card .btn-outline-light:hover {
-        background-color: rgba(255, 255, 255, 0.12);
-        color: #fff;
-      }
-
-      [data-theme="light"] .spotlight-card .btn-outline-light {
-        color: var(--bs-danger);
-        border-color: rgba(0, 0, 0, 0.2);
-      }
-      [data-theme="light"] .spotlight-card .btn-outline-light:hover {
-        background-color: rgba(107, 0, 0, 0.15);
+      .d-none-section {
+        display: none !important;
       }
     </style>
   </head>
 
   <body>
-    <button type="button" id="btn-back-to-top" title="กลับขึ้นบนสุด" aria-label="กลับขึ้นบนสุด">
+    <button
+      type="button"
+      id="btn-back-to-top"
+      title="กลับขึ้นบนสุด"
+      aria-label="กลับขึ้นบนสุด">
       <i class="fas fa-arrow-up"></i>
     </button>
 
@@ -662,9 +473,16 @@
           <a
             class="nav-link px-3 py-2 text-white mb-2"
             href="#"
-            onclick="switchPage('spotlight')"
-            id="nav-spotlight-mobile">
-            <i class="fa-solid fa-fire-flame-curved"></i> Spotlight
+            onclick="switchPage('gallery')"
+            id="nav-gallery-mobile">
+            <i class="fa-solid fa-images"></i> Gallery
+          </a>
+          <a
+            class="nav-link px-3 py-2 text-white mb-2"
+            href="#"
+            onclick="switchPage('faq')"
+            id="nav-faq-mobile">
+            <i class="fa-solid fa-circle-question"></i> FAQ
           </a>
           <a
             class="nav-link px-3 py-2 text-white"
@@ -718,9 +536,16 @@
           <a
             class="nav-link text-white mx-2 px-3"
             href="#"
-            onclick="switchPage('spotlight')"
-            id="nav-spotlight-desktop"
-            >Spotlight</a
+            onclick="switchPage('gallery')"
+            id="nav-gallery-desktop"
+            >Gallery</a
+          >
+          <a
+            class="nav-link text-white mx-2 px-3"
+            href="#"
+            onclick="switchPage('faq')"
+            id="nav-faq-desktop"
+            >FAQ</a
           >
           <a
             class="nav-link text-white mx-2 px-3"
@@ -734,8 +559,7 @@
         <button
           class="btn btn-link theme-toggle-btn ms-auto"
           onclick="toggleTheme()"
-          title="เปลี่ยนธีม"
-          aria-label="เปลี่ยนธีม">
+          title="เปลี่ยนธีม">
           <i class="fa-solid fa-sun" id="themeIcon"></i>
         </button>
       </div>
@@ -747,7 +571,6 @@
           <h1 class="display-4 text-center mb-5 text-underline-danger">
             || รีวิวเกม ||
           </h1>
-
           <div class="mb-4 text-center">
             <div class="dropdown">
               <button
@@ -763,7 +586,6 @@
                 style="max-height: 300px; overflow-y: auto"></ul>
             </div>
           </div>
-
           <div class="row align-items-center mb-4">
             <div class="col-md-8 mb-2 mb-md-0">
               <input
@@ -778,7 +600,6 @@
               </select>
             </div>
           </div>
-
           <div id="game-list-container"></div>
         </div>
       </div>
@@ -790,18 +611,186 @@
             ทีมงานเบื้องหลัง Project เว็บไซต์รีวิวเกม
           </p>
         </div>
-
         <div id="team-grid"></div>
       </div>
 
-      <div id="spotlight-section" class="d-none-section">
+      <div id="gallery-section" class="d-none-section">
         <div class="text-center mb-5 pt-4">
-          <h1 class="display-4 text-underline-danger">Game Spotlight</h1>
+          <h1 class="display-4 text-underline-danger">Game Gallery</h1>
           <p class="fs-5 mt-3 opacity-75">
-            คัด 3 เกมเด่นประจำเดือน พร้อมเหตุผลว่าทำไมถึงห้ามพลาด
+            รวมภาพบรรยากาศสุดอลังการจากเกมต่างๆ
           </p>
         </div>
-        <div id="spotlight-grid" class="row g-4"></div>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="gallery-item ratio ratio-4x3">
+              <img
+                src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=60"
+                alt="Game 1" />
+              <div class="gallery-caption text-white">
+                <h5>E-Sport Arena</h5>
+                <p class="small mb-0">บรรยากาศการแข่งขันสุดเดือด</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="gallery-item ratio ratio-4x3">
+              <img
+                src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=800&q=60"
+                alt="Game 2" />
+              <div class="gallery-caption text-white">
+                <h5>Retro Gaming</h5>
+                <p class="small mb-0">ความคลาสสิกที่ไม่มีวันตาย</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="gallery-item ratio ratio-4x3">
+              <img
+                src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=60"
+                alt="Game 3" />
+              <div class="gallery-caption text-white">
+                <h5>Console Station</h5>
+                <p class="small mb-0">มุมพักผ่อนสำหรับชาวคอนโซล</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="gallery-item ratio ratio-16x9">
+              <img
+                src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=60"
+                alt="Game 4" />
+              <div class="gallery-caption text-white">
+                <h5>VR Experience</h5>
+                <p class="small mb-0">สัมผัสโลกเสมือนจริง</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="gallery-item ratio ratio-16x9">
+              <img
+                src="https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=800&q=60"
+                alt="Game 5" />
+              <div class="gallery-caption text-white">
+                <h5>Setup แรงๆ</h5>
+                <p class="small mb-0">สเปกคอมในฝันของเกมเมอร์</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="faq-section" class="d-none-section">
+        <div class="text-center mb-5 pt-4">
+          <h1 class="display-4 text-underline-danger">F.A.Q.</h1>
+          <p class="fs-5 mt-3 opacity-75">
+            คำถามที่พบบ่อยเกี่ยวกับการรีวิวและการใช้งานเว็บไซต์
+          </p>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="accordion" id="accordionExample">
+              <div class="accordion-item mb-3 rounded overflow-hidden">
+                <h2 class="accordion-header" id="headingOne">
+                  <button
+                    class="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne"
+                    aria-expanded="true"
+                    aria-controls="collapseOne">
+                    <strong>Q: เกณฑ์การให้คะแนนเกมมีอะไรบ้าง?</strong>
+                  </button>
+                </h2>
+                <div
+                  id="collapseOne"
+                  class="accordion-collapse collapse show"
+                  aria-labelledby="headingOne"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    เราพิจารณาจาก 4 ปัจจัยหลักคือ:
+                    <strong
+                      >Gameplay (ความสนุก), Graphics (ภาพ), Sound (เสียง), และ
+                      Story (เนื้อเรื่อง)</strong
+                    >
+                    โดยแต่ละส่วนจะมีน้ำหนักคะแนนแตกต่างกันไปตามแนวเกมครับ
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item mb-3 rounded overflow-hidden">
+                <h2 class="accordion-header" id="headingTwo">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="collapseTwo">
+                    <strong>Q: สามารถแนะนำเกมให้รีวิวได้ที่ไหน?</strong>
+                  </button>
+                </h2>
+                <div
+                  id="collapseTwo"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="headingTwo"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    สามารถส่งรายชื่อเกมที่อยากให้รีวิวได้ผ่านหน้า
+                    <strong>Contact Us</strong> ได้เลยครับ
+                    ทีมงานจะนำไปพิจารณาและรีวิวให้เร็วที่สุดครับ
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item mb-3 rounded overflow-hidden">
+                <h2 class="accordion-header" id="headingThree">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseThree"
+                    aria-expanded="false"
+                    aria-controls="collapseThree">
+                    <strong>Q: เว็บไซต์รองรับ Dark Mode หรือไม่?</strong>
+                  </button>
+                </h2>
+                <div
+                  id="collapseThree"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="headingThree"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    รองรับครับ! สามารถกดไอคอน
+                    <strong>รูปพระอาทิตย์/พระจันทร์</strong>
+                    ที่มุมขวาบนของเมนูบาร์เพื่อเปลี่ยนธีมได้เลยครับ
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item mb-3 rounded overflow-hidden">
+                <h2 class="accordion-header" id="headingFour">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseFour"
+                    aria-expanded="false"
+                    aria-controls="collapseFour">
+                    <strong>Q: สมาชิกในกลุ่มมีใครบ้าง?</strong>
+                  </button>
+                </h2>
+                <div
+                  id="collapseFour"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="headingFour"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    สามารถดูรายชื่อและหน้าที่ของสมาชิกทุกคนได้ที่หน้า
+                    <strong>About Us</strong> ครับ
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div id="contact-section" class="d-none-section">
@@ -811,15 +800,19 @@
             มีคำถามเกี่ยวกับโปรเจกต์ หรืออยากแนะนำเกมใหม่ ๆ ติดต่อเราได้เลย
           </p>
         </div>
-
         <div class="contact-grid row g-4 align-items-start">
           <div class="col-12 col-lg-7">
             <div class="contact-card theme-bg">
-              <h4><i class="fa-solid fa-inbox me-2 text-danger"></i>ส่งข้อความถึงทีมงาน</h4>
+              <h4>
+                <i class="fa-solid fa-inbox me-2 text-danger"></i
+                >ส่งข้อความถึงทีมงาน
+              </h4>
               <form id="contact-form" class="needs-validation" novalidate>
                 <div class="row g-3">
                   <div class="col-md-6">
-                    <label for="contact-name" class="form-label">ชื่อ-สกุล *</label>
+                    <label for="contact-name" class="form-label"
+                      >ชื่อ-สกุล *</label
+                    >
                     <input
                       type="text"
                       class="form-control"
@@ -830,7 +823,9 @@
                     <div class="invalid-feedback">กรุณาระบุชื่อ</div>
                   </div>
                   <div class="col-md-6">
-                    <label for="contact-email" class="form-label">อีเมล *</label>
+                    <label for="contact-email" class="form-label"
+                      >อีเมล *</label
+                    >
                     <input
                       type="email"
                       class="form-control"
@@ -841,7 +836,9 @@
                     <div class="invalid-feedback">กรุณากรอกอีเมลให้ถูกต้อง</div>
                   </div>
                   <div class="col-md-6">
-                    <label for="contact-phone" class="form-label">เบอร์โทรศัพท์</label>
+                    <label for="contact-phone" class="form-label"
+                      >เบอร์โทรศัพท์</label
+                    >
                     <input
                       type="tel"
                       class="form-control"
@@ -850,7 +847,9 @@
                       placeholder="08X-XXX-XXXX" />
                   </div>
                   <div class="col-md-6">
-                    <label for="contact-topic" class="form-label">หัวข้อ *</label>
+                    <label for="contact-topic" class="form-label"
+                      >หัวข้อ *</label
+                    >
                     <select
                       class="form-select"
                       id="contact-topic"
@@ -865,7 +864,9 @@
                     <div class="invalid-feedback">กรุณาเลือกหัวข้อ</div>
                   </div>
                   <div class="col-12">
-                    <label for="contact-message" class="form-label">ข้อความ *</label>
+                    <label for="contact-message" class="form-label"
+                      >ข้อความ *</label
+                    >
                     <textarea
                       class="form-control"
                       id="contact-message"
@@ -884,50 +885,64 @@
                       <i class="fa-regular fa-paper-plane me-2"></i>ส่งข้อความ
                     </button>
                     <small class="opacity-75"
-                      ><i class="fa-solid fa-lock me-1"></i>ข้อมูลของคุณถูกเก็บเป็นความลับ
-                      และใช้เพื่อการติดต่อกลับเท่านั้น</small
+                      ><i class="fa-solid fa-lock me-1"></i
+                      >ข้อมูลของคุณถูกเก็บเป็นความลับ</small
                     >
                   </div>
                 </div>
               </form>
             </div>
           </div>
-
           <div class="col-12 col-lg-5">
             <div class="contact-card theme-bg">
-              <h4><i class="fa-solid fa-headset me-2 text-danger"></i>ช่องทางอื่น ๆ</h4>
+              <h4>
+                <i class="fa-solid fa-headset me-2 text-danger"></i>ช่องทางอื่น
+                ๆ
+              </h4>
               <p class="mb-2">
-                <i class="fa-solid fa-phone me-2 text-danger"></i>
-                <strong>Call Center:</strong> 02-558-6888
+                <i class="fa-solid fa-phone me-2 text-danger"></i
+                ><strong>Call Center:</strong> 02-558-6888
               </p>
               <p class="mb-2">
-                <i class="fa-regular fa-envelope me-2 text-danger"></i>
-                <strong>Email:</strong> admissions@spu.ac.th
+                <i class="fa-regular fa-envelope me-2 text-danger"></i
+                ><strong>Email:</strong> admissions@spu.ac.th
               </p>
               <p class="mb-2">
-                <i class="fa-solid fa-clock me-2 text-danger"></i>
-                <strong>เวลาให้บริการ:</strong> จันทร์ - ศุกร์ 09:00 - 17:00 น.
+                <i class="fa-solid fa-clock me-2 text-danger"></i
+                ><strong>เวลาให้บริการ:</strong> จันทร์ - ศุกร์ 09:00 - 17:00 น.
               </p>
               <hr class="border-danger opacity-50" />
-              <p class="opacity-75">
-                หรือเลือกติดตามข่าวสาร / อัปเดตรีวิวเกมใหม่ ๆ ผ่านโซเชียลด้านล่างได้เลย
-              </p>
               <div class="d-flex flex-wrap gap-3 fs-3">
-                <a href="https://lin.ee/BEbNr4r" class="social-link social-line" target="_blank" rel="noopener" aria-label="Line">
-                  <i class="fa-brands fa-line"></i>
-                </a>
-                <a href="https://www.instagram.com/sripatum_spu" class="social-link social-instagram" target="_blank" rel="noopener" aria-label="Instagram">
-                  <i class="fa-brands fa-instagram"></i>
-                </a>
-                <a href="https://www.facebook.com/SPUsripatumuniversity/?locale=th_TH" class="social-link social-facebook" target="_blank" rel="noopener" aria-label="Facebook">
-                  <i class="fa-brands fa-facebook"></i>
-                </a>
-                <a href="https://www.youtube.com/channel/UCrXai9P4Weq5z91t2hJEI4g" class="social-link social-youtube" target="_blank" rel="noopener" aria-label="YouTube">
-                  <i class="fa-brands fa-youtube"></i>
-                </a>
-                <a href="https://www.tiktok.com/@sripatum.spu" class="social-link social-tiktok" target="_blank" rel="noopener" aria-label="TikTok">
-                  <i class="fa-brands fa-tiktok"></i>
-                </a>
+                <a
+                  href="https://lin.ee/BEbNr4r"
+                  class="social-link social-line"
+                  target="_blank"
+                  ><i class="fa-brands fa-line"></i
+                ></a>
+                <a
+                  href="https://www.instagram.com/sripatum_spu"
+                  class="social-link social-instagram"
+                  target="_blank"
+                  ><i class="fa-brands fa-instagram"></i
+                ></a>
+                <a
+                  href="https://www.facebook.com/SPUsripatumuniversity"
+                  class="social-link social-facebook"
+                  target="_blank"
+                  ><i class="fa-brands fa-facebook"></i
+                ></a>
+                <a
+                  href="https://www.youtube.com/channel/UCrXai9P4Weq5z91t2hJEI4g"
+                  class="social-link social-youtube"
+                  target="_blank"
+                  ><i class="fa-brands fa-youtube"></i
+                ></a>
+                <a
+                  href="https://www.tiktok.com/@sripatum.spu"
+                  class="social-link social-tiktok"
+                  target="_blank"
+                  ><i class="fa-brands fa-tiktok"></i
+                ></a>
               </div>
               <div class="mt-4">
                 <h5 class="text-underline-danger">แผนที่</h5>
@@ -938,8 +953,7 @@
                     height="100%"
                     style="border: 0"
                     allowfullscreen
-                    loading="lazy"
-                    title="แผนที่มหาวิทยาลัยศรีปทุม"></iframe>
+                    loading="lazy"></iframe>
                 </div>
                 <p class="mb-1"><strong>มหาวิทยาลัยศรีปทุม</strong></p>
                 <p class="opacity-75 mb-0">
@@ -982,20 +996,46 @@
                 10900</span
               >
             </p>
+
             <div class="d-flex flex-wrap gap-3 mt-3 fs-3">
-              <a href="https://lin.ee/BEbNr4r" class="social-link social-line" aria-label="Line link" target="_blank" rel="noopener">
+              <a
+                href="https://lin.ee/BEbNr4r"
+                class="social-link social-line"
+                aria-label="Line link"
+                target="_blank"
+                rel="noopener">
                 <i class="fa-brands fa-line"></i>
               </a>
-              <a href="https://www.instagram.com/sripatum_spu" class="social-link social-instagram" aria-label="Instagram link" target="_blank" rel="noopener">
+              <a
+                href="https://www.instagram.com/sripatum_spu"
+                class="social-link social-instagram"
+                aria-label="Instagram link"
+                target="_blank"
+                rel="noopener">
                 <i class="fa-brands fa-instagram"></i>
               </a>
-              <a href="https://www.facebook.com/SPUsripatumuniversity/?locale=th_TH" class="social-link social-facebook" aria-label="Facebook link" target="_blank" rel="noopener">
+              <a
+                href="https://www.facebook.com/SPUsripatumuniversity/?locale=th_TH"
+                class="social-link social-facebook"
+                aria-label="Facebook link"
+                target="_blank"
+                rel="noopener">
                 <i class="fa-brands fa-facebook"></i>
               </a>
-              <a href="https://www.youtube.com/channel/UCrXai9P4Weq5z91t2hJEI4g" class="social-link social-youtube" aria-label="YouTube link" target="_blank" rel="noopener">
+              <a
+                href="https://www.youtube.com/channel/UCrXai9P4Weq5z91t2hJEI4g"
+                class="social-link social-youtube"
+                aria-label="YouTube link"
+                target="_blank"
+                rel="noopener">
                 <i class="fa-brands fa-youtube"></i>
               </a>
-              <a href="https://www.tiktok.com/@sripatum.spu" class="social-link social-tiktok" aria-label="TikTok link" target="_blank" rel="noopener">
+              <a
+                href="https://www.tiktok.com/@sripatum.spu"
+                class="social-link social-tiktok"
+                aria-label="TikTok link"
+                target="_blank"
+                rel="noopener">
                 <i class="fa-brands fa-tiktok"></i>
               </a>
             </div>
@@ -1007,13 +1047,9 @@
       </div>
     </footer>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      /* ---------------- Data ---------------- */
+      /* --- Data & Logic --- */
       const gameData = [
         {
           id: "elden-ring",
@@ -1439,84 +1475,7 @@
         },
       ];
 
-      const spotlightGames = [
-        {
-          id: "elden-ring-spotlight",
-          title: "Elden Ring",
-          subtitle: "Shadow of the Erdtree Update",
-          coverImage:
-            "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=60",
-          tags: ["GOTY", "Souls-like", "Open World"],
-          summary:
-            "นำเสนอคอนเทนต์ DLC ล่าสุด พร้อมแนะนำเส้นทางเก็บบอสลับและบิลด์ยอดนิยมที่ยังคงโกงเกมได้แบบสะใจ.",
-          highlights: [
-            "แนะนำบอสที่ควรไปหาอาวุธก่อนสู้",
-            "สรุป Meta Build (Bleed & Faith) เวอร์ชัน 1.12",
-            "ลิสต์ไอเทมสำคัญที่ไม่ควรพลาดใน DLC",
-          ],
-          stats: [
-            { label: "Score", value: "9.5/10" },
-            { label: "Playtime", value: "100+ ชม." },
-            { label: "Mode", value: "Solo / Co-op" },
-            { label: "Difficulty", value: "สูงมาก" },
-          ],
-          videoId: "eD_oYIbublE",
-          storeUrl: "https://store.steampowered.com/app/1245620/ELDEN_RING/",
-        },
-        {
-          id: "monster-hunter-spotlight",
-          title: "Monster Hunter World",
-          subtitle: "Co-op ที่ยังสนุกสุดในปี 2025",
-          coverImage:
-            "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=900&q=60",
-          tags: ["Co-op", "Hunting", "Iceborne"],
-          summary:
-            "รวบรวมกิจกรรมพิเศษปัจจุบัน, เซ็ตเกราะ Meta และแนวทางหาของสำหรับผู้เล่นที่เพิ่งกลับมา.",
-          highlights: [
-            "Roadmap แนะนำลำดับการล่าจาก HR0 ถึง MR100",
-            "สรุป Meta Weapons สำหรับทุกสาย",
-            "Mod คุณภาพชีวิตที่ช่วยให้เล่นสนุกขึ้น",
-          ],
-          stats: [
-            { label: "Score", value: "9/10" },
-            { label: "Team", value: "1-4 คน" },
-            { label: "Content", value: "Iceborne" },
-            { label: "Hours", value: "80+ ชม." },
-          ],
-          videoId: "D8ubGtcYxpA",
-          storeUrl: "https://store.steampowered.com/app/582010/Monster_Hunter_World/",
-        },
-        {
-          id: "nfs-heat-spotlight",
-          title: "Need for Speed Heat",
-          subtitle: "สายแต่งรถกลางวัน-กลางคืน",
-          coverImage:
-            "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=900&q=60",
-          tags: ["Racing", "Tuner", "Night Ride"],
-          summary:
-            "คู่มือสร้างรถสำหรับกลางวัน/กลางคืน, เทคนิคหนีตำรวจระดับ Heat 5 และคอมมูนิตี้ Custom Liveries.",
-          highlights: [
-            "สเปกรถแนะนำ 3 คลาส (A, S, S+) สำหรับ Street / Track",
-            "เทคนิคหนีตำรวจ + เส้นทางซ่อนตัวใน Palm City",
-            "รวม Liveries เท่ ๆ พร้อมรหัสแชร์",
-          ],
-          stats: [
-            { label: "Score", value: "8.8/10" },
-            { label: "Platform", value: "PC / Console" },
-            { label: "Focus", value: "Street Racing" },
-            { label: "Playstyle", value: "Solo / Online" },
-          ],
-          videoId: "bG844SBTS5s",
-          storeUrl: "https://store.steampowered.com/app/1222680/Need_for_Speed_Heat/",
-        },
-      ];
-
-      /* ---------------- Render Functions ---------------- */
-
-      // Render Game List
-      let currentSearch = "";
-      let currentTagFilter = "";
-
+      // Functions
       function getStarHtml(scoreStr) {
         if (!scoreStr || scoreStr.includes("x")) return "";
         const score = parseFloat(scoreStr);
@@ -1545,228 +1504,118 @@
       function renderGameList() {
         const container = document.getElementById("game-list-container");
         if (!container) return;
-        const search = currentSearch.toLowerCase().trim();
-        const tag = currentTagFilter;
-        let allGamesHtml = "";
-        let renderedCount = 0;
+        const search = (
+          document.getElementById("game-search-input")?.value || ""
+        )
+          .toLowerCase()
+          .trim();
+        const tag = document.getElementById("game-tag-filter")?.value || "";
+        let html = "";
         gameData.forEach((game, index) => {
           const titleMatch =
             !search || game.title.toLowerCase().includes(search);
-          const tagMatch =
-            !tag || (game.tags && game.tags.includes(tag));
+          const tagMatch = !tag || (game.tags && game.tags.includes(tag));
           if (!titleMatch || !tagMatch) return;
-          renderedCount++;
 
           const isVideoLeft = index % 2 === 0;
-          const videoColOrder = isVideoLeft ? "" : "order-lg-2";
-          const textColOrder = isVideoLeft ? "" : "order-lg-1";
-
-          if (allGamesHtml !== "")
-            allGamesHtml += `<hr class="border-danger border-2 opacity-50 my-5" />`;
-
-          let shopButtonHtml = "";
-          if (game.steamUrl && game.steamUrl.trim() !== "") {
-            shopButtonHtml = `<a class="btn btn-lg btn-custom-shop" href="${game.steamUrl}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-shop"></i><span class="d-none d-md-inline ms-2">สั่งซื้อเกมนี้</span></a>`;
-          }
-
-          const iconHtml = game.iconUrl
-            ? `<img src="${game.iconUrl}" alt="${game.title} icon" width="78" onerror="this.style.display='none'"/>`
-            : "";
-
-          allGamesHtml += `
-          <section id="game-${
-            game.id
-          }" class="row g-4 align-items-center my-4 pt-4">
-            <div class="col-lg-6 ${videoColOrder}">
-              <div class="ratio ratio-16x9 video-wrapper">
-                <iframe src="https://www.youtube.com/embed/${
-                  game.youtubeId
-                }" loading="lazy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          html += `
+            ${
+              html
+                ? '<hr class="border-danger border-2 opacity-50 my-5" />'
+                : ""
+            }
+            <section id="game-${
+              game.id
+            }" class="row g-4 align-items-center my-4 pt-4">
+              <div class="col-lg-6 ${isVideoLeft ? "" : "order-lg-2"}">
+                <div class="ratio ratio-16x9 video-wrapper">
+                  <iframe src="https://www.youtube.com/embed/${
+                    game.youtubeId
+                  }" loading="lazy" allowfullscreen></iframe>
+                </div>
               </div>
-            </div>
-            <div class="col-lg-6 ${textColOrder}">
-              <h2 class="display-6 text-center">${game.title} ${iconHtml}</h2>
-              <div class="text-center mb-3">${getTagsHtml(game.tags)}</div>
-              <p class="fs-5">${game.description}</p>
-              <div class="row mb-3">
-                <div class="col-md-6"><h5 class="text-success"><i class="fa-solid fa-circle-check"></i> จุดเด่น</h5><ul class="fs-6">${game.pros
-                  .map((p) => `<li>${p}</li>`)
-                  .join("")}</ul></div>
-                <div class="col-md-6"><h5 class="text-warning"><i class="fa-solid fa-circle-exclamation"></i> จุดด้อย</h5><ul class="fs-6">${game.cons
-                  .map((c) => `<li>${c}</li>`)
-                  .join("")}</ul></div>
-              </div>
-              <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
-                 <div class="d-flex align-items-center">${getStarHtml(
-                   game.score
-                 )}<h4 class="text-danger mb-0 fw-bold">คะแนน: ${
+              <div class="col-lg-6 ${isVideoLeft ? "" : "order-lg-1"}">
+                <h2 class="display-6 text-center">${game.title}</h2>
+                <div class="text-center mb-3">${getTagsHtml(game.tags)}</div>
+                <p class="fs-5">${game.description}</p>
+                <div class="row mb-3">
+                    <div class="col-md-6"><h5 class="text-success"><i class="fa-solid fa-circle-check"></i> จุดเด่น</h5><ul class="fs-6">${game.pros
+                      .map((p) => `<li>${p}</li>`)
+                      .join("")}</ul></div>
+                    <div class="col-md-6"><h5 class="text-warning"><i class="fa-solid fa-circle-exclamation"></i> จุดด้อย</h5><ul class="fs-6">${game.cons
+                      .map((c) => `<li>${c}</li>`)
+                      .join("")}</ul></div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                    <div class="d-flex align-items-center">${getStarHtml(
+                      game.score
+                    )}<h4 class="text-danger mb-0 fw-bold">${
             game.score
           }</h4></div>
-                 ${shopButtonHtml}
+                    <a class="btn btn-custom-shop" href="${
+                      game.steamUrl
+                    }" target="_blank"><i class="fa-solid fa-shop me-2"></i>ซื้อเกมนี้</a>
+                </div>
               </div>
-            </div>
-          </section>`;
+            </section>`;
         });
-        if (allGamesHtml === "") {
-          container.innerHTML = `<div class="text-center py-5">
-            <i class="fa-solid fa-sad-tear fa-3x text-danger mb-3"></i>
-            <p class="fs-4 fw-bold">ไม่พบเกมที่ตรงกับการค้นหาหรือแท็กที่เลือก</p>
-            <p class="opacity-75">ลองเปลี่ยนคำค้นหาหรือเลือกหมวดหมู่อื่นดูนะครับ</p>
-          </div>`;
-          return;
-        }
-        container.innerHTML = allGamesHtml;
-      }
-
-      function renderSkeletonCards(count = 3) {
-        const container = document.getElementById("game-list-container");
-        if (!container) return;
-        let placeholderHtml = "";
-        for (let i = 0; i < count; i++) {
-          placeholderHtml += `
-            <div class="skeleton-card">
-              <div class="skeleton-line w-75"></div>
-              <div class="skeleton-line"></div>
-              <div class="skeleton-line w-50"></div>
-              <div class="skeleton-line"></div>
-              <div class="skeleton-line w-25"></div>
-            </div>`;
-        }
-        container.innerHTML = placeholderHtml;
-      }
-
-      function getAllTags() {
-        const tagsSet = new Set();
-        gameData.forEach((game) => {
-          if (game.tags && Array.isArray(game.tags)) {
-            game.tags.forEach((t) => tagsSet.add(t));
-          }
-        });
-        return Array.from(tagsSet).sort();
-      }
-
-      function initFilters() {
-        const searchInput = document.getElementById("game-search-input");
-        const tagSelect = document.getElementById("game-tag-filter");
-        if (!searchInput || !tagSelect) return;
-
-        const allTags = getAllTags();
-        tagSelect.innerHTML =
-          '<option value="">ทุกแนวเกม</option>' +
-          allTags.map((t) => `<option value="${t}">${t}</option>`).join("");
-
-        searchInput.addEventListener("input", (e) => {
-          currentSearch = e.target.value || "";
-          renderGameList();
-        });
-
-        tagSelect.addEventListener("change", (e) => {
-          currentTagFilter = e.target.value || "";
-          renderGameList();
-        });
+        container.innerHTML =
+          html || '<div class="text-center py-5">ไม่พบเกมที่ค้นหา</div>';
       }
 
       function renderGameJumpList() {
-        const listContainer = document.getElementById("game-jump-list");
-        let listHtml = "";
-        gameData.forEach((game) => {
-          listHtml += `<li><a class="dropdown-item" href="#game-${game.id}">${game.title}</a></li>`;
-        });
-        listContainer.innerHTML = listHtml;
-      }
-
-      // Render Team Grid
-      function createMemberCard(member, colSize) {
-        return `
-            <div class="col-md-6 ${colSize}">
-              <div class="theme-bg rounded-3 p-4 text-center profile-card shadow-lg">
-                <div class="profile-img-wrapper"><img src="${member.image}" alt="${member.name}"></div>
-                <div class="role-badge shadow-sm">${member.role}</div>
-                <h3 class="mb-1 fs-3">${member.name}</h3>
-                <p class="student-id mb-0"><i class="fa-solid fa-id-card me-2"></i>${member.id}</p>
-              </div>
-            </div>`;
+        const list = document.getElementById("game-jump-list");
+        if (list)
+          list.innerHTML = gameData
+            .map(
+              (g) =>
+                `<li><a class="dropdown-item" href="#game-${g.id}">${g.title}</a></li>`
+            )
+            .join("");
       }
 
       function renderTeamGrid() {
         const container = document.getElementById("team-grid");
-        const topRowMembers = teamMembers.slice(0, 3);
-        const bottomRowMembers = teamMembers.slice(3, 5);
-        let html = '<div class="row g-4 justify-content-center mb-4">';
-        topRowMembers.forEach(
-          (member) => (html += createMemberCard(member, "col-lg-4"))
-        );
-        html += '</div><div class="row g-4 justify-content-center">';
-        bottomRowMembers.forEach(
-          (member) => (html += createMemberCard(member, "col-lg-4"))
-        );
-        html += "</div>";
-        container.innerHTML = html;
-      }
-
-      function renderSpotlightGrid() {
-        const container = document.getElementById("spotlight-grid");
         if (!container) return;
-        let html = "";
-        spotlightGames.forEach((game) => {
-          const chipsHtml = (game.tags || [])
-            .map((tag) => `<span class="spotlight-chip">${tag}</span>`)
-            .join("");
-          const highlightsHtml = (game.highlights || [])
-            .map(
-              (item) =>
-                `<li><i class="fa-solid fa-circle-check mt-1"></i><span>${item}</span></li>`
-            )
-            .join("");
-          const statsHtml = (game.stats || [])
-            .map(
-              (stat) => `
-            <div class="spotlight-stat">
-              <small class="text-uppercase opacity-75">${stat.label}</small>
-              <strong>${stat.value}</strong>
-            </div>`
-            )
-            .join("");
-          const backgroundStyle = game.coverImage
-            ? `style="background-image: linear-gradient(135deg, rgba(107,0,0,0.85), rgba(0,0,0,0.6)), url('${game.coverImage}');"`
-            : "";
-          html += `
-          <div class="col-12 col-lg-4">
-            <article class="spotlight-card" ${backgroundStyle}>
-              <div class="spotlight-header">
-                <div>
-                  <h3 class="spotlight-title mb-1">${game.title}</h3>
-                  <p class="mb-0 opacity-75">${game.subtitle || ""}</p>
-                </div>
-              </div>
-              <div class="spotlight-chips mb-3">${chipsHtml}</div>
-              <p class="fs-5">${game.summary}</p>
-              <ul class="spotlight-highlights">${highlightsHtml}</ul>
-              <div class="spotlight-stats">${statsHtml}</div>
-              <div class="spotlight-actions d-flex flex-wrap gap-3">
-                <a class="btn btn-outline-light" href="https://www.youtube.com/watch?v=${
-                  game.videoId
-                }" target="_blank" rel="noopener">
-                  <i class="fa-brands fa-youtube me-2"></i>ชม Trailer
-                </a>
-                <a class="btn btn-danger" href="${game.storeUrl}" target="_blank" rel="noopener">
-                  <i class="fa-solid fa-cart-shopping me-2"></i>ดูรายละเอียด
-                </a>
-              </div>
-            </article>
+        const createCard = (m) => `
+          <div class="col-md-6 col-lg-4">
+            <div class="theme-bg rounded-3 p-4 text-center profile-card shadow-lg">
+              <div class="profile-img-wrapper"><img src="${m.image}" alt="${m.name}"></div>
+              <div class="role-badge shadow-sm">${m.role}</div>
+              <h3 class="mb-1 fs-3">${m.name}</h3>
+              <p class="student-id mb-0"><i class="fa-solid fa-id-card me-2"></i>${m.id}</p>
+            </div>
           </div>`;
-        });
-        container.innerHTML = html;
+        container.innerHTML = `<div class="row g-4 justify-content-center mb-4">${teamMembers
+          .slice(0, 3)
+          .map(createCard)
+          .join(
+            ""
+          )}</div><div class="row g-4 justify-content-center">${teamMembers
+          .slice(3, 5)
+          .map(createCard)
+          .join("")}</div>`;
       }
 
-      /* ---------------- Utility Logic (Theme, Scroll, Navigation) ---------------- */
+      function initFilters() {
+        const tagSelect = document.getElementById("game-tag-filter");
+        const allTags = new Set();
+        gameData.forEach((g) => g.tags.forEach((t) => allTags.add(t)));
+        if (tagSelect) {
+          tagSelect.innerHTML =
+            '<option value="">ทุกแนวเกม</option>' +
+            Array.from(allTags)
+              .sort()
+              .map((t) => `<option value="${t}">${t}</option>`)
+              .join("");
+        }
+      }
 
-      // Theme Toggle with localStorage
+      // Theme Logic
       function applyTheme(theme) {
         const body = document.body;
         const icon = document.getElementById("themeIcon");
         const navbar = document.querySelector(".navbar");
-
         if (theme === "light") {
           body.setAttribute("data-theme", "light");
           if (icon) icon.classList.replace("fa-sun", "fa-moon");
@@ -1782,185 +1631,84 @@
             navbar.classList.add("navbar-dark", "bg-dark");
           }
         }
-
         localStorage.setItem("theme", theme);
       }
-
       function toggleTheme() {
-        const isLight = document.body.getAttribute("data-theme") === "light";
-        const nextTheme = isLight ? "dark" : "light";
-        applyTheme(nextTheme);
+        applyTheme(
+          document.body.getAttribute("data-theme") === "light"
+            ? "dark"
+            : "light"
+        );
       }
 
-      // Back to Top
-      let mybutton = document.getElementById("btn-back-to-top");
-      window.onscroll = function () {
-        if (
+      // Switch Page Logic
+      function switchPage(pageId) {
+        const sections = ["home", "about", "gallery", "faq", "contact"];
+        sections.forEach((s) => {
+          const el = document.getElementById(s + "-section");
+          if (el) el.classList.toggle("d-none-section", s !== pageId);
+
+          // Nav Active State
+          const navMob = document.getElementById("nav-" + s + "-mobile");
+          const navDesk = document.getElementById("nav-" + s + "-desktop");
+          if (navMob) navMob.classList.toggle("active-custom", s === pageId);
+          if (navDesk) navDesk.classList.toggle("active-custom", s === pageId);
+        });
+        window.scrollTo(0, 0);
+        const bsOffcanvas = bootstrap.Offcanvas.getInstance(
+          document.getElementById("mySidenav")
+        );
+        if (bsOffcanvas) bsOffcanvas.hide();
+      }
+
+      // Init
+      document.addEventListener("DOMContentLoaded", () => {
+        applyTheme(localStorage.getItem("theme") || "dark");
+        renderGameList();
+        renderGameJumpList();
+        renderTeamGrid();
+        initFilters();
+
+        // Filter Events
+        document
+          .getElementById("game-search-input")
+          ?.addEventListener("input", renderGameList);
+        document
+          .getElementById("game-tag-filter")
+          ?.addEventListener("change", renderGameList);
+
+        // Contact Form (Mockup)
+        document
+          .getElementById("contact-form")
+          ?.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const btn = document.getElementById("contact-submit-btn");
+            const status = document.getElementById("contact-status");
+            btn.disabled = true;
+            status.innerHTML =
+              '<div class="alert alert-info mt-2">กำลังส่ง...</div>';
+            setTimeout(() => {
+              status.innerHTML =
+                '<div class="alert alert-success mt-2">ส่งเรียบร้อย!</div>';
+              btn.disabled = false;
+              e.target.reset();
+            }, 1000);
+          });
+      });
+
+      // Back to top
+      const mybutton = document.getElementById("btn-back-to-top");
+      window.onscroll = () => {
+        mybutton.style.display =
           document.body.scrollTop > 200 ||
           document.documentElement.scrollTop > 200
-        ) {
-          mybutton.style.display = "block";
-        } else {
-          mybutton.style.display = "none";
-        }
+            ? "block"
+            : "none";
       };
       mybutton.addEventListener("click", () => {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
       });
-
-      /* ---------------- PAGE SWITCHING LOGIC (Single File Magic) ---------------- */
-      function switchPage(pageId) {
-        const homeSection = document.getElementById("home-section");
-        const aboutSection = document.getElementById("about-section");
-        const spotlightSection = document.getElementById("spotlight-section");
-        const contactSection = document.getElementById("contact-section");
-
-        // Navbar Items (Desktop & Mobile)
-        const navHomeMobile = document.getElementById("nav-home-mobile");
-        const navAboutMobile = document.getElementById("nav-about-mobile");
-        const navSpotlightMobile =
-          document.getElementById("nav-spotlight-mobile");
-        const navContactMobile = document.getElementById("nav-contact-mobile");
-        const navHomeDesktop = document.getElementById("nav-home-desktop");
-        const navAboutDesktop = document.getElementById("nav-about-desktop");
-        const navSpotlightDesktop = document.getElementById(
-          "nav-spotlight-desktop"
-        );
-        const navContactDesktop = document.getElementById("nav-contact-desktop");
-
-        // Reset Scroll
-        window.scrollTo(0, 0);
-
-        if (pageId === "home") {
-          // Show Home, Hide others
-          homeSection.classList.remove("d-none-section");
-          aboutSection.classList.add("d-none-section");
-          if (spotlightSection) spotlightSection.classList.add("d-none-section");
-          if (contactSection) contactSection.classList.add("d-none-section");
-
-          // Update Active Class
-          navHomeMobile.classList.add("active-custom");
-          navAboutMobile.classList.remove("active-custom");
-          if (navSpotlightMobile)
-            navSpotlightMobile.classList.remove("active-custom");
-          if (navContactMobile) navContactMobile.classList.remove("active-custom");
-          if (navHomeDesktop) navHomeDesktop.classList.add("active-custom");
-          if (navAboutDesktop)
-            navAboutDesktop.classList.remove("active-custom");
-          if (navSpotlightDesktop)
-            navSpotlightDesktop.classList.remove("active-custom");
-          if (navContactDesktop)
-            navContactDesktop.classList.remove("active-custom");
-        } else if (pageId === "about") {
-          // Hide Home, Show About
-          homeSection.classList.add("d-none-section");
-          aboutSection.classList.remove("d-none-section");
-          if (spotlightSection) spotlightSection.classList.add("d-none-section");
-          if (contactSection) contactSection.classList.add("d-none-section");
-
-          // Update Active Class
-          navHomeMobile.classList.remove("active-custom");
-          navAboutMobile.classList.add("active-custom");
-          if (spotlightSection && navSpotlightMobile)
-            navSpotlightMobile.classList.remove("active-custom");
-          if (navContactMobile) navContactMobile.classList.remove("active-custom");
-          if (navHomeDesktop) navHomeDesktop.classList.remove("active-custom");
-          if (navAboutDesktop) navAboutDesktop.classList.add("active-custom");
-          if (navSpotlightDesktop)
-            navSpotlightDesktop.classList.remove("active-custom");
-          if (navContactDesktop)
-            navContactDesktop.classList.remove("active-custom");
-        } else if (pageId === "spotlight") {
-          homeSection.classList.add("d-none-section");
-          aboutSection.classList.add("d-none-section");
-          if (spotlightSection) spotlightSection.classList.remove("d-none-section");
-          if (contactSection) contactSection.classList.add("d-none-section");
-
-          navHomeMobile.classList.remove("active-custom");
-          navAboutMobile.classList.remove("active-custom");
-          if (navSpotlightMobile) navSpotlightMobile.classList.add("active-custom");
-          if (navContactMobile) navContactMobile.classList.remove("active-custom");
-          if (navHomeDesktop) navHomeDesktop.classList.remove("active-custom");
-          if (navAboutDesktop) navAboutDesktop.classList.remove("active-custom");
-          if (navSpotlightDesktop)
-            navSpotlightDesktop.classList.add("active-custom");
-          if (navContactDesktop)
-            navContactDesktop.classList.remove("active-custom");
-        } else if (pageId === "contact") {
-          homeSection.classList.add("d-none-section");
-          aboutSection.classList.add("d-none-section");
-          if (spotlightSection) spotlightSection.classList.add("d-none-section");
-          if (contactSection) contactSection.classList.remove("d-none-section");
-
-          navHomeMobile.classList.remove("active-custom");
-          navAboutMobile.classList.remove("active-custom");
-          if (navSpotlightMobile)
-            navSpotlightMobile.classList.remove("active-custom");
-          if (navContactMobile) navContactMobile.classList.add("active-custom");
-          if (navHomeDesktop) navHomeDesktop.classList.remove("active-custom");
-          if (navAboutDesktop) navAboutDesktop.classList.remove("active-custom");
-          if (navSpotlightDesktop)
-            navSpotlightDesktop.classList.remove("active-custom");
-          if (navContactDesktop)
-            navContactDesktop.classList.add("active-custom");
-        }
-
-        // Close Offcanvas automatically on mobile
-        const offcanvasElement = document.getElementById("mySidenav");
-        const bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
-        if (bsOffcanvas) {
-          bsOffcanvas.hide();
-        }
-      }
-
-      // Show placeholders immediately
-      renderSkeletonCards();
-
-      // Initialization
-      document.addEventListener("DOMContentLoaded", () => {
-        const savedTheme = localStorage.getItem("theme") || "dark";
-        applyTheme(savedTheme);
-        renderGameList();
-        renderGameJumpList();
-        renderTeamGrid();
-        renderSpotlightGrid();
-        initFilters();
-        initContactForm();
-      });
-
-      function initContactForm() {
-        const form = document.getElementById("contact-form");
-        if (!form) return;
-        const statusEl = document.getElementById("contact-status");
-        const submitBtn = document.getElementById("contact-submit-btn");
-
-        form.addEventListener("submit", (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-
-          if (!form.checkValidity()) {
-            form.classList.add("was-validated");
-            return;
-          }
-
-          form.classList.remove("was-validated");
-          submitBtn.disabled = true;
-          submitBtn.innerHTML =
-            '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>กำลังส่ง...';
-          statusEl.innerHTML =
-            '<div class="alert alert-info py-2 mb-0"><i class="fa-solid fa-circle-info me-2"></i>กำลังส่งข้อมูลของคุณ...</div>';
-
-          setTimeout(() => {
-            statusEl.innerHTML =
-              '<div class="alert alert-success py-2 mb-0"><i class="fa-solid fa-circle-check me-2"></i>ส่งข้อมูลเรียบร้อย ทีมงานจะติดต่อกลับโดยเร็วที่สุด</div>';
-            submitBtn.disabled = false;
-            submitBtn.innerHTML =
-              '<i class="fa-regular fa-paper-plane me-2"></i>ส่งข้อความ';
-            form.reset();
-          }, 1200);
-        });
-      }
     </script>
   </body>
 </html>
