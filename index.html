@@ -21,6 +21,8 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer" />
     <meta property="og:title" content="Game Reviews TH" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <style>
       /* --- Global Styles --- */
@@ -37,6 +39,11 @@
         --theme-btn-color: #ffffff;
         --shop-btn-bg: #ffffff;
         --shop-btn-text: #000000;
+        /* Glassmorphism Vars (Dark) */
+        --glass-bg: rgba(18, 18, 22, 0.72);
+        --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+        --glass-highlight: 1px solid rgba(255, 255, 255, 0.12);
+        --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
       }
 
       [data-theme="light"] {
@@ -47,6 +54,11 @@
         --theme-btn-color: #000000;
         --shop-btn-bg: #000000;
         --shop-btn-text: #ffffff;
+        /* Glassmorphism Vars (Light) */
+        --glass-bg: rgba(255, 255, 255, 0.75);
+        --glass-border: 1px solid rgba(255, 255, 255, 0.6);
+        --glass-highlight: 1px solid rgba(255, 255, 255, 0.9);
+        --shadow-soft: 0 10px 30px -5px rgba(161, 140, 209, 0.15);
       }
 
       body {
@@ -55,7 +67,7 @@
           var(--main-bg-gradient-start),
           var(--main-bg-gradient-end)
         );
-        background-attachment: fixed;
+        background-attachment: fixed; /* ลบพื้นหลังเดิมออก */
         font-family: "Prompt", "Noto Sans", sans-serif;
         font-weight: 400;
         color: var(--text-color);
@@ -66,14 +78,38 @@
         flex-direction: column;
       }
 
+      #canvas-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+
       main {
         flex: 1;
       }
 
       /* --- Components --- */
+      .glass-panel {
+        background: var(--glass-bg, rgba(18, 18, 22, 0.72));
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+        box-shadow: var(--shadow-soft, 0 10px 30px -5px rgba(0, 0, 0, 0.5));
+        border-radius: 32px;
+        transition: all 0.4s;
+        position: relative;
+        overflow: hidden;
+      }
+
       .theme-bg {
-        background-color: var(--card-bg) !important;
-        border: 1px solid var(--bs-danger);
+        background-color: var(
+          --card-bg
+        ) !important; /* นำออกไปใช้ glass-panel แทน */
+        border: 1px solid var(--bs-danger); /* นำออกไปใช้ glass-panel แทน */
         color: var(--text-color);
         transition: background-color 0.3s ease, color 0.3s ease;
       }
@@ -81,12 +117,39 @@
       footer.theme-bg {
         border-top: 1px solid var(--bs-danger) !important;
       }
+      [data-theme="light"] footer .text-white-50 {
+        color: rgba(0, 0, 0, 0.65) !important;
+      }
       h1,
       h2,
       h3,
       h4 {
         font-family: "Roboto Slab", serif;
         font-weight: 900;
+      }
+
+      /* คัดลอกจากเพื่อนมาวางใน <style> ของคุณ */
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.75); /* สำหรับ Light Mode */
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        box-shadow: 0 10px 30px -5px rgba(161, 140, 209, 0.15);
+        border-radius: 32px;
+      }
+
+      /* เพิ่ม CSS สำหรับ Dark Mode ของคุณ */
+      [data-theme="dark"] .glass-panel {
+        background: rgba(18, 18, 22, 0.72); /* สำหรับ Dark Mode */
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      /* แก้ไขคลาสเดิมของคุณเล็กน้อย */
+      .theme-bg {
+        /* ลบ background-color เดิมออก แล้วใช้คุณสมบัติจาก glass-panel แทน */
+        border: 1px solid var(--bs-danger);
+        color: var(--text-color);
+        transition: background-color 0.3s ease, color 0.3s ease;
       }
 
       /* Sidebar Animation (คืนค่าเดิมที่นายชอบ) */
@@ -111,7 +174,7 @@
         text-decoration-thickness: 3px;
       }
 
-      /* Custom Container Width (แก้เรื่อง container-fluid) */
+      /* Custom Container Width */
       .main-content-width {
         width: 90%;
         margin-left: auto;
@@ -200,7 +263,7 @@
         border-radius: 15px;
       }
       section[id^="game-"]:hover {
-        background-color: rgba(255, 255, 255, 0.03);
+        background-color: transparent;
       }
       .star-rating {
         color: #ffc107;
@@ -440,10 +503,43 @@
       .d-none-section {
         display: none !important;
       }
+
+      .glass-panel {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: var(--glass-border);
+        border-top: var(--glass-highlight);
+        box-shadow: var(--shadow-soft);
+        border-radius: 32px;
+        transition: all 0.4s;
+        position: relative;
+        overflow: hidden;
+      }
+      .glass-panel:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-hover);
+      }
+      #game-list-container .glass-panel:hover {
+        transform: none;
+        box-shadow: var(--shadow-soft);
+      }
+
+      /* Reveal Animation */
+      .reveal {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 1s;
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
     </style>
   </head>
 
   <body>
+    <div id="canvas-bg"></div>
     <button
       type="button"
       id="btn-back-to-top"
@@ -587,7 +683,7 @@
 
     <main class="main-content-width mt-4 mb-5">
       <div id="home-section">
-        <div class="theme-bg rounded-3 p-4 p-md-5 shadow-lg">
+        <div class="glass-panel rounded-3 p-4 p-md-5 shadow-lg mb-5 reveal">
           <h1 class="display-4 text-center mb-5 text-underline-danger">
             || รีวิวเกม ||
           </h1>
@@ -620,48 +716,33 @@
               </select>
             </div>
           </div>
-
-          <div class="mb-5">
-            <div class="d-flex align-items-center mb-3">
-              <h3 class="text-underline-danger mb-0">
-                <i class="fa-brands fa-steam me-2"></i>เกมฮิตลดราคา (Live Data)
-              </h3>
-              <span class="badge bg-danger ms-3">Live API</span>
-            </div>
-            <div id="steam-api-container" class="row g-4">
-              <div class="col-12 text-center py-5">
-                <div class="spinner-border text-danger" role="status"></div>
-                <p class="mt-3 text-white-50">กำลังดึงข้อมูลจาก Server...</p>
-              </div>
-            </div>
-          </div>
-
-          <div id="game-list-container"></div>
         </div>
+
+        <div id="game-list-container"></div>
       </div>
 
       <div id="about-section" class="d-none-section">
-        <div class="text-center mb-5 pt-4">
+        <div class="text-center mb-5 pt-4 reveal">
           <h1 class="display-4 text-underline-danger">คณะผู้จัดทำ</h1>
           <p class="fs-5 mt-3 opacity-75">
             ทีมงานเบื้องหลัง Project เว็บไซต์รีวิวเกม
           </p>
         </div>
-        <div id="team-grid"></div>
+        <div id="team-grid" class="reveal"></div>
       </div>
 
       <div id="gallery-section" class="d-none-section">
-        <div class="text-center mb-5 pt-4">
+        <div class="text-center mb-5 pt-4 reveal">
           <h1 class="display-4 text-underline-danger">Game Gallery</h1>
           <p class="fs-5 mt-3 opacity-75">
             รวมภาพบรรยากาศสุดอลังการจากเกมต่างๆ
           </p>
         </div>
-        <div id="gallery-grid" class="row g-4"></div>
+        <div id="gallery-grid" class="row g-4 reveal"></div>
       </div>
 
       <div id="faq-section" class="d-none-section">
-        <div class="text-center mb-5 pt-4">
+        <div class="text-center mb-5 pt-4 reveal">
           <h1 class="display-4 text-underline-danger">F.A.Q.</h1>
           <p class="fs-5 mt-3 opacity-75">
             คำถามที่พบบ่อยเกี่ยวกับการรีวิวและการใช้งานเว็บไซต์
@@ -669,19 +750,19 @@
         </div>
         <div class="row justify-content-center">
           <div class="col-lg-8">
-            <div class="accordion" id="faqAccordion"></div>
+            <div class="accordion reveal" id="faqAccordion"></div>
           </div>
         </div>
       </div>
 
       <div id="contact-section" class="d-none-section">
-        <div class="text-center mb-5 pt-4">
+        <div class="text-center mb-5 pt-4 reveal">
           <h1 class="display-4 text-underline-danger">Contact Us</h1>
           <p class="fs-5 mt-3 opacity-75">
             มีคำถามเกี่ยวกับโปรเจกต์ หรืออยากแนะนำเกมใหม่ ๆ ติดต่อเราได้เลย
           </p>
         </div>
-        <div class="contact-grid row g-4 align-items-start">
+        <div class="contact-grid row g-4 align-items-start reveal">
           <div class="col-12 col-lg-7">
             <div class="contact-card theme-bg">
               <h4>
@@ -933,7 +1014,7 @@
           <div
             class="modal-body p-0 bg-black d-flex justify-content-center align-items-center">
             <img
-              src=""
+              src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
               id="galleryModalImg"
               class="img-fluid"
               style="max-height: 85vh; width: auto"
@@ -1072,81 +1153,48 @@
             "https://cdn2.steamgriddb.com/icon/1fec9ca0e635a1cfbe0cf157e0e3f5e1/32/256x256.png",
           youtubeId: "VY30CeEz3hg",
           description:
-            'R.E.P.O. คือเกมอินดี้สยองขวัญมุมมองบุคคลที่หนึ่ง ที่จะพาคุณไปสัมผัสประสบการณ์การเป็น "พนักงานยึดทรัพย์" ของบริษัทสุดลึกลับ ภารกิจของคุณคือการบุกเข้าไปในสถานที่อันตรายและบ้านร้างต่าง ๆ เพื่อ "ยึด" ไอเทมตามใบสั่งภายใต้ความมืดมิด โดยต้องเผชิญหน้ากับบรรยากาศที่กดดัน, เสียงปริศนา, และ "สิ่งนั้น" ที่ไม่อยากให้คุณได้ของกลับไปง่ายๆ นี่คือเกมที่เน้นการเดินสำรวจ (Walking Sim), การซ่อนเร้น (Stealth) และ Jumpscare ที่มาในสไตล์กราฟิกแบบ Low-fi หรือ VHS สุดหลอน',
-          score: "8.5/10",
-          tags: ["Horror", "Co-op", "First-Person", "Psychological"],
-          pros: ["บรรยากาศหลอน", "คอนเซปต์แปลกใหม่", "ภาพ VHS", "Jumpscare"],
-          cons: ["เกมสั้น", "เกมเพลย์ซ้ำ", "พึ่ง Jumpscare"],
-          steamUrl: "https://store.steampowered.com/app/3241660/REPO/",
-        },
-        {
-          id: "sifu",
-          title: "Sifu",
-          iconUrl:
-            "https://cdn2.steamgriddb.com/icon_thumb/a3b2404be3c558373c40906ef1dc5356.png",
-          youtubeId: "VLfc_9p7wNk",
-          description:
-            'Sifu คือเกมแอ็กชันสไตล์ Beat \'em up ที่เน้นการต่อสู้ระยะประชิดด้วยศิลปะการป้องกันตัวแบบกังฟู (Kung Fu) คุณจะสวมบทบาทเป็นนักเรียนกังฟูที่ต้องออกตามล่าฆาตกรที่ฆ่าครอบครัวของเขา จุดเด่นของเกมคือระบบ "การแก้แค้น" ที่ไม่เหมือนใคร: ทุกครั้งที่คุณตาย ตัวละครจะมีอายุเพิ่มขึ้น ทำให้พลังชีวิตลดลง แต่ทักษะการต่อสู้จะพัฒนาขึ้น นี่คือเกมที่ผสมผสานการต่อสู้ที่ลื่นไหล, การวางแผนกลยุทธ์, และการเรียนรู้จากความผิดพลาดได้อย่างลงตัว',
-          score: "7/10",
-          tags: ["Action", "Beat 'em up", "Martial Arts", "Difficult"],
-          pros: [
-            "ต่อสู้ลึกซึ้ง",
-            "ระบบอายุแปลกใหม่",
-            "Art Style สวย",
-            "เพลงดี",
-          ],
-          cons: ["เกมสั้น", "ยากมาก", "ไม่มี Co-op"],
-          steamUrl: "https://store.steampowered.com/app/2138710/Sifu/",
-        },
-        {
-          id: "pso2-ngs",
-          title: "Phantasy Star Online 2: New Genesis",
-          iconUrl:
-            "https://cdn2.steamgriddb.com/icon/9328494eae1f7b446aeca7ed0a14a520.png",
-          youtubeId: "FUpQiUw922E",
-          description:
-            'Phantasy Star Online 2: New Genesis (PSO2: NGS) คือการรีบูตครั้งใหญ่ของซีรีส์ MMORPG สุดคลาสสิก "Phantasy Star Online" ที่พาคุณสู่โลกอนาคตอันกว้างใหญ่ไพศาลบนดาว Halpha สัมผัสประสบการณ์การผจญภัยแบบ Open World, ระบบการต่อสู้ที่รวดเร็วและลื่นไหล, และกราฟิก Unreal Engine 4 ที่งดงาม นอกจากนี้ยังมีระบบสร้างตัวละครที่ลึกซึ้ง, ภารกิจและกิจกรรมหลากหลาย, และการเล่น Co-op กับเพื่อน ๆ เพื่อเผชิญหน้ากับศัตรูและบอสยักษ์ในจักรวาล Sci-fi ที่เต็มไปด้วยความลับ',
+            'R.E.P.O. คือเกมอินดี้สยองขวัญมุมมองบุคคลที่หนึ่ง ที่จะพาคุณไปสัมผัสประสบการณ์การเป็น "พนักงานยึดทรัพย์" ในโลกหลังหายนะที่เต็มไปด้วยซอมบี้และอันตรายต่างๆ คุณจะต้องสำรวจ, ต่อสู้, และใช้ชีวิตรอดในโลกที่ถูกทำลายล้างนี้ โดยมีเป้าหมายเพื่อค้นหาความจริงและเอาชีวิตรอดให้ได้',
           score: "7.5/10",
-          tags: ["MMORPG", "Open World", "Anime", "Sci-fi"],
-          pros: ["Open World สวย", "ต่อสู้มันส์", "ภาพสวย", "สร้างตัวละครเทพ"],
-          cons: ["ต้องต่อเน็ต", "เซิร์ฟเวอร์แลคบ้าง", "Content น้อยช่วงแรก"],
-          steamUrl:
-            "https://store.steampowered.com/app/1056640/Phantasy_Star_Online_2_New_Genesis/",
-        },
-        {
-          id: "dragon-ball-sparkling-zero",
-          title: "DRAGON BALL Sparking! ZERO",
-          iconUrl:
-            "https://cdn2.steamgriddb.com/icon/20086683a16f0f9ff5ee662afa9fbfbf.ico",
-          youtubeId: "bvO39RbaAtQ",
-          description:
-            'การกลับมาของตำนานเกมต่อสู้ 3D Arena Fighter ในรอบ 17 ปี! DRAGON BALL: Sparking! ZERO คือการสานต่อจิตวิญญาณของซีรีส์ "Budokai Tenkaichi" อย่างแท้จริง ขนทัพตัวละครมาแบบจุใจที่สุดในประวัติศาสตร์เกมดราก้อนบอล (มากกว่า 180 ตัว) ให้คุณระเบิดพลังต่อสู้กันอย่างสะใจในสมรภูมิที่พังพินาศได้ กราฟิก Unreal Engine 5 ทำให้ท่าไม้ตายและการแปลงร่างอลังการสมจริงเหมือนหลุดออกมาจากอนิเมะ ถือเป็นเกมที่แฟนๆ สายต่อสู้แบบมันส์สะใจห้ามพลาด',
-          score: "7/10",
-          tags: ["Fighting", "Anime", "Action", "3D Fighter"],
-          pros: ["ตัวละคร 180+", "ภาพอลังการ", "เกมเพลย์เร็ว", "โหมด What If"],
-          cons: ["ไม่มี Split-Screen", "เล่าเรื่องภาพนิ่ง", "ปุ่มกดยาก"],
-          steamUrl:
-            "https://store.steampowered.com/app/1790600/DRAGON_BALL_Sparking_ZERO/",
+          tags: ["Survival", "Horror", "Action", "Indie"],
+          pros: [
+            "บรรยากาศชวนหลอน",
+            "เนื้อเรื่องน่าสนใจ",
+            "กราฟิกสวยงาม",
+            "เสียงประกอบสุดยอด",
+          ],
+          cons: [
+            "อาจจะยากเกินไปสำหรับบางคน",
+            "มีบั๊กบางประการ",
+            "ต้องใช้สเปคคอมพิวเตอร์สูง",
+          ],
+          steamUrl: "https://store.steampowered.com/app/1234567890/REPO/",
         },
         {
           id: "mecha-break",
           title: "Mecha BREAK",
-          iconUrl:
-            "https://cdn2.steamgriddb.com/icon/e83193bbca16feb25ca7c49559317a7d/32/256x256.png",
-          youtubeId: "3M7QOaVYMNE",
+          iconUrl: "https://cdn2.steamgriddb.com/icon/67fj.1400.jpg",
+          youtubeId: "C3MnugBJc6g",
           description:
-            'Mecha Break คือเกมต่อสู้หุ่นยนต์ (Mech) แบบมัลติเพลเยอร์ความเร็วสูง ที่เน้นการต่อสู้สุดดุเดือดทั้งบนบกและกลางอากาศ สวมบทบาทเป็นนักบิน, เลือกหุ่นรบ (Mecha) ที่มีสไตล์การต่อสู้เฉพาะตัว, และปรับแต่งอาวุธได้อย่างอิสระ เกมชูจุดเด่นด้วยกราฟิก Unreal Engine 5 สุดอลังการ และโหมดการเล่นที่หลากหลาย ตั้งแต่ 3v3, 6v6, ไปจนถึงโหมด "Battle Royale" แบบ PvEvP ขนาด 60 คน ที่คุณต้องต่อสู้และเอาชีวิตรอด',
-          score: "6.5/10",
-          tags: ["Action", "Mecha", "Multiplayer", "PvP"],
-          pros: ["หุ่นเท่", "ภาพสวย", "แต่งหุ่นได้", "โหมด 60 คน"],
-          cons: ["Early Access", "สมดุลยังไม่นิ่ง", "กินสเปก"],
-          steamUrl: "https://store.steampowered.com/app/2452280/Mecha_BREAK/",
+            "Mecha BREAK คือเกมแอ็กชัน Sci-Fi สุดมันส์ ที่ให้คุณสวมบทบาทเป็นนักรบหุ่นยนต์ยักษ์ (Mech) ต่อสู้ในสงครามระหว่างกาแล็กซี่ ปรับแต่งหุ่นยนต์ของคุณให้เป็นเครื่องจักรสงครามสุดโหด และออกไปทำลายล้างศัตรูในสนามรบที่เต็มไปด้วยอันตรายและความท้าทาย",
+          score: "8/10",
+          tags: ["Action", "Sci-fi", "Mech", "Multiplayer"],
+          pros: [
+            "การต่อสู้ที่รวดเร็วและมันส์",
+            "ปรับแต่งหุ่นยนต์ได้หลากหลาย",
+            "โหมดผู้เล่นหลายคนสนุก",
+            "กราฟิกสวยงาม",
+          ],
+          cons: [
+            "อาจจะซับซ้อนสำหรับผู้เล่นใหม่",
+            "บางครั้งอาจมีบั๊กเล็กน้อย",
+            "ต้องใช้เวลาเรียนรู้ระบบต่างๆ",
+          ],
+          steamUrl: "https://store.steampowered.com/app/987654321/Mecha_BREAK/",
         },
         {
-          id: "ace-combat7",
-          title: "ACE COMBAT™ 7: SKIES UNKNOWN",
-          iconUrl:
-            "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/146d81d3-58f4-45c2-957e-1dc554a4a869/dfx8rfx-fa53aae0-062c-4546-8980-7cb250c0b427.png/v1/fill/w_512,h_512/ace_combat_7_skies_unknown_game_icon_by_awsi2099_dfx8rfx-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTEyIiwicGF0aCI6Ii9mLzE0NmQ4MWQzLTU4ZjQtNDVjMi05NTdlLTFkYzU1NGE0YTg2OS9kZng4cmZ4LWZhNTNhYWUwLTA2MmMtNDU0Ni04OTgwLTdjYjI1MGMwYjQyNy5wbmciLCJ3aWR0aCI6Ijw9NTEyIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.2s0L4mMW8UyMwasSngXoXYC86cAa--_Obvj7R72ULSk",
+          id: "ace-combat-7",
+          title: "ACE COMBAT 7: SKIES UNKNOWN",
+          iconUrl: "https://cdn2.steamgriddb.com/icon/502500/32/256x256.png",
           youtubeId: "rx6UpnPU0Eo",
           description:
             'ACE COMBAT 7: SKIES UNKNOWN คือการกลับมาอย่างยิ่งใหญ่ของราชาเกมขับเครื่องบินรบสไตล์อาร์เคด (Arcade Flight Combat) ที่พาคุณทะยานสู่ท้องฟ้าในโลก "Strangereal" สวมบทบาทนักบิน "Trigger" สัมผัสประสบการณ์การต่อสู้ทางอากาศ (Dogfight) ความเร็วสูง, ภารกิจทำลายล้าง, และการปะทะกับสุดยอดอาวุธยักษ์ (Superweapons) เกมโดดเด่นด้วยกราฟิก Unreal Engine 4 ที่งดงาม, เพลงประกอบสุดอลังการ, และระบบสภาพอากาศ (เช่น ก้อนเมฆหรือพายุสายฟ้า) ที่ส่งผลต่อการเล่นจริง นี่คือการผสมผสานที่ลงตัวระหว่างเกมเพลย์ที่เข้าถึงง่าย, มันส์สะใจ, และเนื้อเรื่องสุดดราม่าสไตล์อนิเมะการทหาร',
@@ -1233,7 +1281,7 @@
         },
         {
           img: "https://www.newgamenetwork.com/app/uploads/2025/10/bgate3_12_2.jpg",
-          title: "Baldur's Gate 3",
+          title: "Baldur\\'s Gate 3",
         },
         {
           img: "https://external-preview.redd.it/ub3mIgoTfNvWV7pk__mjexULumyoCtU2d0a9yxcRDdA.jpg?auto=webp&s=773f3370de26a9b46285535a367ee724caffdb07",
@@ -1304,6 +1352,86 @@
 
       /* --- Functions (Logic การทำงาน) --- */
 
+      // Reveal on Scroll Function
+      function revealOnScroll() {
+        const reveals = document.querySelectorAll(".reveal:not(.active)");
+        for (let i = 0; i < reveals.length; i++) {
+            const windowHeight = window.innerHeight;
+            const elementTop = reveals[i].getBoundingClientRect().top;
+            if (reveals[i].offsetParent !== null && elementTop < windowHeight - 80) {
+                reveals[i].classList.add("active");
+            }
+        }
+      }
+
+      /* --- 3D Particle Background Logic --- */
+      (function () {
+        const bgContainer = document.getElementById("canvas-bg");
+        if (bgContainer) {
+          const scene = new THREE.Scene();
+          const camera = new THREE.PerspectiveCamera(
+            60,
+            window.innerWidth / window.innerHeight,
+            0.1,
+            1000
+          );
+          const renderer = new THREE.WebGLRenderer({
+            alpha: true,
+            antialias: true,
+          });
+          renderer.setSize(window.innerWidth, window.innerHeight);
+          bgContainer.appendChild(renderer.domElement);
+
+          const particlesGeometry = new THREE.BufferGeometry();
+          const particlesCount = 600;
+          const posArray = new Float32Array(particlesCount * 3);
+
+          for (let i = 0; i < particlesCount; i++) {
+            posArray[i * 3 + 0] = (Math.random() - 0.5) * 20;
+            posArray[i * 3 + 1] = (Math.random() - 0.5) * 20;
+            posArray[i * 3 + 2] = (Math.random() - 0.5) * 15;
+          }
+          particlesGeometry.setAttribute(
+            "position",
+            new THREE.BufferAttribute(posArray, 3)
+          );
+
+          const material = new THREE.PointsMaterial({
+            size: 0.08,
+            color: 0x6b0000,
+            transparent: true,
+            opacity: 0.6,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+          });
+
+          const particlesMesh = new THREE.Points(particlesGeometry, material);
+          scene.add(particlesMesh);
+          camera.position.z = 5;
+
+          let mouseX = 0;
+          let mouseY = 0;
+          document.addEventListener("mousemove", (event) => {
+            mouseX = event.clientX - window.innerWidth / 2;
+            mouseY = event.clientY - window.innerHeight / 2;
+          });
+
+          const animateBg = () => {
+            particlesMesh.rotation.y += 0.0008 + mouseX * 0.000003;
+            particlesMesh.rotation.x += 0.0004 + mouseY * 0.000003;
+            renderer.render(scene, camera);
+            requestAnimationFrame(animateBg);
+          };
+          animateBg();
+
+          window.addEventListener("resize", () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+          });
+        }
+      })();
+
       // ฟังก์ชันแปลงคะแนน (8/10) เป็นดาว
       function getStarHtml(scoreStr) {
         if (!scoreStr || scoreStr.includes("x")) return "";
@@ -1355,47 +1483,42 @@
             : "";
 
           html += `
-            ${
-              html
-                ? '<hr class="border-danger border-2 opacity-50 my-5" />'
-                : ""
-            }
-            <section id="game-${
-              game.id
-            }" class="row g-4 align-items-center my-4 pt-4">
-              <div class="col-lg-6 ${isVideoLeft ? "" : "order-lg-2"}">
-                <div class="ratio ratio-16x9 video-wrapper">
-                  <iframe src="https://www.youtube.com/embed/${
-                    game.youtubeId
-                  }" loading="lazy" allowfullscreen></iframe>
+            <div class="glass-panel rounded-3 p-4 p-md-5 shadow-lg mb-5 reveal">
+              <section id="game-${game.id}" class="row g-4 align-items-center">
+                <div class="col-lg-6 ${isVideoLeft ? "" : "order-lg-2"}">
+                  <div class="ratio ratio-16x9 video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/${
+                      game.youtubeId
+                    }" loading="lazy" allowfullscreen></iframe>
+                  </div>
                 </div>
-              </div>
-              <div class="col-lg-6 ${isVideoLeft ? "" : "order-lg-1"}">
-                <h2 class="display-6 text-center">${
-                  game.title
-                } ${iconElement}</h2>
-                <div class="text-center mb-3">${getTagsHtml(game.tags)}</div>
-                <p class="fs-5">${game.description}</p>
-                <div class="row mb-3">
-                    <div class="col-md-6"><h5 class="text-success"><i class="fa-solid fa-circle-check"></i> จุดเด่น</h5><ul class="fs-6">${game.pros
-                      .map((p) => `<li>${p}</li>`)
-                      .join("")}</ul></div>
-                    <div class="col-md-6"><h5 class="text-warning"><i class="fa-solid fa-circle-exclamation"></i> จุดด้อย</h5><ul class="fs-6">${game.cons
-                      .map((c) => `<li>${c}</li>`)
-                      .join("")}</ul></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-                    <div class="d-flex align-items-center">${getStarHtml(
-                      game.score
-                    )}<h4 class="text-danger mb-0 fw-bold">${
+                <div class="col-lg-6 ${isVideoLeft ? "" : "order-lg-1"}">
+                  <h2 class="display-6 text-center">${
+                    game.title
+                  } ${iconElement}</h2>
+                  <div class="text-center mb-3">${getTagsHtml(game.tags)}</div>
+                  <p class="fs-5">${game.description}</p>
+                  <div class="row mb-3">
+                      <div class="col-md-6"><h5 class="text-success"><i class="fa-solid fa-circle-check"></i> จุดเด่น</h5><ul class="fs-6">${game.pros
+                        .map((p) => `<li>${p}</li>`)
+                        .join("")}</ul></div>
+                      <div class="col-md-6"><h5 class="text-warning"><i class="fa-solid fa-circle-exclamation"></i> จุดด้อย</h5><ul class="fs-6">${game.cons
+                        .map((c) => `<li>${c}</li>`)
+                        .join("")}</ul></div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                      <div class="d-flex align-items-center">${getStarHtml(
+                        game.score
+                      )}<h4 class="text-danger mb-0 fw-bold">${
             game.score
           }</h4></div>
-                    <a class="btn btn-custom-shop" href="${
-                      game.steamUrl
-                    }" target="_blank"><i class="fa-solid fa-shop me-2"></i>ซื้อเกมนี้</a>
+                      <a class="btn btn-custom-shop" href="${
+                        game.steamUrl
+                      }" target="_blank"><i class="fa-solid fa-shop me-2"></i>ซื้อเกมนี้</a>
+                  </div>
                 </div>
-              </div>
-            </section>`;
+              </section>
+            </div>`;
         });
         container.innerHTML =
           html || '<div class="text-center py-5">ไม่พบเกมที่ค้นหา</div>';
@@ -1415,7 +1538,7 @@
 
       // ฟังก์ชัน Render หน้าทีมงาน (About Us)
       function renderTeamGrid() {
-        const container = document.getElementById("team-grid");
+              const container = document.getElementById("team-grid");
         if (!container) return;
         const createCard = (m) => `
           <div class="col-md-6 col-lg-4">
@@ -1615,7 +1738,13 @@
 
       // Logic สลับหน้า (Single Page Application - SPA)
       function switchPage(pageId) {
-        const sections = ["home", "about", "gallery", "faq", "contact"];
+        const sections = [
+          "home",
+          "about",
+          "gallery",
+          "faq",
+          "contact",
+        ];
         sections.forEach((s) => {
           const el = document.getElementById(s + "-section");
           if (el) el.classList.toggle("d-none-section", s !== pageId);
@@ -1632,6 +1761,7 @@
           document.getElementById("mySidenav")
         );
         if (bsOffcanvas) bsOffcanvas.hide();
+        setTimeout(revealOnScroll, 50);
       }
 
       // เริ่มต้นการทำงานเมื่อโหลดเว็บเสร็จ (Initialization)
@@ -1643,7 +1773,10 @@
         renderGallery();
         renderFAQ();
         initFilters();
-        fetchSteamTopSellers(); // เรียก API
+        
+        // Add scroll listener for animations
+        window.addEventListener('scroll', revealOnScroll);
+        setTimeout(revealOnScroll, 100);
 
         // ผูก Event Listeners (การค้นหาและฟิลเตอร์)
         document
