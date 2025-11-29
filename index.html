@@ -684,9 +684,7 @@
       }
       /* When we force the menu to 'float' above content we'll apply this class */
       .dropdown-menu#game-jump-list.fixed-top-drawer {
-        position: fixed !important;
-        transform: none !important; /* remove any popper translate */
-        will-change: top, left, transform;
+        /* Keep only z-index when we apply this class; positioning is handled by Popper */
         z-index: 999999 !important;
       }
       .dropdown-menu#game-jump-list .dropdown-item {
@@ -954,7 +952,7 @@
               <!-- Custom theme-aware dropdown for tags. We keep a hidden native select for accessibility and logic.
                    Visible dropdown is styled to match the form-select. -->
               <div class="dropdown w-100">
-                <button id="tagDropdownToggler" class="btn form-select dropdown-toggle w-100 text-start" type="button" data-bs-toggle="dropdown" aria-expanded="false">ทุกแนวเกม</button>
+                <button id="tagDropdownToggler" class="btn form-select dropdown-toggle w-100 text-start" type="button" data-bs-toggle="dropdown" data-bs-boundary="viewport" aria-expanded="false">ทุกแนวเกม</button>
                 <ul class="dropdown-menu" id="game-tag-dropdown"></ul>
               </div>
               <select id="game-tag-filter" class="visually-hidden" aria-hidden="false">
@@ -1392,6 +1390,39 @@
           cons: ["ระบบซับซ้อน", "ฟาร์มเยอะ"],
           steamUrl: "https://store.steampowered.com/app/230410/Warframe/",
         },
+        
+                {
+          id: "pso2-ngs",
+          title: "Phantasy Star Online 2: New Genesis",
+          iconUrl: "icon/pso2-ngs.png",
+          youtubeId: "FUpQiUw922E",
+          description:
+            'Phantasy Star Online 2: New Genesis (PSO2: NGS) คือการรีบูตครั้งใหญ่ของซีรีส์ MMORPG สุดคลาสสิก "Phantasy Star Online" ที่พาคุณสู่โลกอนาคตอันกว้างใหญ่ไพศาลบนดาว Halpha สัมผัสประสบการณ์การผจญภัยแบบ Open World, ระบบการต่อสู้ที่รวดเร็วและลื่นไหล, และกราฟิก Unreal Engine 4 ที่งดงาม นอกจากนี้ยังมีระบบสร้างตัวละครที่ลึกซึ้ง, ภารกิจและกิจกรรมหลากหลาย, และการเล่น Co-op กับเพื่อน ๆ เพื่อเผชิญหน้ากับศัตรูและบอสยักษ์ในจักรวาล Sci-fi ที่เต็มไปด้วยความลับ',
+          score: "x/10",
+          tags: [
+            "MMORPG",
+            "Open World",
+            "Anime",
+            "Sci-fi",
+            "Action",
+            "Live Service",
+          ],
+          pros: [
+            "โลก Open World ที่กว้างใหญ่และสวยงาม",
+            "ระบบการต่อสู้ที่รวดเร็วและลื่นไหล",
+            "กราฟิก Unreal Engine 4 ที่น่าทึ่ง",
+            "ระบบสร้างตัวละครที่มีความลึก",
+          ],
+          cons: [
+            "ต้องเชื่อมต่ออินเทอร์เน็ตตลอดเวลา (Online-only)",
+            "บางครั้งอาจมีปัญหาด้านเซิร์ฟเวอร์",
+            "ระบบเกมซับซ้อนสำหรับผู้เล่นใหม่",
+            "เนื้อเรื่องอาจจะไม่ลึกซึ้งเท่าภาคก่อนหน้า",
+          ],
+          steamUrl:
+            "https://store.steampowered.com/app/1056640/Phantasy_Star_Online_2_New_Genesis/",
+        },
+        
         {
           id: "repo",
           title: "R.E.P.O.",
@@ -1415,10 +1446,71 @@
           ],
           steamUrl: "https://store.steampowered.com/app/1234567890/REPO/",
         },
+                {
+          id: "sifu",
+          title: "Sifu",
+          iconUrl: "https://cdn2.steamgriddb.com/icon_thumb/a3b2404be3c558373c40906ef1dc5356.png",
+          youtubeId: "VLfc_9p7wNk",
+          description:
+            'Sifu คือเกมแอ็กชันสไตล์ Beat \'em up ที่เน้นการต่อสู้ระยะประชิดด้วยศิลปะการป้องกันตัวแบบกังฟู (Kung Fu) คุณจะสวมบทบาทเป็นนักเรียนกังฟูที่ต้องออกตามล่าฆาตกรที่ฆ่าครอบครัวของเขา จุดเด่นของเกมคือระบบ "การแก้แค้น" ที่ไม่เหมือนใคร: ทุกครั้งที่คุณตาย ตัวละครจะมีอายุเพิ่มขึ้น ทำให้พลังชีวิตลดลง แต่ทักษะการต่อสู้จะพัฒนาขึ้น นี่คือเกมที่ผสมผสานการต่อสู้ที่ลื่นไหล, การวางแผนกลยุทธ์, และการเรียนรู้จากความผิดพลาดได้อย่างลงตัว',
+          score: "x/10",
+          tags: [
+            "Action",
+            "Beat 'em up",
+            "Martial Arts",
+            "Difficult",
+            "Singleplayer",
+            "Roguelite",
+          ],
+          pros: [
+            "ระบบการต่อสู้ที่ลื่นไหลและมีความลึก",
+            'คอนเซปต์ "การแก้แค้น" ที่ไม่เหมือนใคร',
+            "กราฟิกและการออกแบบฉากที่มีสไตล์",
+            "เพลงประกอบ (Soundtrack) ที่เพิ่มอารมณ์ในการเล่น",
+          ],
+          cons: [
+            "เกมค่อนข้างสั้น (ถ้าเล่นแค่โหมดเนื้อเรื่อง)",
+            "บางครั้งอาจจะรู้สึกซ้ำซากกับการต่อสู้",
+            "การควบคุมอาจต้องใช้เวลาปรับตัว",
+            "ไม่มีโหมด Co-op หรือ Multiplayer",
+          ],
+          steamUrl: "https://store.steampowered.com/app/2138710/Sifu/",
+        },
+                {
+          id: "dragon-ball-sparkling-zero",
+          title: "DRAGON BALL Sparking! ZERO",
+          iconUrl: "https://cdn2.steamgriddb.com/icon/20086683a16f0f9ff5ee662afa9fbfbf.ico",
+          youtubeId: "bvO39RbaAtQ",
+          description:
+            'การกลับมาของตำนานเกมต่อสู้ 3D Arena Fighter ในรอบ 17 ปี! DRAGON BALL: Sparking! ZERO คือการสานต่อจิตวิญญาณของซีรีส์ "Budokai Tenkaichi" อย่างแท้จริง ขนทัพตัวละครมาแบบจุใจที่สุดในประวัติศาสตร์เกมดราก้อนบอล (มากกว่า 180 ตัว) ให้คุณระเบิดพลังต่อสู้กันอย่างสะใจในสมรภูมิที่พังพินาศได้ กราฟิก Unreal Engine 5 ทำให้ท่าไม้ตายและการแปลงร่างอลังการสมจริงเหมือนหลุดออกมาจากอนิเมะ ถือเป็นเกมที่แฟนๆ สายต่อสู้แบบมันส์สะใจห้ามพลาด',
+          score: "9.0/10",
+          tags: [
+            "Fighting",
+            "Anime",
+            "Action",
+            "3D Fighter",
+            "Versus",
+            "Split-second Combat",
+          ],
+          pros: [
+            "จำนวนตัวละครเยอะที่สุดในประวัติศาสตร์เกม DB",
+            "กราฟิกและเอฟเฟกต์ (Unreal 5) สวยงามอลังการ",
+            "เกมเพลย์ 3D Arena Fighter ที่รวดเร็วและคุ้นเคย",
+            'โหมดเนื้อเรื่องมีฉาก "What If" ให้เล่น',
+          ],
+          cons: [
+            "ไม่มี Local Split-Screen (เล่น 2 คนจอเดียวกันไม่ได้)",
+            "โหมดเนื้อเรื่องถูกวิจารณ์ว่าใช้ภาพนิ่งเล่าเรื่องเยอะไป",
+            "บางคนรู้สึกว่าเกมเพลย์ซ้ำซาก (เมื่อเทียบกับเกมไฟต์ติ้งยุคใหม่)",
+            "การควบคุมอาจต้องใช้เวลาปรับตัว",
+          ],
+          steamUrl:
+            "https://store.steampowered.com/app/1790600/DRAGON_BALL_Sparking_ZERO/",
+        },
         {
           id: "mecha-break",
           title: "Mecha BREAK",
-          iconUrl: "https://cdn2.steamgriddb.com/icon/67fj.1400.jpg",
+          iconUrl: "https://cdn2.steamgriddb.com/icon/e83193bbca16feb25ca7c49559317a7d/32/256x256.png",
           youtubeId: "C3MnugBJc6g",
           description:
             "Mecha BREAK คือเกมแอ็กชัน Sci-Fi สุดมันส์ ที่ให้คุณสวมบทบาทเป็นนักรบหุ่นยนต์ยักษ์ (Mech) ต่อสู้ในสงครามระหว่างกาแล็กซี่ ปรับแต่งหุ่นยนต์ของคุณให้เป็นเครื่องจักรสงครามสุดโหด และออกไปทำลายล้างศัตรูในสนามรบที่เต็มไปด้วยอันตรายและความท้าทาย",
@@ -1440,7 +1532,7 @@
         {
           id: "ace-combat-7",
           title: "ACE COMBAT 7: SKIES UNKNOWN",
-          iconUrl: "https://cdn2.steamgriddb.com/icon/502500/32/256x256.png",
+          iconUrl: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/5484a0af-71d9-4d3e-8a70-0ccc74268e4d/ddxpyxv-9641f0a3-9c78-43d8-940a-f8b9afc39f36.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiIvZi81NDg0YTBhZi03MWQ5LTRkM2UtOGE3MC0wY2NjNzQyNjhlNGQvZGR4cHl4di05NjQxZjBhMy05Yzc4LTQzZDgtOTQwYS1mOGI5YWZjMzlmMzYucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.3rvbkYjtdMxyQ2Pn0WHd8nIFlWHwYhpU2misbW8dGK8",
           youtubeId: "rx6UpnPU0Eo",
           description:
             'ACE COMBAT 7: SKIES UNKNOWN คือการกลับมาอย่างยิ่งใหญ่ของราชาเกมขับเครื่องบินรบสไตล์อาร์เคด (Arcade Flight Combat) ที่พาคุณทะยานสู่ท้องฟ้าในโลก "Strangereal" สวมบทบาทนักบิน "Trigger" สัมผัสประสบการณ์การต่อสู้ทางอากาศ (Dogfight) ความเร็วสูง, ภารกิจทำลายล้าง, และการปะทะกับสุดยอดอาวุธยักษ์ (Superweapons) เกมโดดเด่นด้วยกราฟิก Unreal Engine 4 ที่งดงาม, เพลงประกอบสุดอลังการ, และระบบสภาพอากาศ (เช่น ก้อนเมฆหรือพายุสายฟ้า) ที่ส่งผลต่อการเล่นจริง นี่คือการผสมผสานที่ลงตัวระหว่างเกมเพลย์ที่เข้าถึงง่าย, มันส์สะใจ, และเนื้อเรื่องสุดดราม่าสไตล์อนิเมะการทหาร',
@@ -1695,9 +1787,63 @@
       }
 
       // ฟังก์ชันสร้าง Badge Tags
+      // Normalize tags so the dropdown & badges use the same canonical categories
+      const TAG_CANONICAL_MAP = {
+        'Co-op': 'Multiplayer',
+        'Co op': 'Multiplayer',
+        'co-op': 'Multiplayer',
+        'Multiplayer': 'Multiplayer',
+        'Coop': 'Multiplayer',
+        'Survival Horror': 'Survival',
+        'Horror': 'Horror',
+        'Survival': 'Survival',
+        'FPS': 'Shooter',
+        'Looter Shooter': 'Shooter',
+        'Shooter': 'Shooter',
+        '2D Platformer': 'Platformer',
+        "Beat 'em up": 'Fighting',
+        '3D Fighter': 'Fighting',
+        'Fighting': 'Fighting',
+        'Open World': 'Open World',
+        'Action RPG': 'Action RPG',
+        'Action': 'Action',
+        'Arcade': 'Arcade',
+        'Platformer': 'Platformer',
+        'Racing': 'Racing',
+        'Street Racing': 'Racing',
+        'Tuner': 'Racing',
+        'Flight Action': 'Flight',
+        'Jet': 'Flight',
+        'MMORPG': 'MMORPG',
+        'Indie': 'Indie',
+        'Sandbox': 'Sandbox',
+        'Voxel': 'Voxel',
+        'Isometric': 'Isometric',
+        'Sci-fi': 'Sci-fi',
+        'Mech': 'Mech',
+        'Singleplayer': 'Singleplayer',
+        'Story Rich': 'Story Rich',
+        'Dark Fantasy': 'Dark Fantasy',
+        'Souls-like': 'Souls-like',
+        'Hardcore': 'Hardcore'
+      };
+
+      function normalizeTag(tag) {
+        if (!tag || typeof tag !== 'string') return tag;
+        const trimmed = tag.trim();
+        if (TAG_CANONICAL_MAP[trimmed]) return TAG_CANONICAL_MAP[trimmed];
+        // try case-insensitive mapping
+        const foundKey = Object.keys(TAG_CANONICAL_MAP).find(k => k.toLowerCase() === trimmed.toLowerCase());
+        if (foundKey) return TAG_CANONICAL_MAP[foundKey];
+        // Fallback: title-case the tag
+        return trimmed.replace(/(^|\s)([a-z])/g, (m, p1, p2) => p1 + p2.toUpperCase());
+      }
       function getTagsHtml(tags) {
         if (!tags) return "";
+        // Normalize tags before rendering badges
         return tags
+          .map((tag) => normalizeTag(tag))
+          .filter((t, idx, arr) => arr.indexOf(t) === idx) // unique
           .map(
             (tag) =>
               `<span class="badge rounded-pill badge-genre">${tag}</span>`
@@ -1719,7 +1865,8 @@
         gameData.forEach((game, index) => {
           const titleMatch =
             !search || game.title.toLowerCase().includes(search);
-          const tagMatch = !tag || (game.tags && game.tags.includes(tag));
+          const tagsNormalized = (game.tags || []).map(normalizeTag);
+          const tagMatch = !tag || (tagsNormalized && tagsNormalized.includes(tag));
           if (!titleMatch || !tagMatch) return;
 
           const isVideoLeft = index % 2 === 0;
@@ -1775,15 +1922,43 @@
       // ฟังก์ชันสร้างรายการ Jump Menu (ลิสต์เกมแบบ Dropdown)
       function renderGameJumpList() {
         const list = document.getElementById("game-jump-list");
-        if (list)
-          list.innerHTML = gameData
-            .slice(0)
-            .sort((a, b) => a.title.localeCompare(b.title, 'th'))
-            .map(
-              (g) =>
-                `<li><a class="dropdown-item text-truncate" href="#game-${g.id}" title="${g.title}">${g.title}</a></li>`
-            )
-            .join("");
+        if (!list) return;
+        // Prefer reading the current DOM order of rendered game sections
+        const container = document.getElementById('game-list-container');
+        let items = [];
+        if (container) {
+          const sections = container.querySelectorAll('section[id^="game-"]');
+          sections.forEach((sec) => {
+            const id = sec.id;
+            // Title is usually in h2; use textContent if present
+            const h2 = sec.querySelector('h2');
+            const title = (h2 && h2.textContent) ? h2.textContent.trim() : id;
+            items.push({ id, title });
+          });
+        }
+        // Fallback: if no sections are rendered, use the gameData order
+        if (!items.length) {
+          items = gameData.slice(0).map(g => ({ id: `game-${g.id}`, title: g.title }));
+        }
+        list.innerHTML = items
+          .map(i => `<li><button class="dropdown-item text-truncate" type="button" data-target="#${i.id}" title="${i.title}">${i.title}</button></li>`)
+          .join("");
+        // Attach click handlers to close dropdown and smooth scroll
+        list.querySelectorAll('button.dropdown-item').forEach(btn => {
+          btn.addEventListener('click', (ev) => {
+            ev.preventDefault();
+            const targetId = btn.dataset.target;
+            // Hide the dropdown first to avoid weird position shifting
+            try { bootstrap.Dropdown.getOrCreateInstance(document.getElementById('gameJumpMenu')).hide(); } catch(e) {}
+            // Smooth scroll to the target element
+            const el = document.querySelector(targetId);
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              // After scroll, add keyboard focus for accessibility
+              setTimeout(() => { el.setAttribute('tabindex', '-1'); el.focus(); }, 600);
+            }
+          });
+        });
       }
 
       // ฟังก์ชัน Render หน้าทีมงาน (About Us)
@@ -1876,7 +2051,7 @@
       function initFilters() {
         const tagSelect = document.getElementById("game-tag-filter");
         const allTags = new Set();
-        gameData.forEach((g) => g.tags.forEach((t) => allTags.add(t)));
+        gameData.forEach((g) => g.tags.forEach((t) => allTags.add(normalizeTag(t))));
         if (tagSelect) {
           tagSelect.innerHTML =
             '<option value="">ทุกแนวเกม</option>' +
@@ -2101,54 +2276,31 @@
             const origNextSibling = menu ? menu.nextSibling : null;
             if (!btn || !menu) return;
 
-            function setMenuFixedPosition() {
-              const rect = btn.getBoundingClientRect();
-              // Prefer showing below the button, aligned to the left
-              menu.style.position = 'fixed';
-              menu.style.left = `${rect.left}px`;
-              menu.style.top = `${rect.top + rect.height}px`;
-              menu.style.minWidth = `${rect.width}px`;
-              menu.style.width = menu.style.width || `${rect.width}px`;
-              // allow tall menus to scroll
-              menu.style.maxHeight = '60vh';
-              menu.style.overflowY = 'auto';
-              menu.style.zIndex = '999999';
-            }
-
-            function resetMenuPosition() {
-              menu.style.position = '';
-              menu.style.left = '';
-              menu.style.top = '';
-              menu.style.minWidth = '';
-              menu.style.width = '';
-              menu.style.maxHeight = '';
-              menu.style.overflowY = '';
-              menu.style.zIndex = '';
-            }
+            // We do not manually position the menu to avoid conflicting with Popper,
+            // which handles placement; instead we will reparent the menu to body and
+            // only set a high z-index when open so it floats above the layout.
 
             btn.addEventListener('shown.bs.dropdown', function (e) {
-              // Wait a tick to ensure bootstrap/popover set inline styles; then
-              // add our class and override
+              // After the dropdown is shown by Bootstrap we move it to the body so
+              // it escapes any ancestor stacking context; Popper will handle
+              // correct placement while it is appended to the body, so we do not
+              // apply manual left/top transforms.
               setTimeout(function () {
-                setMenuFixedPosition();
                 menu.classList.add('fixed-top-drawer');
-                // remove any transform applied by Popper
-                menu.style.removeProperty('transform');
-                // set z-index as important via setProperty
                 menu.style.setProperty('z-index', '999999', 'important');
-                // Move the menu to document.body while open to avoid clipping from
-                // ancestor containers; remember where it came from
                 if (!menu.__wasReparented) {
                   menu.__origParent = origParent;
                   menu.__origNextSibling = origNextSibling;
                   document.body.appendChild(menu);
                   menu.__wasReparented = true;
+                  // Ask popper to recalculate placement now the node is in body
+                  try { const dd = bootstrap.Dropdown.getOrCreateInstance(btn); if (dd && dd._popper) dd._popper.update(); } catch (e) {}
                 }
               }, 10);
             });
             btn.addEventListener('hidden.bs.dropdown', function () {
-              resetMenuPosition();
               menu.classList.remove('fixed-top-drawer');
+              try { menu.style.removeProperty('z-index'); } catch(e) {}
               // Try to restore the menu to its original location in the DOM
               try {
                 if (menu.__wasReparented && menu.__origParent) {
@@ -2159,46 +2311,31 @@
                 // ignore
               }
             });
-            // Also update position on resize & scroll while open
+            // Also update popper's placement on resize & scroll while open
             window.addEventListener('resize', function () {
-              if (btn.getAttribute('aria-expanded') === 'true') setMenuFixedPosition();
+              if (btn.getAttribute('aria-expanded') === 'true') {
+                try { const dd = bootstrap.Dropdown.getOrCreateInstance(btn); if (dd && dd._popper) dd._popper.update(); } catch (e) {}
+              }
             });
             window.addEventListener('scroll', function () {
-              if (btn.getAttribute('aria-expanded') === 'true') setMenuFixedPosition();
+              if (btn.getAttribute('aria-expanded') === 'true') {
+                try { const dd = bootstrap.Dropdown.getOrCreateInstance(btn); if (dd && dd._popper) dd._popper.update(); } catch (e) {}
+              }
             });
           })();
         // Ensure the Tag dropdown floats above content as well so it matches theme and escapes clipping
         (function ensureTagDropdownVisible(){
           const toggler = document.getElementById('tagDropdownToggler');
           const menu = document.getElementById('game-tag-dropdown');
-          if (!toggler || !menu) return;
+            if (!toggler || !menu) return;
           const origParent = menu.parentNode;
           const origNext = menu.nextSibling;
 
-          function setPos(){
-            const rect = toggler.getBoundingClientRect();
-            menu.style.position = 'fixed';
-            menu.style.left = `${rect.left}px`;
-            menu.style.top = `${rect.top + rect.height}px`;
-            menu.style.minWidth = `${rect.width}px`;
-            menu.style.zIndex = '999999';
-            menu.style.maxHeight = '60vh';
-            menu.style.overflowY = 'auto';
-          }
-          function reset(){
-            menu.style.position = '';
-            menu.style.left = '';
-            menu.style.top = '';
-            menu.style.minWidth = '';
-            menu.style.zIndex = '';
-            menu.style.maxHeight = '';
-            menu.style.overflowY = '';
-          }
+          // We do not set style.left/top; we rely on Popper from Bootstrap dropdown
+          // to take care of placement after we reparent to body.
           toggler.addEventListener('shown.bs.dropdown', function(){
             setTimeout(function(){
-              setPos();
               menu.classList.add('fixed-top-drawer');
-              menu.style.removeProperty('transform');
               if (!menu.__tagWasReparented){
                 const insideOffcanvas = toggler.closest('.offcanvas');
                 menu.__tagOrigParent = origParent;
@@ -2206,20 +2343,21 @@
                 if (!insideOffcanvas) {
                   document.body.appendChild(menu);
                   menu.__tagWasReparented = true;
+                  try { const dd = bootstrap.Dropdown.getOrCreateInstance(toggler); if (dd && dd._popper) dd._popper.update(); } catch (e) {}
                 }
               }
             }, 10);
           });
           toggler.addEventListener('hidden.bs.dropdown', function(){
-            reset();
             menu.classList.remove('fixed-top-drawer');
+            try { menu.style.removeProperty('z-index'); } catch(e) {}
             try{
               if (menu.__tagWasReparented && menu.__tagOrigParent) menu.__tagOrigParent.insertBefore(menu, menu.__tagOrigNextSibling);
               menu.__tagWasReparented = false;
             }catch(e){}
           });
-          window.addEventListener('resize', function(){ if (toggler.getAttribute('aria-expanded') === 'true') setPos(); });
-          window.addEventListener('scroll', function(){ if (toggler.getAttribute('aria-expanded') === 'true') setPos(); });
+          window.addEventListener('resize', function(){ if (toggler.getAttribute('aria-expanded') === 'true') { try { const dd = bootstrap.Dropdown.getOrCreateInstance(toggler); if (dd && dd._popper) dd._popper.update(); } catch(e){} } });
+          window.addEventListener('scroll', function(){ if (toggler.getAttribute('aria-expanded') === 'true') { try { const dd = bootstrap.Dropdown.getOrCreateInstance(toggler); if (dd && dd._popper) dd._popper.update(); } catch(e){} } });
         })();
       });
 
