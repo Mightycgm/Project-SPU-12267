@@ -9,6 +9,7 @@
       rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous" />
+    <link rel="icon" type="image/png" href="https://i.ibb.co/NdL5xtZW/Xeroc-Eye.png">
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
     <link
@@ -205,6 +206,119 @@
         background-color: rgba(0, 0, 0, 0.05);
       }
 
+      /* Theme-aware Navbar: use CSS variables so it's readable in both themes */
+      :root {
+        --nav-bg-light: rgba(255,255,255,0.9);
+        --nav-link-light: #212529; /* dark text for light mode */
+        --nav-border-light: rgba(0,0,0,0.06);
+        --nav-bg-dark: rgba(17,18,22,0.85);
+        --nav-link-dark: #e6e8ee; /* near-white for dark mode */
+        --nav-border-dark: rgba(255,255,255,0.06);
+      }
+
+      /* Preferred navbar style - a subtle glass with a backdrop blur */
+      .navbar {
+        background: var(--nav-bg-dark) !important;
+        color: var(--nav-link-dark) !important;
+        border-bottom: 1px solid var(--nav-border-dark);
+        backdrop-filter: blur(8px) saturate(110%);
+        -webkit-backdrop-filter: blur(8px) saturate(110%);
+      }
+
+      /* Light theme overrides */
+      body[data-theme="light"] .navbar {
+        background: var(--nav-bg-light) !important;
+        color: var(--nav-link-light) !important;
+        border-bottom: 1px solid var(--nav-border-light) !important;
+      }
+
+      /* Navbar brand gradient for a richer look (affects text only) */
+      .navbar .navbar-brand {
+        background: linear-gradient(135deg, #ff9a9e, #a18cd1);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 900;
+      }
+
+      /* Logo image visual adjustments removed (use JS swap, per user request) */
+
+      /* Optional: soft gradient for the navbar to match theme colors */
+      body[data-theme="light"] .navbar { background-image: linear-gradient(90deg, rgba(255,200,200,0.12), rgba(255,255,255,0.02)); }
+      body:not([data-theme="light"]) .navbar { background-image: linear-gradient(90deg, rgba(107,0,0,0.06), rgba(12,14,18,0.04)); }
+
+      /* Hover & Focus states - high contrast but subtle */
+      .navbar .nav-link:hover,
+      .navbar .nav-link:focus,
+      .navbar .nav-link:focus-visible {
+        text-decoration: none;
+        outline: none;
+        background-color: rgba(255,255,255,0.04);
+        color: inherit !important;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      }
+      body[data-theme="light"] .navbar .nav-link:hover,
+      body[data-theme="light"] .navbar .nav-link:focus,
+      body[data-theme="light"] .navbar .nav-link:focus-visible {
+        background-color: rgba(0,0,0,0.05);
+      }
+
+      /* Focus visible outline for keyboard users (accessibility) */
+      .navbar .nav-link:focus-visible {
+        box-shadow: 0 0 0 3px rgba(255, 154, 158, 0.18), 0 6px 18px rgba(0,0,0,0.08);
+        border-radius: 14px;
+      }
+
+      /* Make the toggler icon very visible on both themes */
+      .navbar .navbar-toggler { background: transparent; border-radius: 8px; }
+      .navbar .navbar-toggler:focus-visible { box-shadow: 0 0 0 3px rgba(161,140,209,0.15); }
+      .navbar .navbar-toggler .navbar-toggler-icon { filter: none; }
+
+      /* Mobile/touch: increase padding and contrast on nav items */
+      @media (max-width: 991px) {
+        .navbar .nav-link { padding: 0.9rem 1.1rem; border-radius: 12px; }
+        .offcanvas .nav-link { padding: 0.95rem 1rem; }
+        .navbar .navbar-brand { padding-left: 0.5rem; }
+      }
+
+      /* Offcanvas nav links should be white on darker background even when theme is light */
+      .offcanvas { color: #fff !important; }
+      .offcanvas .nav-link { color: #fff !important; }
+      body[data-theme="light"] .offcanvas .nav-link { color: #fff !important; }
+      .offcanvas .nav-link.active-custom { background-color: rgba(255,255,255,0.06) !important; color: #fff !important; }
+      .offcanvas .nav-link:focus-visible { box-shadow: 0 0 0 4px rgba(255,154,158,0.14); border-radius: 12px; }
+
+      /* Ensure nav links contrast and remain visible */
+      .navbar .nav-link {
+        color: inherit !important;
+        font-weight: 700;
+      }
+      .navbar .nav-link:hover {
+        opacity: 0.95;
+      }
+
+      /* Toggler / brand color tuning */
+      .navbar .navbar-brand, .navbar .navbar-brand * {
+        color: inherit !important;
+      }
+
+      .navbar-toggler { border: none; }
+      .navbar-toggler-icon { filter: none; }
+
+      /* Improve active state reading on both themes */
+      .navbar .nav-link.active-custom {
+        background-color: var(--bs-danger) !important;
+        color: #fff !important;
+        box-shadow: 0 6px 16px rgba(107, 0, 0, 0.18);
+      }
+
+      /* Keep offcanvas toggler items readable on mobile */
+      .offcanvas .nav-link {
+        color: #fff !important;
+      }
+      body[data-theme="light"] .offcanvas .nav-link { color: #fff !important; }
+
       /* UI Elements */
       .theme-toggle-btn {
         cursor: pointer;
@@ -299,29 +413,7 @@
         background-color: var(--card-bg);
         color: var(--text-color);
       }
-      .dropdown-menu-dark#game-jump-list {
-        background-color: #111;
-        color: #f8f9fa;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-      }
-      .dropdown-menu-dark#game-jump-list .dropdown-item:hover {
-        background-color: var(--bs-danger);
-        color: #ffffff;
-      }
-      [data-theme="light"] .dropdown-menu-dark#game-jump-list {
-        background-color: #ffffff;
-        color: #212529;
-        border-color: rgba(0, 0, 0, 0.12);
-      }
-      [data-theme="light"] .dropdown-menu-dark#game-jump-list .dropdown-item {
-        color: #212529;
-      }
-      [data-theme="light"]
-        .dropdown-menu-dark#game-jump-list
-        .dropdown-item:hover {
-        background-color: rgba(107, 0, 0, 0.08);
-        color: #000000;
-      }
+      /* removed the static 'dark' class CSS for #game-jump-list because we are now using theme variables */
 
       /* About Us */
       .profile-card {
@@ -516,6 +608,48 @@
         position: relative;
         overflow: hidden;
       }
+
+      /* Game card specific glass effect - subtle frosted glass allowing background to show */
+      .glass-panel.game-card {
+        --game-glass-bg-light: rgba(255, 255, 255, 0.08);
+        --game-glass-bg-dark: rgba(8, 10, 12, 0.46);
+        background: linear-gradient(180deg, var(--game-glass-bg-light), rgba(255,255,255,0.02));
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 8px 26px rgba(0, 0, 0, 0.14);
+        backdrop-filter: blur(14px) saturate(125%);
+        -webkit-backdrop-filter: blur(14px) saturate(125%);
+        background-clip: padding-box;
+        border-radius: 20px;
+        padding: 1.25rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Force transparent inner backgrounds so the glass effect is visible */
+      .glass-panel.game-card .video-wrapper,
+      .glass-panel.game-card .card-body,
+      .glass-panel.game-card .row,
+      .glass-panel.game-card .col-lg-6 {
+        background: transparent !important;
+      }
+
+      /* Dark-mode tuning for game-card (support both attribute and default dark) */
+      body:not([data-theme="light"]) .glass-panel.game-card,
+      [data-theme="dark"] .glass-panel.game-card {
+        background: linear-gradient(180deg, var(--game-glass-bg-dark), rgba(255,255,255,0.02));
+        border: 1px solid rgba(255,255,255,0.06);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+      }
+
+      .glass-panel.game-card::after {
+        content: "";
+        position: absolute;
+        top: -20%; left: -30%; width: 160%; height: 60%;
+        background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02), transparent);
+        transform: rotate(-18deg);
+        pointer-events: none;
+        opacity: 0.7;
+      }
       .glass-panel:hover {
         transform: translateY(-5px);
         box-shadow: var(--shadow-hover);
@@ -535,6 +669,109 @@
         opacity: 1;
         transform: translateY(0);
       }
+
+      /* --- Dropdown Theme Fixes --- */
+      /* Game Jump Dropdown: apply theme colors, ensure visibility & scroll */
+      .dropdown-menu#game-jump-list {
+        position: absolute !important; /* keep absolute but force it */
+        background: var(--card-bg) !important;
+        color: var(--text-color) !important;
+        border: 1px solid rgba(0,0,0,0.06) !important;
+        max-height: 420px !important;
+        overflow-y: auto !important;
+        z-index: 999999 !important; /* very high so it floats above other cards */
+        min-width: 220px;
+      }
+      /* When we force the menu to 'float' above content we'll apply this class */
+      .dropdown-menu#game-jump-list.fixed-top-drawer {
+        position: fixed !important;
+        transform: none !important; /* remove any popper translate */
+        will-change: top, left, transform;
+        z-index: 999999 !important;
+      }
+      .dropdown-menu#game-jump-list .dropdown-item {
+        color: var(--text-color) !important;
+      }
+      body[data-theme="light"] .dropdown-menu#game-jump-list .dropdown-item:hover { background-color: rgba(0,0,0,0.05) !important; }
+      body:not([data-theme="light"]) .dropdown-menu#game-jump-list .dropdown-item:hover { background-color: rgba(255,255,255,0.04) !important; }
+
+      /* Make the dropdown escape panel clipping in the home header */
+      #home-section .glass-panel { overflow: visible; }
+
+      /* Game-tag select (filter): adapt to theme (form-select overrides) */
+      /* Toggler looks like a .form-select and uses theme variables */
+      #tagDropdownToggler, #game-tag-filter, #game-tag-filter.form-select, select#game-tag-filter, .form-select#game-tag-filter {
+        background-color: var(--card-bg) !important;
+        color: var(--text-color) !important;
+        border: 1px solid var(--bs-danger) !important;
+      }
+      /* Ensure standard select rendering for browsers that don't style options reliably */
+      select#game-tag-filter.form-select::-ms-expand { display: block; }
+      select#game-tag-filter { -webkit-appearance: none; appearance: none; }
+      .offcanvas #tagDropdownToggler, .offcanvas #game-tag-filter, .offcanvas #game-tag-filter.form-select, .offcanvas .form-select#game-tag-filter { background-color: var(--card-bg) !important; color: var(--text-color) !important; border: 1px solid var(--bs-danger) !important; }
+      /* Force options readable in both themes */
+      body:not([data-theme="light"]) #game-tag-filter option { background: rgba(12,14,18,0.9) !important; color: var(--text-color) !important; }
+      body[data-theme="light"] #game-tag-filter option { background: #ffffff !important; color: var(--text-color) !important; }
+      /* Also ensure the select options inherit theme when inside offcanvas */
+      .offcanvas #game-tag-filter option { background: var(--card-bg) !important; color: var(--text-color) !important; }
+
+      /* Custom tag dropdown styles */
+      .dropdown-menu#game-tag-dropdown {
+        background: var(--card-bg) !important;
+        color: var(--text-color) !important;
+        border: 1px solid rgba(0,0,0,0.06) !important;
+        max-height: 420px !important;
+        overflow-y: auto !important;
+        z-index: 999999 !important;
+      }
+      .dropdown-menu#game-tag-dropdown .dropdown-item {
+        color: var(--text-color) !important;
+      }
+      body[data-theme="light"] .dropdown-menu#game-tag-dropdown .dropdown-item:hover { background-color: rgba(0,0,0,0.05) !important; }
+      body:not([data-theme="light"]) .dropdown-menu#game-tag-dropdown .dropdown-item:hover { background-color: rgba(255,255,255,0.04) !important; }
+
+      /* Make the tag toggler visually consistent with .form-select */
+      #tagDropdownToggler.form-select {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      /* --- FIX: Dropdown & Z-Index Issues --- */
+
+/* 1. แก้ Dropdown เลือกเกมโดนบัง */
+/* ระบุเจาะจงไปที่ Panel ตัวแรกในหน้า Home (ที่มีช่องค้นหา) */
+#home-section .glass-panel:first-child {
+  overflow: visible !important; /* อนุญาตให้ Dropdown ทะลุกรอบออกมา */
+  position: relative;           /* ต้องมี position เพื่อให้ z-index ทำงาน */
+  z-index: 1000;               /* ดัน Layer ให้ลอยเหนือการ์ดเกมข้างล่าง */
+}
+
+/* 2. แก้สี Dropdown เลือกหมวดหมู่ (Game Tag Filter) */
+#game-tag-filter.form-select {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border: 1px solid var(--bs-danger) !important;
+  /* ลบเงาสีฟ้าๆ เวลา Focus ของ Bootstrap ออก เพื่อความเท่ */
+  box-shadow: none !important; 
+}
+
+#game-tag-filter.form-select:focus {
+  border-color: #ff0000 !important; /* เปลี่ยนเป็นสีแดงตอนกด */
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+}
+
+/* แก้สีตัวเลือกข้างใน (Option) ให้ตรงตามธีม */
+#game-tag-filter option {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* กรณี Light Mode ให้ตัวเลือกข้างในเป็นสีขาว */
+[data-theme="light"] #game-tag-filter option {
+  background-color: #ffffff;
+  color: #000000;
+}
     </style>
   </head>
 
@@ -615,8 +852,10 @@
 
         <div class="d-flex align-items-center">
           <a class="navbar-brand ms-3 d-none d-sm-block me-2" href="#">
-            <img
-              src="https://www.spu.ac.th/wp-content/uploads/elementor/thumbs/Logo-SPU-SIT_Color-r4ruyzsrhxf2rdb4b2pvbdhoqphmpacydp4i4dqvpc.png"
+            <img id="mainLogo"
+              src="https://www.spu.ac.th/download/logo/new_logo_spu08.gif"
+              data-dark="https://www.spu.ac.th/download/logo/new_logo_spu08.gif"
+              data-light="https://www.spu.ac.th/download/logo/new_logo_spu07.gif"
               alt="SPU logo"
               style="height: 45px; width: auto" />
           </a>
@@ -693,6 +932,7 @@
                 class="btn btn-outline-danger btn-lg dropdown-toggle"
                 id="gameJumpMenu"
                 data-bs-toggle="dropdown"
+                data-bs-boundary="viewport"
                 type="button">
                 เลือกเกมที่ต้องการ...
               </button>
@@ -711,7 +951,13 @@
                 placeholder="พิมพ์ชื่อเกมที่ต้องการค้นหา..." />
             </div>
             <div class="col-md-4">
-              <select id="game-tag-filter" class="form-select">
+              <!-- Custom theme-aware dropdown for tags. We keep a hidden native select for accessibility and logic.
+                   Visible dropdown is styled to match the form-select. -->
+              <div class="dropdown w-100">
+                <button id="tagDropdownToggler" class="btn form-select dropdown-toggle w-100 text-start" type="button" data-bs-toggle="dropdown" aria-expanded="false">ทุกแนวเกม</button>
+                <ul class="dropdown-menu" id="game-tag-dropdown"></ul>
+              </div>
+              <select id="game-tag-filter" class="visually-hidden" aria-hidden="false">
                 <option value="">ทุกแนวเกม</option>
               </select>
             </div>
@@ -1173,7 +1419,7 @@
           id: "mecha-break",
           title: "Mecha BREAK",
           iconUrl: "https://cdn2.steamgriddb.com/icon/67fj.1400.jpg",
-          youtubeId: "3M7QOaVYMNE",
+          youtubeId: "C3MnugBJc6g",
           description:
             "Mecha BREAK คือเกมแอ็กชัน Sci-Fi สุดมันส์ ที่ให้คุณสวมบทบาทเป็นนักรบหุ่นยนต์ยักษ์ (Mech) ต่อสู้ในสงครามระหว่างกาแล็กซี่ ปรับแต่งหุ่นยนต์ของคุณให้เป็นเครื่องจักรสงครามสุดโหด และออกไปทำลายล้างศัตรูในสนามรบที่เต็มไปด้วยอันตรายและความท้าทาย",
           score: "8/10",
@@ -1483,7 +1729,7 @@
             : "";
 
           html += `
-            <div class="glass-panel rounded-3 p-4 p-md-5 shadow-lg mb-5 reveal">
+            <div class="glass-panel game-card rounded-3 p-4 p-md-5 shadow-lg mb-5 reveal">
               <section id="game-${game.id}" class="row g-4 align-items-center">
                 <div class="col-lg-6 ${isVideoLeft ? "" : "order-lg-2"}">
                   <div class="ratio ratio-16x9 video-wrapper">
@@ -1522,6 +1768,8 @@
         });
         container.innerHTML =
           html || '<div class="text-center py-5">ไม่พบเกมที่ค้นหา</div>';
+        // Keep jump list in sync whenever the list is rendered/filtered
+        if (typeof renderGameJumpList === 'function') renderGameJumpList();
       }
 
       // ฟังก์ชันสร้างรายการ Jump Menu (ลิสต์เกมแบบ Dropdown)
@@ -1529,9 +1777,11 @@
         const list = document.getElementById("game-jump-list");
         if (list)
           list.innerHTML = gameData
+            .slice(0)
+            .sort((a, b) => a.title.localeCompare(b.title, 'th'))
             .map(
               (g) =>
-                `<li><a class="dropdown-item" href="#game-${g.id}">${g.title}</a></li>`
+                `<li><a class="dropdown-item text-truncate" href="#game-${g.id}" title="${g.title}">${g.title}</a></li>`
             )
             .join("");
       }
@@ -1635,6 +1885,34 @@
               .map((t) => `<option value="${t}">${t}</option>`)
               .join("");
         }
+        // Build the custom dropdown menu too
+        const tagDropdown = document.getElementById('game-tag-dropdown');
+        const tagToggler = document.getElementById('tagDropdownToggler');
+        if (tagDropdown && tagToggler && tagSelect) {
+          tagDropdown.innerHTML = '<li><button class="dropdown-item text-truncate" data-value="">ทุกแนวเกม</button></li>' + Array.from(allTags).sort().map(t => `<li><button class="dropdown-item text-truncate" data-value="${t}">${t}</button></li>`).join('');
+          // Update toggler label if a value is set
+          const updateTogglerLabel = (value) => {
+            const label = value ? value : 'ทุกแนวเกม';
+            tagToggler.textContent = label;
+          }
+          updateTogglerLabel(tagSelect.value);
+          // Ensure toggler label updates when native select changes (e.g., keyboard input)
+          tagSelect.addEventListener('change', () => updateTogglerLabel(tagSelect.value));
+
+          // Wire up click events to set the hidden select value and trigger change
+          tagDropdown.querySelectorAll('.dropdown-item').forEach(btn => {
+            btn.addEventListener('click', (ev) => {
+              ev.preventDefault();
+              const value = btn.dataset.value || '';
+              if (tagSelect) {
+                tagSelect.value = value;
+                // Dispatch change so renderGameList() listens as before
+                tagSelect.dispatchEvent(new Event('change', { bubbles: true }));
+              }
+              updateTogglerLabel(value);
+            });
+          });
+        }
       }
 
       /* ---------------- API Logic (CheapShark) ---------------- */
@@ -1727,6 +2005,15 @@
           }
         }
         localStorage.setItem("theme", theme);
+        // Update logo based on theme
+        try {
+          const logo = document.getElementById('mainLogo');
+          if (logo && logo.dataset) {
+            logo.src = theme === 'light' ? logo.dataset.light : logo.dataset.dark;
+          }
+        } catch (e) {
+          /* ignore */
+        }
       }
       function toggleTheme() {
         applyTheme(
@@ -1803,6 +2090,137 @@
               e.target.reset();
             }, 1000);
           });
+
+          // Ensure the Game Jump dropdown floats above the page elements even when
+          // other elements might create stacking contexts. We calculate and set
+          // a fixed position for the dropdown on open, and reset on close.
+          (function ensureJumpDropdownVisible() {
+            const btn = document.getElementById('gameJumpMenu');
+            const menu = document.getElementById('game-jump-list');
+            const origParent = menu ? menu.parentNode : null;
+            const origNextSibling = menu ? menu.nextSibling : null;
+            if (!btn || !menu) return;
+
+            function setMenuFixedPosition() {
+              const rect = btn.getBoundingClientRect();
+              // Prefer showing below the button, aligned to the left
+              menu.style.position = 'fixed';
+              menu.style.left = `${rect.left}px`;
+              menu.style.top = `${rect.top + rect.height}px`;
+              menu.style.minWidth = `${rect.width}px`;
+              menu.style.width = menu.style.width || `${rect.width}px`;
+              // allow tall menus to scroll
+              menu.style.maxHeight = '60vh';
+              menu.style.overflowY = 'auto';
+              menu.style.zIndex = '999999';
+            }
+
+            function resetMenuPosition() {
+              menu.style.position = '';
+              menu.style.left = '';
+              menu.style.top = '';
+              menu.style.minWidth = '';
+              menu.style.width = '';
+              menu.style.maxHeight = '';
+              menu.style.overflowY = '';
+              menu.style.zIndex = '';
+            }
+
+            btn.addEventListener('shown.bs.dropdown', function (e) {
+              // Wait a tick to ensure bootstrap/popover set inline styles; then
+              // add our class and override
+              setTimeout(function () {
+                setMenuFixedPosition();
+                menu.classList.add('fixed-top-drawer');
+                // remove any transform applied by Popper
+                menu.style.removeProperty('transform');
+                // set z-index as important via setProperty
+                menu.style.setProperty('z-index', '999999', 'important');
+                // Move the menu to document.body while open to avoid clipping from
+                // ancestor containers; remember where it came from
+                if (!menu.__wasReparented) {
+                  menu.__origParent = origParent;
+                  menu.__origNextSibling = origNextSibling;
+                  document.body.appendChild(menu);
+                  menu.__wasReparented = true;
+                }
+              }, 10);
+            });
+            btn.addEventListener('hidden.bs.dropdown', function () {
+              resetMenuPosition();
+              menu.classList.remove('fixed-top-drawer');
+              // Try to restore the menu to its original location in the DOM
+              try {
+                if (menu.__wasReparented && menu.__origParent) {
+                  menu.__origParent.insertBefore(menu, menu.__origNextSibling);
+                  menu.__wasReparented = false;
+                }
+              } catch (err) {
+                // ignore
+              }
+            });
+            // Also update position on resize & scroll while open
+            window.addEventListener('resize', function () {
+              if (btn.getAttribute('aria-expanded') === 'true') setMenuFixedPosition();
+            });
+            window.addEventListener('scroll', function () {
+              if (btn.getAttribute('aria-expanded') === 'true') setMenuFixedPosition();
+            });
+          })();
+        // Ensure the Tag dropdown floats above content as well so it matches theme and escapes clipping
+        (function ensureTagDropdownVisible(){
+          const toggler = document.getElementById('tagDropdownToggler');
+          const menu = document.getElementById('game-tag-dropdown');
+          if (!toggler || !menu) return;
+          const origParent = menu.parentNode;
+          const origNext = menu.nextSibling;
+
+          function setPos(){
+            const rect = toggler.getBoundingClientRect();
+            menu.style.position = 'fixed';
+            menu.style.left = `${rect.left}px`;
+            menu.style.top = `${rect.top + rect.height}px`;
+            menu.style.minWidth = `${rect.width}px`;
+            menu.style.zIndex = '999999';
+            menu.style.maxHeight = '60vh';
+            menu.style.overflowY = 'auto';
+          }
+          function reset(){
+            menu.style.position = '';
+            menu.style.left = '';
+            menu.style.top = '';
+            menu.style.minWidth = '';
+            menu.style.zIndex = '';
+            menu.style.maxHeight = '';
+            menu.style.overflowY = '';
+          }
+          toggler.addEventListener('shown.bs.dropdown', function(){
+            setTimeout(function(){
+              setPos();
+              menu.classList.add('fixed-top-drawer');
+              menu.style.removeProperty('transform');
+              if (!menu.__tagWasReparented){
+                const insideOffcanvas = toggler.closest('.offcanvas');
+                menu.__tagOrigParent = origParent;
+                menu.__tagOrigNextSibling = origNext;
+                if (!insideOffcanvas) {
+                  document.body.appendChild(menu);
+                  menu.__tagWasReparented = true;
+                }
+              }
+            }, 10);
+          });
+          toggler.addEventListener('hidden.bs.dropdown', function(){
+            reset();
+            menu.classList.remove('fixed-top-drawer');
+            try{
+              if (menu.__tagWasReparented && menu.__tagOrigParent) menu.__tagOrigParent.insertBefore(menu, menu.__tagOrigNextSibling);
+              menu.__tagWasReparented = false;
+            }catch(e){}
+          });
+          window.addEventListener('resize', function(){ if (toggler.getAttribute('aria-expanded') === 'true') setPos(); });
+          window.addEventListener('scroll', function(){ if (toggler.getAttribute('aria-expanded') === 'true') setPos(); });
+        })();
       });
 
       // ปุ่ม Back to Top Logic
@@ -1821,4 +2239,3 @@
     </script>
   </body>
 </html>
-
