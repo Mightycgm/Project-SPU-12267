@@ -1876,7 +1876,7 @@
             : "";
 
           html += `
-            <div class="glass-panel game-card rounded-3 p-4 p-md-5 shadow-lg mb-5 reveal">
+            <div class="glass-panel game-card rounded-3 p-4 p-md-5 shadow-lg mb-5">
               <section id="game-${game.id}" class="row g-4 align-items-center">
                 <div class="col-lg-6 ${isVideoLeft ? "" : "order-lg-2"}">
                   <div class="ratio ratio-16x9 video-wrapper">
@@ -2248,22 +2248,53 @@
           .getElementById("game-tag-filter")
           ?.addEventListener("change", renderGameList);
 
-        // Contact Form Mockup
+        // Contact Form -- send to server endpoint (/api/contact) or fallback to mailto
         document
           .getElementById("contact-form")
-          ?.addEventListener("submit", (e) => {
+          ?.addEventListener("submit", async (e) => {
             e.preventDefault();
+            const form = e.target;
             const btn = document.getElementById("contact-submit-btn");
             const status = document.getElementById("contact-status");
+            // simple browser validation
+            if (!form.checkValidity()) {
+              form.classList.add('was-validated');
+              return;
+            }
+            const payload = {
+              name: form.name.value || '',
+              email: form.email.value || '',
+              phone: form.phone.value || '',
+              topic: form.topic.value || '',
+              message: form.message.value || ''
+            };
             btn.disabled = true;
-            status.innerHTML =
-              '<div class="alert alert-info mt-2">กำลังส่ง...</div>';
-            setTimeout(() => {
-              status.innerHTML =
-                '<div class="alert alert-success mt-2">ส่งเรียบร้อย!</div>';
+            status.innerHTML = '<div class="alert alert-info mt-2">กำลังส่ง...</div>';
+
+            try {
+              // Try to post to a backend endpoint - the server sample is provided in the workspace (see server/)
+              const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+              });
+              if (!res.ok) throw new Error('Network response not OK');
+              const json = await res.json().catch(() => null);
+              status.innerHTML = '<div class="alert alert-success mt-2">ส่งเรียบร้อย!</div>';
+              form.reset();
+            } catch (err) {
+              console.warn('Contact POST failed - falling back to mailto or showing error', err);
+              // fallback: open mail client with prefilled body (not reliable but useful)
+              const subject = encodeURIComponent('Contact Form: ' + (payload.topic || 'Contact'));
+              const body = encodeURIComponent(`Name: ${payload.name}\nEmail: ${payload.email}\nPhone: ${payload.phone}\nTopic: ${payload.topic}\n\nMessage:\n${payload.message}`);
+              // using a mailto to the target email
+              const mailto = `mailto:Nachasil.nak@spumail.net?subject=${subject}&body=${body}`;
+              // If you prefer - open the default email client instead
+              window.location.href = mailto;
+              status.innerHTML = '<div class="alert alert-warning mt-2">ไม่สามารถส่งโดยตรงได้ — เปิดอีเมลลูกค้าของคุณเพื่อส่งต่อ</div>';
+            } finally {
               btn.disabled = false;
-              e.target.reset();
-            }, 1000);
+            }
           });
 
           // Ensure the Game Jump dropdown floats above the page elements even when
