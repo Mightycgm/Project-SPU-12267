@@ -1,0 +1,744 @@
+      /* --- Global Styles --- */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      :root {
+        --bs-danger: #6b0000;
+        --main-bg-gradient-start: #6b0000;
+        --main-bg-gradient-end: #000000;
+        --card-bg: #000000;
+        --text-color: #ffffff;
+        --theme-btn-color: #ffffff;
+        --shop-btn-bg: #ffffff;
+        --shop-btn-text: #000000;
+        /* Glassmorphism Vars (Dark) */
+        --glass-bg: rgba(18, 18, 22, 0.72);
+        --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+        --glass-highlight: 1px solid rgba(255, 255, 255, 0.12);
+        --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+      }
+
+      [data-theme="light"] {
+        --main-bg-gradient-start: #ffcccc;
+        --main-bg-gradient-end: #ffffff;
+        --card-bg: #ffffff;
+        --text-color: #212529;
+        --theme-btn-color: #000000;
+        --shop-btn-bg: #000000;
+        --shop-btn-text: #ffffff;
+        /* Glassmorphism Vars (Light) */
+        --glass-bg: rgba(255, 255, 255, 0.75);
+        --glass-border: 1px solid rgba(255, 255, 255, 0.6);
+        --glass-highlight: 1px solid rgba(255, 255, 255, 0.9);
+        --shadow-soft: 0 10px 30px -5px rgba(161, 140, 209, 0.15);
+      }
+
+      body {
+        background: linear-gradient(
+          to top,
+          var(--main-bg-gradient-start),
+          var(--main-bg-gradient-end)
+        );
+        background-attachment: fixed; /* ลบพื้นหลังเดิมออก */
+        font-family: "Prompt", "Noto Sans", sans-serif;
+        font-weight: 400;
+        color: var(--text-color);
+        transition: background 0.5s ease, color 0.3s ease;
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      #canvas-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      main {
+        flex: 1;
+      }
+
+      /* --- Components --- */
+      .glass-panel {
+        background: var(--glass-bg, rgba(18, 18, 22, 0.72));
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+        box-shadow: var(--shadow-soft, 0 10px 30px -5px rgba(0, 0, 0, 0.5));
+        border-radius: 32px;
+        transition: all 0.4s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .theme-bg {
+        background-color: var(
+          --card-bg
+        ) !important; /* นำออกไปใช้ glass-panel แทน */
+        border: 1px solid var(--bs-danger); /* นำออกไปใช้ glass-panel แทน */
+        color: var(--text-color);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      footer.theme-bg {
+        border-top: 1px solid var(--bs-danger) !important;
+      }
+      [data-theme="light"] footer .text-white-50 {
+        color: rgba(0, 0, 0, 0.65) !important;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Roboto Slab", serif;
+        font-weight: 900;
+      }
+
+      /* คัดลอกจากเพื่อนมาวางใน <style> ของคุณ */
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.75); /* สำหรับ Light Mode */
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        box-shadow: 0 10px 30px -5px rgba(161, 140, 209, 0.15);
+        border-radius: 32px;
+      }
+
+      /* เพิ่ม CSS สำหรับ Dark Mode ของคุณ */
+      [data-theme="dark"] .glass-panel {
+        background: rgba(18, 18, 22, 0.72); /* สำหรับ Dark Mode */
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      /* แก้ไขคลาสเดิมของคุณเล็กน้อย */
+      .theme-bg {
+        /* ลบ background-color เดิมออก แล้วใช้คุณสมบัติจาก glass-panel แทน */
+        border: 1px solid var(--bs-danger);
+        color: var(--text-color);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      /* Sidebar Animation (คืนค่าเดิมที่นายชอบ) */
+      .offcanvas-custom-gradient {
+        background: linear-gradient(
+          to right,
+          var(--bs-danger),
+          10%,
+          var(--main-bg-gradient-end)
+        );
+      }
+      .offcanvas {
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+      }
+      .offcanvas-backdrop {
+        transition: opacity 0.4s ease-in-out !important;
+      }
+
+      .text-underline-danger {
+        text-decoration: underline;
+        text-decoration-color: var(--bs-danger);
+        text-decoration-thickness: 3px;
+      }
+
+      /* Custom Container Width */
+      .main-content-width {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 1400px;
+      }
+
+      /* Navbar */
+      .nav-link.active-custom {
+        background-color: var(--bs-danger);
+        color: white !important;
+        border-radius: 5px;
+      }
+      .offcanvas .nav-link:hover {
+        background-color: #440606;
+        color: white;
+      }
+      nav.navbar .nav-link {
+        transition: color 0.2s ease, background-color 0.2s ease;
+      }
+      body:not([data-theme="light"]) nav.navbar .nav-link {
+        color: #ffffff;
+      }
+      body[data-theme="light"] nav.navbar .nav-link:not(.active-custom) {
+        color: #212529 !important;
+      }
+      body[data-theme="light"] nav.navbar .nav-link:not(.active-custom):hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+
+      /* Theme-aware Navbar: use CSS variables so it's readable in both themes */
+      :root {
+        --nav-bg-light: rgba(255,255,255,0.9);
+        --nav-link-light: #212529; /* dark text for light mode */
+        --nav-border-light: rgba(0,0,0,0.06);
+        --nav-bg-dark: rgba(17,18,22,0.85);
+        --nav-link-dark: #e6e8ee; /* near-white for dark mode */
+        --nav-border-dark: rgba(255,255,255,0.06);
+      }
+
+      /* Preferred navbar style - a subtle glass with a backdrop blur */
+      .navbar {
+        background: var(--nav-bg-dark) !important;
+        color: var(--nav-link-dark) !important;
+        border-bottom: 1px solid var(--nav-border-dark);
+        backdrop-filter: blur(8px) saturate(110%);
+        -webkit-backdrop-filter: blur(8px) saturate(110%);
+      }
+
+      /* Light theme overrides */
+      body[data-theme="light"] .navbar {
+        background: var(--nav-bg-light) !important;
+        color: var(--nav-link-light) !important;
+        border-bottom: 1px solid var(--nav-border-light) !important;
+      }
+
+      /* Navbar brand gradient for a richer look (affects text only) */
+      .navbar .navbar-brand {
+        background: linear-gradient(135deg, #ff9a9e, #a18cd1);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 900;
+      }
+
+      /* Logo image visual adjustments removed (use JS swap, per user request) */
+
+      /* Optional: soft gradient for the navbar to match theme colors */
+      body[data-theme="light"] .navbar { background-image: linear-gradient(90deg, rgba(255,200,200,0.12), rgba(255,255,255,0.02)); }
+      body:not([data-theme="light"]) .navbar { background-image: linear-gradient(90deg, rgba(107,0,0,0.06), rgba(12,14,18,0.04)); }
+
+      /* Hover & Focus states - high contrast but subtle */
+      .navbar .nav-link:hover,
+      .navbar .nav-link:focus,
+      .navbar .nav-link:focus-visible {
+        text-decoration: none;
+        outline: none;
+        background-color: rgba(255,255,255,0.04);
+        color: inherit !important;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      }
+      body[data-theme="light"] .navbar .nav-link:hover,
+      body[data-theme="light"] .navbar .nav-link:focus,
+      body[data-theme="light"] .navbar .nav-link:focus-visible {
+        background-color: rgba(0,0,0,0.05);
+      }
+
+      /* Focus visible outline for keyboard users (accessibility) */
+      .navbar .nav-link:focus-visible {
+        box-shadow: 0 0 0 3px rgba(255, 154, 158, 0.18), 0 6px 18px rgba(0,0,0,0.08);
+        border-radius: 14px;
+      }
+
+      /* Make the toggler icon very visible on both themes */
+      .navbar .navbar-toggler { background: transparent; border-radius: 8px; }
+      .navbar .navbar-toggler:focus-visible { box-shadow: 0 0 0 3px rgba(161,140,209,0.15); }
+      .navbar .navbar-toggler .navbar-toggler-icon { filter: none; }
+
+      /* Mobile/touch: increase padding and contrast on nav items */
+      @media (max-width: 991px) {
+        .navbar .nav-link { padding: 0.9rem 1.1rem; border-radius: 12px; }
+        .offcanvas .nav-link { padding: 0.95rem 1rem; }
+        .navbar .navbar-brand { padding-left: 0.5rem; }
+      }
+
+      /* Offcanvas nav links should be white on darker background even when theme is light */
+      .offcanvas { color: #fff !important; }
+      .offcanvas .nav-link { color: #fff !important; }
+      body[data-theme="light"] .offcanvas .nav-link { color: #fff !important; }
+      .offcanvas .nav-link.active-custom { background-color: rgba(255,255,255,0.06) !important; color: #fff !important; }
+      .offcanvas .nav-link:focus-visible { box-shadow: 0 0 0 4px rgba(255,154,158,0.14); border-radius: 12px; }
+
+      /* Ensure nav links contrast and remain visible */
+      .navbar .nav-link {
+        color: inherit !important;
+        font-weight: 700;
+      }
+      .navbar .nav-link:hover {
+        opacity: 0.95;
+      }
+
+      /* Toggler / brand color tuning */
+      .navbar .navbar-brand, .navbar .navbar-brand * {
+        color: inherit !important;
+      }
+
+      .navbar-toggler { border: none; }
+      .navbar-toggler-icon { filter: none; }
+
+      /* Improve active state reading on both themes */
+      .navbar .nav-link.active-custom {
+        background-color: var(--bs-danger) !important;
+        color: #fff !important;
+        box-shadow: 0 6px 16px rgba(107, 0, 0, 0.18);
+      }
+
+      /* Keep offcanvas toggler items readable on mobile */
+      .offcanvas .nav-link {
+        color: #fff !important;
+      }
+      body[data-theme="light"] .offcanvas .nav-link { color: #fff !important; }
+
+      /* UI Elements */
+      .theme-toggle-btn {
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: var(--theme-btn-color);
+        transition: color 0.3s ease;
+      }
+      .theme-toggle-btn:hover {
+        color: var(--bs-danger) !important;
+      }
+      #btn-back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: none;
+        z-index: 1000;
+        background-color: var(--bs-danger);
+        border: 2px solid white;
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s;
+      }
+      #btn-back-to-top:hover {
+        background-color: #ff0000;
+        transform: scale(1.1);
+      }
+
+      /* Game Cards */
+      .video-wrapper {
+        border: 1px solid var(--bs-danger);
+        border-radius: 0.5rem;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      }
+      .btn-custom-shop {
+        background-color: var(--shop-btn-bg);
+        color: var(--shop-btn-text);
+        border: 2px solid var(--bs-danger);
+        font-weight: bold;
+        transition: all 0.3s ease;
+      }
+      .btn-custom-shop:hover {
+        background-color: var(--bs-danger);
+        color: #ffffff;
+        border-color: var(--bs-danger);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      section[id^="game-"] {
+        transition: transform 0.3s ease;
+        padding: 20px;
+        border-radius: 15px;
+      }
+      section[id^="game-"]:hover {
+        background-color: transparent;
+      }
+      .star-rating {
+        color: #ffc107;
+        font-size: 1.2rem;
+        margin-right: 10px;
+      }
+      .badge-genre {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--bs-danger);
+        color: var(--text-color);
+        margin-right: 5px;
+        font-weight: normal;
+        font-size: 0.85rem;
+      }
+
+      /* Form Controls */
+      #game-search-input,
+      #game-tag-filter {
+        background-color: var(--card-bg);
+        color: var(--text-color);
+        border: 1px solid var(--bs-danger);
+      }
+      #game-search-input::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+      }
+      [data-theme="light"] #game-search-input::placeholder {
+        color: rgba(0, 0, 0, 0.5);
+      }
+      #game-search-input:focus,
+      #game-tag-filter:focus {
+        border-color: var(--bs-danger);
+        box-shadow: 0 0 0 0.2rem rgba(107, 0, 0, 0.35);
+        background-color: var(--card-bg);
+        color: var(--text-color);
+      }
+      /* removed the static 'dark' class CSS for #game-jump-list because we are now using theme variables */
+
+      /* About Us */
+      .profile-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+      }
+      .profile-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(255, 0, 0, 0.15);
+        border-color: #ff0000;
+      }
+      .profile-img-wrapper {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 1.5rem;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 5px solid var(--bs-danger);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s;
+      }
+      .profile-card:hover .profile-img-wrapper {
+        transform: scale(1.05);
+      }
+      .profile-img-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .role-badge {
+        background-color: var(--bs-danger);
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 1rem;
+        display: inline-block;
+        margin-bottom: 15px;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+      .student-id {
+        font-family: monospace;
+        font-size: 1.2rem;
+        color: #aaa;
+      }
+      [data-theme="light"] .student-id {
+        color: #666;
+      }
+
+      /* Gallery */
+      .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+      }
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+      .gallery-item:hover {
+        border-color: var(--bs-danger);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+      }
+      .gallery-item:hover img {
+        transform: scale(1.1);
+      }
+      .gallery-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        text-align: center;
+        padding: 1rem;
+      }
+      .gallery-item:hover .gallery-overlay {
+        opacity: 1;
+      }
+      .gallery-title {
+        color: white;
+        font-weight: bold;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        text-shadow: 2px 2px 4px #000;
+      }
+      .gallery-desc {
+        color: #fff;
+        font-size: 0.9rem;
+        font-weight: 300;
+      }
+
+      /* FAQ */
+      .accordion-button:not(.collapsed) {
+        color: white;
+        background-color: var(--bs-danger);
+        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125);
+      }
+      .accordion-button:focus {
+        border-color: var(--bs-danger);
+        box-shadow: 0 0 0 0.25rem rgba(107, 0, 0, 0.25);
+      }
+      .accordion-item {
+        background-color: rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--bs-danger);
+        color: var(--text-color);
+      }
+      [data-theme="light"] .accordion-item {
+        background-color: #fff;
+      }
+      .accordion-button {
+        background-color: var(--card-bg);
+        color: var(--text-color);
+      }
+
+      /* Contact */
+      .contact-card {
+        border: 1px solid var(--bs-danger);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+      [data-theme="light"] .contact-card {
+        background-color: rgba(255, 255, 255, 0.8);
+      }
+      #contact-form .form-control,
+      #contact-form .form-select {
+        background-color: var(--card-bg);
+        color: var(--text-color);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      [data-theme="light"] #contact-form .form-control,
+      [data-theme="light"] #contact-form .form-select {
+        border-color: rgba(0, 0, 0, 0.1);
+      }
+      #contact-form .form-control:focus,
+      #contact-form .form-select:focus {
+        border-color: var(--bs-danger);
+        box-shadow: 0 0 0 0.2rem rgba(107, 0, 0, 0.35);
+      }
+      .social-link {
+        color: rgba(255, 255, 255, 0.65);
+        transition: color 0.2s ease, transform 0.2s ease;
+      }
+      [data-theme="light"] .social-link {
+        color: rgba(0, 0, 0, 0.6);
+      }
+      .social-link:hover {
+        transform: translateY(-2px);
+      }
+      .social-line:hover {
+        color: #00c300;
+      }
+      .social-instagram:hover {
+        color: #e4405f;
+      }
+      .social-facebook:hover {
+        color: #1778f2;
+      }
+      .social-youtube:hover {
+        color: #ff0000;
+      }
+      .social-tiktok:hover {
+        color: #25f4ee;
+      }
+
+      .d-none-section {
+        display: none !important;
+      }
+
+      .glass-panel {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: var(--glass-border);
+        border-top: var(--glass-highlight);
+        box-shadow: var(--shadow-soft);
+        border-radius: 32px;
+        transition: all 0.4s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Game card specific glass effect - subtle frosted glass allowing background to show */
+      .glass-panel.game-card {
+        --game-glass-bg-light: rgba(255, 255, 255, 0.08);
+        --game-glass-bg-dark: rgba(8, 10, 12, 0.46);
+        background: linear-gradient(180deg, var(--game-glass-bg-light), rgba(255,255,255,0.02));
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 8px 26px rgba(0, 0, 0, 0.14);
+        backdrop-filter: blur(14px) saturate(125%);
+        -webkit-backdrop-filter: blur(14px) saturate(125%);
+        background-clip: padding-box;
+        border-radius: 20px;
+        padding: 1.25rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Force transparent inner backgrounds so the glass effect is visible */
+      .glass-panel.game-card .video-wrapper,
+      .glass-panel.game-card .card-body,
+      .glass-panel.game-card .row,
+      .glass-panel.game-card .col-lg-6 {
+        background: transparent !important;
+      }
+
+      /* Dark-mode tuning for game-card (support both attribute and default dark) */
+      body:not([data-theme="light"]) .glass-panel.game-card,
+      [data-theme="dark"] .glass-panel.game-card {
+        background: linear-gradient(180deg, var(--game-glass-bg-dark), rgba(255,255,255,0.02));
+        border: 1px solid rgba(255,255,255,0.06);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+      }
+
+      .glass-panel.game-card::after {
+        content: "";
+        position: absolute;
+        top: -20%; left: -30%; width: 160%; height: 60%;
+        background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02), transparent);
+        transform: rotate(-18deg);
+        pointer-events: none;
+        opacity: 0.7;
+      }
+      .glass-panel:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-hover);
+      }
+      #game-list-container .glass-panel:hover {
+        transform: none;
+        box-shadow: var(--shadow-soft);
+      }
+
+      /* Reveal Animation */
+      .reveal {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 1s;
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* --- Dropdown Theme Fixes --- */
+      /* Game Jump Dropdown: apply theme colors, ensure visibility & scroll */
+      .dropdown-menu#game-jump-list {
+        position: absolute !important; /* keep absolute but force it */
+        background: var(--card-bg) !important;
+        color: var(--text-color) !important;
+        border: 1px solid rgba(0,0,0,0.06) !important;
+        max-height: 420px !important;
+        overflow-y: auto !important;
+        z-index: 999999 !important; /* very high so it floats above other cards */
+        min-width: 220px;
+      }
+      /* When we force the menu to 'float' above content we'll apply this class */
+      .dropdown-menu#game-jump-list.fixed-top-drawer {
+        /* Keep only z-index when we apply this class; positioning is handled by Popper */
+        z-index: 999999 !important;
+      }
+      .dropdown-menu#game-jump-list .dropdown-item {
+        color: var(--text-color) !important;
+      }
+      body[data-theme="light"] .dropdown-menu#game-jump-list .dropdown-item:hover { background-color: rgba(0,0,0,0.05) !important; }
+      body:not([data-theme="light"]) .dropdown-menu#game-jump-list .dropdown-item:hover { background-color: rgba(255,255,255,0.04) !important; }
+
+      /* Make the dropdown escape panel clipping in the home header */
+      #home-section .glass-panel { overflow: visible; }
+
+      /* Game-tag select (filter): adapt to theme (form-select overrides) */
+      /* Toggler looks like a .form-select and uses theme variables */
+      #tagDropdownToggler, #game-tag-filter, #game-tag-filter.form-select, select#game-tag-filter, .form-select#game-tag-filter {
+        background-color: var(--card-bg) !important;
+        color: var(--text-color) !important;
+        border: 1px solid var(--bs-danger) !important;
+      }
+      /* Ensure standard select rendering for browsers that don't style options reliably */
+      select#game-tag-filter.form-select::-ms-expand { display: block; }
+      select#game-tag-filter { -webkit-appearance: none; appearance: none; }
+      .offcanvas #tagDropdownToggler, .offcanvas #game-tag-filter, .offcanvas #game-tag-filter.form-select, .offcanvas .form-select#game-tag-filter { background-color: var(--card-bg) !important; color: var(--text-color) !important; border: 1px solid var(--bs-danger) !important; }
+      /* Force options readable in both themes */
+      body:not([data-theme="light"]) #game-tag-filter option { background: rgba(12,14,18,0.9) !important; color: var(--text-color) !important; }
+      body[data-theme="light"] #game-tag-filter option { background: #ffffff !important; color: var(--text-color) !important; }
+      /* Also ensure the select options inherit theme when inside offcanvas */
+      .offcanvas #game-tag-filter option { background: var(--card-bg) !important; color: var(--text-color) !important; }
+
+      /* Custom tag dropdown styles */
+      .dropdown-menu#game-tag-dropdown {
+        background: var(--card-bg) !important;
+        color: var(--text-color) !important;
+        border: 1px solid rgba(0,0,0,0.06) !important;
+        max-height: 420px !important;
+        overflow-y: auto !important;
+        z-index: 999999 !important;
+      }
+      .dropdown-menu#game-tag-dropdown .dropdown-item {
+        color: var(--text-color) !important;
+      }
+      body[data-theme="light"] .dropdown-menu#game-tag-dropdown .dropdown-item:hover { background-color: rgba(0,0,0,0.05) !important; }
+      body:not([data-theme="light"]) .dropdown-menu#game-tag-dropdown .dropdown-item:hover { background-color: rgba(255,255,255,0.04) !important; }
+
+      /* Make the tag toggler visually consistent with .form-select */
+      #tagDropdownToggler.form-select {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      /* --- FIX: Dropdown & Z-Index Issues --- */
+
+/* 1. แก้ Dropdown เลือกเกมโดนบัง */
+/* ระบุเจาะจงไปที่ Panel ตัวแรกในหน้า Home (ที่มีช่องค้นหา) */
+#home-section .glass-panel:first-child {
+  overflow: visible !important; /* อนุญาตให้ Dropdown ทะลุกรอบออกมา */
+  position: relative;           /* ต้องมี position เพื่อให้ z-index ทำงาน */
+  z-index: 1000;               /* ดัน Layer ให้ลอยเหนือการ์ดเกมข้างล่าง */
+}
+
+/* 2. แก้สี Dropdown เลือกหมวดหมู่ (Game Tag Filter) */
+#game-tag-filter.form-select {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border: 1px solid var(--bs-danger) !important;
+  /* ลบเงาสีฟ้าๆ เวลา Focus ของ Bootstrap ออก เพื่อความเท่ */
+  box-shadow: none !important; 
+}
+
+#game-tag-filter.form-select:focus {
+  border-color: #ff0000 !important; /* เปลี่ยนเป็นสีแดงตอนกด */
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+}
+
+/* แก้สีตัวเลือกข้างใน (Option) ให้ตรงตามธีม */
+#game-tag-filter option {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* กรณี Light Mode ให้ตัวเลือกข้างในเป็นสีขาว */
+[data-theme="light"] #game-tag-filter option {
+  background-color: #ffffff;
+  color: #000000;
+}
