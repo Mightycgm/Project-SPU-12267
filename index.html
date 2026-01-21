@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
   <head>
     <meta charset="UTF-8" />
@@ -9,7 +9,10 @@
       rel="stylesheet"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous" />
-    <link rel="icon" type="image/png" href="https://i.ibb.co/NdL5xtZW/Xeroc-Eye.png">
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://i.ibb.co/NdL5xtZW/Xeroc-Eye.png" />
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
     <link
@@ -105,7 +108,8 @@
 
         <div class="d-flex align-items-center">
           <a class="navbar-brand ms-3 d-none d-sm-block me-2" href="#">
-            <img id="mainLogo"
+            <img
+              id="mainLogo"
               src="https://www.spu.ac.th/download/logo/new_logo_spu08.gif"
               data-dark="https://www.spu.ac.th/download/logo/new_logo_spu08.gif"
               data-light="https://www.spu.ac.th/download/logo/new_logo_spu07.gif"
@@ -118,7 +122,7 @@
             href="#"
             onclick="switchPage('home')"
             style="
-              font-family: 'Roboto Slab';
+              font-family: &quot;Roboto Slab&quot;;
               color: var(--bs-danger);
               text-decoration: none;
             ">
@@ -207,10 +211,21 @@
               <!-- Custom theme-aware dropdown for tags. We keep a hidden native select for accessibility and logic.
                    Visible dropdown is styled to match the form-select. -->
               <div class="dropdown w-100">
-                <button id="tagDropdownToggler" class="btn form-select dropdown-toggle w-100 text-start" type="button" data-bs-toggle="dropdown" data-bs-boundary="viewport" aria-expanded="false">ทุกแนวเกม</button>
+                <button
+                  id="tagDropdownToggler"
+                  class="btn form-select dropdown-toggle w-100 text-start"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  data-bs-boundary="viewport"
+                  aria-expanded="false">
+                  ทุกแนวเกม
+                </button>
                 <ul class="dropdown-menu" id="game-tag-dropdown"></ul>
               </div>
-              <select id="game-tag-filter" class="visually-hidden" aria-hidden="false">
+              <select
+                id="game-tag-filter"
+                class="visually-hidden"
+                aria-hidden="false">
                 <option value="">ทุกแนวเกม</option>
               </select>
             </div>
